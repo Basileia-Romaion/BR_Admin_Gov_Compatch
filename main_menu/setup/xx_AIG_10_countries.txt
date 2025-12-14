@@ -1,0 +1,1719 @@
+current_age = age_1_traditions
+
+# own_control_core
+# own_control_integrated
+# own_control_conquered
+# own_control_colony
+# own_core
+# own_conquered
+# own_integrated
+# own_colony
+# control_core
+# control
+# our_cores_conquered_by_others
+
+countries = {
+	countries = {
+
+		BYZ = {
+			own_control_core = {
+				lemnos imbros molyvos mitilene gallipoli kesan
+				edirne hayrabolu corlu
+				rodoscuk enez kiyikoy ahtopol constantinople silivri catalca luleburgaz kirklareli
+				malgara alasehir
+				uskudar silli biga eregli
+				chios vize
+				ormenio
+				traianopolis demotica xanthia komotini
+				
+				#TUR
+				kibrus
+				bolu akcasehir akyazi konrapa gerede mengen mudurnu
+				bursa adranos iznik
+				izmit atpazari
+				domanic
+				sultanonu bilecik goynuk eynegol inonu nalli sogut
+				
+				#KRD
+				balikesir balya edremit manyas mihalic susurluk
+				ayvacik bandirma bayramic can canakkale gonen lapseki
+				dursunbey harmancik
+				
+				#GRM
+				mihaliccik sivrihisar bozan kaymaz
+				altintas emirdag seyitgazi
+				kutahya aslanapa emet simav tavsanli
+				usak banaz gediz seyhli
+				
+				#SRU
+				manisa akhisar demirci gordes kula
+				bergama bigadic soma
+				
+				#AYD
+				smyrna ayasuluk cesme menemen urla
+				tire balat birgi guzelhisar nazilli
+				
+				#MEN
+				milas
+				mugla bodrum cine gokabat marmaris megri yuksekkum
+				
+				#TVS
+				tavas
+				
+				#INA
+				honaz lazkiye
+				
+				#SHP
+				karahisar_i_sahib sandikli suhut
+				
+				#HMD
+				isparta burdur dinar egirdir uluborlu
+				golhisar stefani
+				
+				#TEK
+				antalya elmali karahisar_i_teke kas istanoz
+				manavgat finike
+				
+				#KNI
+				rodos kos
+			}
+			own_control_integrated = {
+				bukelon ustra
+			}
+			own_control_conquered = {
+			
+			}
+			our_cores_conquered_by_others = {
+				#ANA
+				aksaray kochisar insuyu
+				kirsehir nevsehir sariyahsi
+				konya celtik eregli_kar eskil hatunsaray karapinar ladik larende pirloganda
+				bekarlar bor_tur nigde
+				beysehir aksehir bolvadin sarkikaraagac seydisehir
+				ilgin turgut suluklu kulu_turkey obruk altinekin cumra
+				ankara cubuk haymana kalecik polatli karakecili
+				bozok baliseyh candir dinek_keskin sorgun
+				hacibektas
+				corum huseyinabad sungurlu
+				akdagmadeni aydincik koyulhisar sulusaray tokat zile
+				yalvac
+				beypazari kizilca
+				#THE
+				sporades servia kastoria hatera veria edessa kassandreia polygyros thessaloniki
+				kilkis giannitsa gynaikokastro serres rentina kavala mount_athos thasos drama
+				ostrovo
+				grevena siatista
+				#THS
+				demetrias farsala elassona larissa stomio trikala tyrnavos karditsa
+				neopatras zetounion
+				#ATH
+				athens megara thebes atalanti livadeia
+				corinth damala ermioni xylokastro
+				gravia
+				bodonitsa
+				salona
+				#MOE
+				tripolitsa veligosti karytaina
+				monemvasia mystras oitylo leuktron astros
+				argos nafplio
+				#ACH
+				damala ermioni kalamata kyparissia
+				andritsaina pontikokastro andravida corinth
+				chalandritsa patras vostitsa kalavryta xylokastro
+				#NEG
+				negroponte kleisoura karystos kymi oreos eretreia
+				#TRE
+				trebizond giresun gorele gumushane surmene
+				bayramlu unye
+				mesudiye
+				amasya niksar sonisa
+				akkus terme
+				gadegara ladik_pontus merzifon
+				samsun
+				bafra gerze
+				rize khupati
+				#PAF
+				bartin
+				kastamonu arac boyabat devrekani inebolu kure_i_mamure sinop taskopru
+				cankiri bayat cerkes kursunlu tosya
+				safranbolu iskilip sabanozu ulus yenicepazari
+				gumus
+				#CRT
+				chania hagios_pavlos rethymno candia gergeri elounda viannos siteia
+				#CYP
+				nicosia_cyp famagusta kyrenia larnaca limassol morphou paphos
+				#GEN
+				samos ikaria foca #Aegean Sea
+				amasra #Black Sea
+				#VEN
+				corfu modon kythira andros mykonos amorgos karpathos
+				#NAX
+				naxos kythnos milos
+				#CEP
+				zakynthos leukas cephalonia
+				#CIL
+				adana ayas kars_armenia iskenderun
+				anavarza sis caxud hargan comana_cil
+				tarsus corycus candir_cil molevon
+				kapan
+				silifke anamur mut ermenek
+				alaiye selinti
+				antioch arsuz
+			}
+			
+			starting_technology_level = 3
+			include = "expl_mediterranean"
+			include = "expl_silk_road_west"
+			include = "expl_silk_road_center"
+			include = "expl_silk_road_east"
+			include = "expl_indian_trade_route"
+			include = "expl_indonesian_trade_route"
+			include = "expl_middle_east"
+			#	discovered_regions = {
+			#		egypt_region
+			#		khorasan_region
+			#		persia_region
+			#		ethiopia_region
+			#		nubia_region
+			#		arabia_region
+			#		western_india_region
+			#		hindustan_region
+			#		xinjiang_region
+			#	}
+			discovered_areas = {
+				red_sea_area
+				persian_gulf_sea_zones_area
+				upper_egypt_area
+				nubia_proper_area
+			}
+			discovered_provinces = {
+				amhara_province
+				argobba_province
+				begemder_province
+			}
+			include = "eastern_european_monarchy"
+			government = {
+				type = admin_imperial
+				heir_selection = cognatic_primogeniture
+				
+				ruler = byz_andronikos_iii_palaiologos
+				consort = byz_anna_of_savoy
+				
+				ruler_term = { character = byz_isaakios_i_komnenos start_date = 1057.6.8 end_date = 1059.11.22 regnal_number = 1 }
+				
+				ruler_term = { character = byz_konstantinos_x_doukas start_date = 1059.11.23 end_date = 1067.5.23 regnal_number = 10 }
+				
+				ruler_term = { character = byz_romanos_iv_diogenes start_date = 1068.1.1 end_date = 1071.10.1 regnal_number = 4 }
+				
+				ruler_term = { character = byz_michael_vii_doukas start_date = 1071.10.1 end_date = 1078.1.7 regnal_number = 7 }
+				ruler_term = {
+					character = byz_michael_vii_doukas start_date = 1078.1.7 end_date = 1078.3.31 regnal_number = 7
+					character = byz_nikephoros_iii_botaneiates start_date = 1078.1.7 end_date = 1078.3.31 regnal_number = 3
+				}
+				
+				ruler_term = { character = byz_nikephoros_iii_botaneiates start_date = 1078.3.31 end_date = 1081.4.1 regnal_number = 3 }
+				
+				
+				ruler_term = { character = byz_alexios_i_komnenos start_date = 1081.4.1 end_date = 1118.8.15 regnal_number = 1 }
+				ruler_term = { character = byz_ioannes_ii_komnenos start_date = 1118.8.15 end_date = 1143.4.8 regnal_number = 2 }
+				ruler_term = { character = byz_manouel_i_komnenos start_date = 1143.4.8 end_date = 1180.9.24 regnal_number = 1 }
+				ruler_term = { character = byz_alexios_ii_komnenos start_date = 1180.9.24 end_date = 1183.9.24 regnal_number = 2 }
+				ruler_term = { character = byz_andronikos_i_komnenos start_date = 1183.9.24 end_date = 1185.9.12 regnal_number = 1 }
+				
+				ruler_term = { character = byz_isaakios_ii_angelos start_date = 1185.9.12 end_date = 1195.4.8 regnal_number = 2 }
+				ruler_term = { character = byz_alexios_iii_angelos start_date = 1195.4.8 end_date = 1203.7.18 regnal_number = 3 }
+				ruler_term = {
+					character = byz_isaakios_ii_angelos start_date = 1203.7.19 end_date = 1204.1.27 regnal_number = 2 #Restored
+					character = byz_alexios_iv_angelos start_date = 1203.7.19 end_date = 1204.1.27 regnal_number = 4  #As Junior Co-Emperor
+				}
+				ruler_term = { character = byz_alexios_v_doukas start_date = 1204.1.27 end_date = 1204.4.12 regnal_number = 5 }
+				
+				ruler_term = { character = byz_theodoros_i_laskaris start_date = 1205.5.1 end_date = 1221.11.1 regnal_number = 1 } # Emperor in Nikaea
+				
+				ruler_term = { character = byz_ioannes_iii_vatatzes start_date = 1221.11.1 end_date = 1254.11.3 regnal_number = 3 } # Emperor in Nikaea
+				
+				
+				ruler_term = { character = byz_theodoros_ii_laskaris start_date = 1254.11.3 end_date = 1258.8.16 regnal_number = 2 } # Emperor in Nikaea
+				ruler_term = { character = byz_ioannes_iv_laskaris start_date = 1258.8.16 end_date = 1259.1.1 regnal_number = 4 } # Emperor in Nikaea
+				
+				ruler_term = {
+					character = byz_ioannes_iv_laskaris start_date = 1259.1.1 end_date = 1261.12.25 regnal_number = 4 # Emperor in Nikaea
+					character = byz_michael_viii_palaiologos start_date = 1259.1.1 end_date = 1261.12.25 regnal_number = 8
+				}
+				ruler_term = { character = byz_michael_viii_palaiologos start_date = 1261.12.25 end_date = 1282.12.1 regnal_number = 8 }
+				ruler_term = { character = byz_andronikos_ii_palaiologos start_date = 1282.12.11 end_date = 1294.5.21 regnal_number = 2 }
+				ruler_term = {
+					character = byz_andronikos_ii_palaiologos start_date = 1294.5.21 end_date = 1320.10.12 regnal_number = 2
+					character = byz_michael_ix_palaiologos start_date = 1294.5.21 end_date = 1320.10.12 regnal_number = 9 # Junior Co-Emperor
+				}
+				ruler_term = { character = byz_andronikos_ii_palaiologos start_date = 1320.10.12 end_date = 1328.5.24 regnal_number = 2 }
+				ruler_term = { character = byz_andronikos_iii_palaiologos start_date = 1328.5.24 regnal_number = 3 }
+				
+				centralization_vs_decentralization = 20
+				traditionalist_vs_innovative = -50
+				spiritualist_vs_humanist = -50
+				aristocracy_vs_plutocracy = -50
+				serfdom_vs_free_subjects = -35
+				mercantilism_vs_free_trade = -70
+				belligerent_vs_conciliatory = -20
+				quality_vs_quantity = -25
+				offensive_vs_defensive = 50
+				land_vs_naval = 20
+				capital_economy_vs_traditional_economy = 60
+				individualism_vs_communalism = -10
+				outward_vs_inward = 70
+				
+				privilege = {
+					#BR EDIT, I wanted to keep the challenge of these modifiers but it turns them into such a mess the ai ends up in an endless revolt loop as it loses all its buildings and pop drops by 3/4ths.
+					#Nobles
+					elaborate_court_ceremonies
+					noble_serfdom_rights
+					manorial_courts
+					noble_patronage_of_the_arts
+					#consolidated_corruption_of_the_nobles
+					
+					#Clergy
+					embellish_great_works_of_faith
+					clergy_powerful_dioceses
+					clergy_strengthen_faith
+					#consolidated_corruption_of_the_clergy #BR EDIT
+					
+					#Burghers
+					formal_guilds
+					land_of_commerce
+					market_fairs
+					sponsor_maritime_contracts
+					control_over_monetary_policy
+					control_over_the_coinage
+					#consolidated_corruption_of_the_burghers #BR EDIT
+					
+					#Commoners
+					access_to_royal_and_ecclesiastical_courts
+					#consolidated_corruption_of_the_peasants #BR EDIT
+				}
+				reforms = {
+					autocracy
+					theme_system
+					kritai_katholikoi
+				}
+				
+				laws = {
+					legal_code_law = byzantine_law
+					distribution_of_power_law = dop_favor_the_ruler
+					#feudal_de_jure_law = by_blood
+					administrative_system = pronoia_system
+					patriarchate_law = state_patriarchate_policy
+					admin_imperial_de_jure_law = admin_imperial_by_edict
+					admin_imperial_levy_law = admin_imperial_militarised_farmers
+					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+				}
+			}
+			#Setup to accurately portray the starting situation
+			currency_data = {
+				gold = 300
+				stability = -5
+				prestige = 20
+				government_power = 10
+				inflation = 0.1
+				war_exhaustion = 5
+			}
+
+			tolerated_cultures = {
+				aromanian
+				anatolian_greek_culture
+				pontic_greek_culture
+			}
+			
+			liturgical_language = khoine_dialect
+			
+			capital = constantinople
+			dynasty = palaiologos_dynasty
+			country_rank = rank_empire
+		}
+
+		EPI = { #BR EDITED
+			own_control_core = {
+				nafpaktos angelokastron vonitsa arta preveza parga ioannina kleisoura_epirus butrint
+				argyrokastro avlonya karpenisi konitsa
+				#BYZ
+				pyli
+				#SAO
+				loidoriki
+			}
+			our_cores_conquered_by_others = {
+				#CEP
+				zakynthos leukas cephalonia
+				#SAO
+				salona
+			}
+			
+			starting_technology_level = 3
+			include = "expl_mediterranean"
+			include = "expl_silk_road_west"
+			include = "expl_silk_road_center"
+			include = "expl_silk_road_east"
+			include = "expl_indian_trade_route"
+			include = "eastern_european_monarchy"
+			government = {
+				type = admin_imperial
+				heir_selection = cognatic_primogeniture
+				
+				ruler = epi_theodoros_synadenos
+				consort = epi_eudokia_doukania_kommene
+				
+				ruler_term = { character = epi_michael_i_komnenos_doukas start_date = 1205.1.1 end_date = 1215.1.1 regnal_number = 1 }
+				ruler_term = { character = the_theodoros_komnenos_doukas start_date = 1215.1.1 end_date = 1230.1.1 regnal_number = 1 }
+				ruler_term = { character = epi_michael_ii_komnenos_doukas start_date = 1230.1.1 end_date = 1268.1.1 regnal_number = 2 }
+				ruler_term = { character = epi_nikephoros_i_komnenos_doukas start_date = 1268.1.1 end_date = 1297.1.1 regnal_number = 1 }
+				ruler_term = { character = epi_thomas_i_komnenos_doukas start_date = 1297.1.1 end_date = 1318.1.1 regnal_number = 1 }
+				
+				ruler_term = { character = epi_nikolaos_orsini start_date = 1318.1.1 end_date = 1323.1.1 regnal_number = 1 }
+				ruler_term = { character = cep_john_orsini start_date = 1323.1.1 end_date = 1335.1.1 regnal_number = 1 }
+				ruler_term = { character = epi_nikephoros_ii_orsini start_date = 1335.1.1 end_date = 1336.1.1 regnal_number = 2 }
+				
+				ruler_term = { character = epi_theodoros_synadenos start_date = 1336.1.1 regnal_number = 0 } # As Governor of Epirus
+				
+				regnal_numbers = {
+					name_michael = 2
+					name_theodore = 1
+					name_nikephoros = 2
+					name_thomas = 1
+					name_nicholas = 1
+					name_john = 1
+				}
+				laws = {
+					admin_imperial_de_jure_law = admin_imperial_by_edict
+					admin_imperial_levy_law = admin_imperial_militarised_farmers
+					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+				}
+			}
+			
+			accepted_cultures = {
+				aromanian 
+			}
+			tolerated_cultures = {
+				albanian latinoi
+			}
+			
+			country_rank = rank_duchy
+			liturgical_language = khoine_dialect
+			
+			capital = ioannina
+		}
+		
+		TRE = {
+			own_control_core = {
+				trebizond giresun gorele gumushane surmene
+				bayramlu unye
+				#HCI
+				mesudiye
+				#TDJ
+				akkus terme
+				#KBD
+				samsun
+				#BFR
+				bafra gerze
+				rize khupati
+			}
+			
+			own_control_integrated = {
+				taman
+				#GAZ
+				tana kaffa vosporo
+				
+			}
+			
+			our_cores_conquered_by_others = {
+				khupati
+				#GLH
+				lusta soldaia
+				amasya merzifon
+				niksar sonisa
+				gadegara ladik_pontus
+			}
+			
+			starting_technology_level = 3
+			include = "expl_eastern_europe"
+			include = "eastern_european_monarchy"
+			government = {
+				type = admin_imperial
+				heir_selection = cognatic_primogeniture
+				ruler = tre_basil_komnenos
+				
+				ruler_term = { character = tre_alexios_i_komnenos start_date = 1204.4.1 end_date = 1222.2.1 regnal_number = 1 }
+				
+				ruler_term = { character = tre_andronikos_i_gidos start_date = 1222.2.1 end_date = 1235.1.1 regnal_number = 1 }
+				
+				ruler_term = { character = tre_ioannes_i_auxouchos start_date = 1235.1.1 end_date = 1238.1.1 regnal_number = 1 }
+				ruler_term = { character = tre_manouel_i_komnenos start_date = 1238.1.1 end_date = 1263.3.1 regnal_number = 1 }
+				ruler_term = { character = tre_andronikos_ii_komnenos start_date = 1263.3.1 end_date = 1266.1.1 regnal_number = 2 }
+				ruler_term = { character = tre_georgios_komnenos start_date = 1266.1.1 end_date = 1280.6.1 regnal_number = 1 }
+				ruler_term = { character = tre_ioannes_ii_komnenos start_date = 1280.6.1 end_date = 1284.10.1 regnal_number = 2 }
+				ruler_term = { character = tre_theodora_komnene start_date = 1284.10.1 end_date = 1285.1.1 regnal_number = 1 }
+				ruler_term = { character = tre_ioannes_ii_komnenos start_date = 1285.1.1 end_date = 1297.8.16 regnal_number = 2 } # Restored
+				ruler_term = { character = tre_alexios_ii_komnenos start_date = 1297.8.16 end_date = 1330.5.3 regnal_number = 2 }
+				ruler_term = { character = tre_andronikos_iii_komnenos start_date = 1330.5.3 end_date = 1332.1.8 regnal_number = 3 }
+				ruler_term = { character = tre_manouel_ii_komnenos start_date = 1332.1.8 end_date = 1332.9.23 regnal_number = 2 }
+				ruler_term = { character = tre_basil_komnenos start_date = 1332.9.23 regnal_number = 1 }
+				
+				regnal_numbers = {
+					name_alexis = 2
+					name_andronikos = 3
+					name_john = 2
+					name_emmanuel = 2
+					name_george = 1
+					name_theodora = 1
+					name_basil = 1
+				}
+				privilege = {
+					#nobles
+					noble_armies
+					primacy_of_nobility
+					auxilium_et_consilium
+					joint_assembly_decrees
+					#burghers
+					#peasants
+					peasants_allowed_weapons_privilege
+				}
+				laws = {
+					admin_imperial_de_jure_law = admin_imperial_by_edict
+					admin_imperial_levy_law = admin_imperial_militarised_farmers
+					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+				}
+			}
+			
+			country_rank = rank_kingdom #BR EDIT
+			capital = trebizond
+			
+			accepted_cultures = {
+				greek_culture
+			}
+			tolerated_cultures = {
+				laz_culture
+			}
+		}
+		
+		MAM = {
+			own_control_core = {
+				alexandria el_alamein damanhur ramsis kafr_saqr kharibta rashid wadi_el_natrun
+				cairo atfih beni_suef faiyum giza dakahla
+				damietta al_mima el_burullus el_mahalla fuwa menouf samanoud tidah
+				mansoura bilbeis faqus ushmum_tannah qalyub tarrana tinnis
+				suez saint_anthony saint_paul_anchorite
+				el_tor
+				edfu esna qena hiw qus
+				asyut el_balyana el_buwit akhmim manfalut
+				minya ashmunayn el_bahnasa sharuna tahna
+				kharga bahariyya baris el_qasr qasr_farafra siwa
+			}
+			
+			own_control_integrated = {
+				el_arish nekhel qatya warrada
+				matruh sallum tobruk
+				el_qoseir ras_gharib safaga
+				el_jundi faran nuweiba saint_katrine
+				jerusalem acre amman aqaba beersheba gaza hebron karak maan majdal nablus safed sughar jaffa al_quwayrah
+				beirut baalbek deir_qamar sidon tripoli_syria shoubak madaba
+				damascus artah baniyas hama homs idlib jableh kafartab latakia masyaf nabek qusayr tartus
+				
+				umluj al_hawra al_manjur al_maramiyah
+				al_ula al_bleiteh al_farah_ula al_marwa az_zubayir mughayra
+				duba ad_disah al_azlam al_wajh bada_yaqub bir_al_qurr
+				tabuk_arabia al_khanbarah al_muazzam al_ukhaydir bajdah bir_ibn_hermas dhat_al_hajj
+				aynuna al_bad al_muwaylih haql makna
+			}
+			
+			own_control_conquered = {
+			}
+			
+			include = "expl_muslim_mediterranean"
+			include = "expl_horn_of_africa"
+			include = "muslim_monarchy"
+			country_rank = rank_kingdom #Should be an Empire Caliphate but Empire Tier Titles need to be fixed.
+			government = {
+				type = admin_imperial
+				heir_selection = cognatic_primogeniture #mamluk_succesion
+				ruler = random
+
+				reforms = {
+					autocracy
+					mamluk_government #Reworked into Fatamid
+				}
+
+				privilege = {
+					#Nobles
+					elaborate_court_ceremonies
+					banal_lordship
+					joint_assembly_decrees
+					ghazi_privilege
+					noble_sponsored_navy
+					auxilium_et_consilium
+
+					#Ulama
+					waqf_payments
+					embellish_great_works_of_faith
+					
+					#Burghers
+					trade_monopolies
+					formal_guilds
+					building_rights
+					market_fairs
+					shipwright_contracts
+					sponsor_maritime_contracts
+					land_of_commerce
+					allow_trade_center_sponsorship
+
+					#peasants
+					peasants_allowed_weapons_privilege
+					
+					#Dhimmi #BR ADDED
+					dhimmi_land_rights
+					dhimmi_administrative_posts
+					dhimmi_abrahamic_communities
+					dhimmi_pact_of_umar
+					dhimmi_military_service
+					dhimmi_traditions
+					urban_development_grants
+					dharmic_dhimmi_communities
+
+					#Tribes
+					tribes_tribal_levies
+					tribes_allow_gatherings
+				}
+				
+				spiritualist_vs_humanist = -10
+				belligerent_vs_conciliatory = -30
+				quality_vs_quantity = -10
+				land_vs_naval = -40
+				laws = {
+					mamluk_rank_system_laws = mam_rigid_system
+					mamluk_army_law = al_mamalik_al_sultaniyya
+					mamluk_promotion_law = merit_basis
+					sharia_law = shafii_policy #maliki_policy
+					administrative_system = local_courts_administration
+					iqta_law = efficient_tax_farming #lenient_taxation
+					#medieval_levy_law = noble_levies
+					censorship = strict_censorship
+					marriage_law = muslim_marriage
+					heir_religion_law = heir_same_religion
+					legal_code_law = sharia_law_policy
+					distribution_of_power_law = dop_favor_the_ruler
+					education_masses_law = basic_religious_education
+					#feudal_de_jure_law = by_blood #by_tradition
+					cultural_traditions_law = martial_society
+					immigration_law = open_borders_law
+					mining_law = nobles_mining_law
+					#royal_court_customs_law = harem_policy
+					#harem_law = public_harem_policy
+					admin_imperial_de_jure_law = admin_imperial_by_edict
+					admin_imperial_levy_law = admin_imperial_militarised_farmers
+					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+				}
+				
+			}
+			religious_school = shafii_school #While Egypt today is mostly Hanafi, the $mamluks$ favored Shaafi over the rest
+			government = { mysticism_vs_jurisprudence = 25 }
+			
+			currency_data = { #To help stabilize them enough to not collapse 
+				gold = 1500
+				stability = 75
+				prestige = 75
+				army_tradition = 75
+			}
+			tolerated_cultures = {
+				upper_egyptian_culture
+				coptic_culture #else they be slaves
+				libyan_arabic_culture
+				bedouin_culture
+				eastern_amazigh
+				mizrahi
+			}
+			
+			capital = cairo
+		}
+	
+	###Not touched by BR
+	#Korea
+	KOR = {
+		own_control_core = {
+			haenam jindo yeonggam naju muan
+			boseong heungyang jangheung hwasun
+			jeonju gimje
+			jeongeup musong yeonggwang
+			namwon imsil jinan mupung
+			suncheon gokseong
+			andong yeongyang yeongdeok bonghwa uiseong boseongbu
+			sangju mungyeong yeongcheon
+			taegu miryang yeongju
+			seongju seonsan yeongdong gaeryeong
+			jinju hadong namhae sacheon geoje
+			geochang hapcheon
+			uian
+			dongnae ulju gyeongju yeongil
+			chungju eumseong icheon goeju
+			wonju jecheon danyang_korea yeongwol pyeongchang
+			gongju yeonsan jinjam
+			cheonan cheongju
+			hongju boryeong hansan
+			aju seosan
+			namgyeong yangju gwangju papyeong jipyeong pocheon
+			inju suwon
+			chunju hongcheon inje hoengcheon nangcheon
+			yanggu pyeonggang hoeyang geumseong ichon
+			gapyeong dongju
+			haeju ongjin jangyeon baekcheon cheongsong
+			anak pungcheon jaeryeong
+			hwangju bongju suan gokju
+			kaesong tosan pyeongju
+			uiju seonju sakju
+			gwiju jeongju_jeongju
+			seogyeong jeungsan samhwa junghwa
+			gaeju sukju sunju
+			deokju yeongwon unju huicheon
+			seongcheon
+			myeongju uljin samcheok jeongseon
+			goseong tongcheon ingnyeong
+
+		}
+
+		our_cores_conquered_by_others = {
+			deungju munju goju hwaju north_jeongju
+			yangam
+			tamna seongwi
+		}
+
+		include = "far_east_asia_monarchy"
+		government = {
+			type = admin_imperial
+			ruler = kor_chungsuk
+
+			ruler_term = { character = kor_chungnyeol start_date = 1274.1.1 end_date = 1298.1.1 regnal_number = 1 }
+			ruler_term = { character = kor_chungseon start_date = 1308.1.1 end_date = 1313.1.1 regnal_number = 1 }
+			ruler_term = { character = kor_chungsuk start_date = 1313.1.1 end_date = 1330.1.1 regnal_number = 1 regnal_name = Chungsuk }
+			ruler_term = { character = kor_chunghye start_date = 1330.1.1 end_date = 1332.1.1 regnal_number = 1 }
+			ruler_term = { character = kor_chungsuk start_date = 1332.1.1 regnal_number = 1 regnal_name = Chungsuk }
+
+			regnal_numbers = {
+				name_chungnyeol = 1
+				name_chungseon = 1
+				Chungsuk = 1
+			}
+
+			centralization_vs_decentralization = 50
+			aristocracy_vs_plutocracy = -20
+			land_vs_naval = 70
+			individualism_vs_communalism = 40
+			serfdom_vs_free_subjects = 10
+			reforms = {
+				son_in_law_rule
+			}
+			laws = {
+				legal_code_law = goryeon_code_policy
+				medieval_levy_law = peasant_levies
+				royal_court_customs_law = balanced_court_policy
+				administrative_system = central_councils
+				piracy_law = anti_piracy_policy
+				distribution_of_power_law = dop_traditional_distribution_of_power
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+			privilege = {
+				#Nobles
+				noble_armies
+
+				#Clergy
+				tax_exemption
+
+				#Peasants
+				partial_yield
+			}
+		}
+		capital = kaesong
+		country_rank = rank_kingdom
+		variables = {
+			data = {
+				{
+					flag = "year_of_start_of_examination_system"
+					data = {
+						type = value
+						identity = 133700000
+					}
+				}
+			}
+		}
+	}
+	#China
+
+	CHI = { #Yuán
+		own_control_core = {
+			#Proper China
+			ningde fuan changshi
+			minxian lianjiang luoyuan fuqing houguan minqing changle_fujian gutian yongfu_fuzhou
+			ouning jianan pucheng_jianning songxi jianyang chongan zhenghe
+			jinjiang tongan anxi dehua huian yongchun nanan_quanzhou
+			shaowu guangze taining jianning putian xianyou
+			changting ninghua_tingzhou liancheng shanghang qingliu wuping mingxi yongding_shanghang
+			nanping datian shaxian jiangle shunchang yongan_sha youxi
+			longxi zhaoan huafeng longyan pinghe nansheng zhangpu changtai zhangping
+
+			zhongxiang fengle shipai fushui jingshan
+			baicang baima longhui chengbu xiakou xinning_wugang shaoyang suxi wugang xinhua
+			wuling taoyuan longyang yuanjiang yuannan
+			changsha anhua_anhua chaling dongping yiyang_changsha yongan_youzhou liling liuyang loudi ningxiang qiaokou xiangtan xiangxiang xiangyin yongfeng_xiangxiang youzhou lukou
+			chenyang guidong guiyang_chenzhou yizhang yongxing xinning_chen hanyang hanchuan
+			yuanling qianyang_yuanzhou chenxi mayang huaihua xupu madi_yuanling luxi luyang
+			hengyang anren changning pingyang_guiyang hengshan lanshan leiyang lingxian linwu xincheng
+			huanggang qichun luotian huangan huangpi huangmei macheng qishui guangji
+			yongping suining_jing huitong tongdao tianzhu yusha jingling xindi
+			jiangling dangyang gongan xingshan zigui changlin changyang songzi xinhua_guizhou yuanan qianjiang jianli shayang shishou jinzhuping yiling zhijiang badong yidu
+			shizhou
+			suixian anlu gaocheng_suizhou yingshan tangcheng meiqiu xiaogan yingcheng yunmeng
+			jiangxia daye wuchang jinkou tongcheng_wuchang puqi chongyang tongshan xianning yongxing_xingguo jiayu
+			xiangyang banqiao baokang wudang fangling gucheng huanglong jinxiangping guanghua lutoudian nanzhang shangjin baihekou bomoping fancheng yicheng yun yunxi zaoyang zhushan zhuxi fengxi
+			lingling dongan_yongzhou yingdao lengshuitan guiyang_hengyang yongming ningyuan qiyang jianghua
+			baling anfu_li anxiang changshou_pingjiang huarong cili liyang_lizhou linxiang pingjiang shimen dayong
+
+			linchuan lean_fuzhou chongren yihuang dongxiang jinxi
+			ganxian changning_anyuan dingnan yudu xinfeng xingguo longnan qianhua ningdu shicheng_ningdu ruijin huichang anyuan_dingnan
+			shangrao yanshan_guangxin guixi_guangxin yiyang_guangxin yongfeng
+			luling taihe_taihe yongfeng_jian wanan futian yongxin yongning_taihe anfu_jian longquan_taihe jishui
+			nancheng nanfeng xincheng_jianchang guangchang
+			dehua_jiujiang pengze dean ruichang hukou
+			qingjiang xingan_linjiang xinyu
+			dayu chongyi nankang shangyou
+			nanchang fengcheng_fengcheng fengxin jinxian jingan wuning fenning tonggu xinjian
+			xingzi duchang anyi jianchang
+		 	poyang yushan_guangxin anren_raozhou dexing fuliang leping shimen_poyang wannian yugan
+			gaoan shanggao xinchang_yifeng
+			yichun fenyi wanzai pingxiang
+
+			huaining qianshan susong taihu tongcheng_anqing wangjiang zongyang
+			wujin jiangyin wuxi yixing
+			guichi shidai qingyang tongling dongliu
+			qingliu_chuzhou zhaoxin quanjiao laian
+			zhongli dingyuan_fengyang guzhen xiacai huaiyuan lingbi shouchun shuihu linhuan suzhou_fengyang
+			gaoyou xinghua baoying guangde jianping hezhou_he hanshan
+			shanyang_huaian qushan banpu andong_huaian gaoqiao ganyu shuyang qinghe_huaian yancheng funing_huaian taoyuan_huaian
+			shexian yixian xiuning jixi_huizhou tunxi qimen wuyuan_huizhou
+			luan huoqiu huoshan mabu shucheng yuexi yingshan_luan
+			hefei chaoxian liangxian lujiang_luzhou wuwei
+			ningguo taiping_ningguo jingxian jingde nanling xuancheng
+			xiapi suining_pizhou suqian xinyi
+			huating nanhui shanghai
+			hongxian linhuai tianchang wuhe xuyi
+			wuxian changshu chongming jiading kunshan wujiang
+			dangtu fanchang wuhu
+			xuzhou dangshan fengxian xiaoxian peixian
+			jiangdu xixi haimen hailing jinghai_tongzhou rugao juegang taixing yangzi
+			shangyuan jiangning jurong luhe liyang lishui_yingtian wujiang_yingtian
+			yingzhou qiaoxian yingshui chengfu mengcheng yingshang shenqiu taihe
+			dantu danyang jintan
+
+			lishui daxue qingtian minghe longquan suichang qingyuan_chuzhou jinyun songyang yunhe
+			hangzhou fuyang_hangzhou haining linan yuhang
+			wuxing anji deqing changxing jiaxing chongde haiyan
+			jinhua dongyang wuyi_jinhua lanxi pujiang yiwu yongkang
+			dinghai cixi xiangshan fenghua yinxian changguo
+			xian_quzhou jiangshan kaihua longyou changshan
+			shaoxing shangyu shengxian xiaoshan xinchang yuyao zhuji
+			linhai xianzhu huangyan ninghai wenling tiantai xianju
+			yongjia pingyang yueqing luoyang_wenzhou ruian shuangxi
+			jiande chunan suian tonglu
+
+			ansu dingxing gaoyang_baoding laishui boye mancheng wanzhou_baoding qingyuan_baoding puyin tangxian gecheng xincheng_baoding shulu guixin yixian_yizhou
+			baochang songzhou shangdu dongliangting yixingzhou pingdisonglin enhua fuzhou kuanhe_xingzhou niushan limin baitan weining chagannur quanning taipingzhuang liuyuan xiabancheng yingchang huanzhou gaoyuan zhangsanying zhongdu
+			changyuan yuancheng baima_daming dongming nanle neihuang puyang qingfeng weixian xunxian
+			xiankang xingzhong lizhou daning_pingquan longshan huihe hezhong naiman pingquan chuanzhou wuping_daning shenshui fushu
+			qinghe guangping handan yongnian mingshui quzhou
+			jiaohe qingchi dongguang fucheng_hejian liguo hejian jinghai tiaoxian leshou nanpi ningjin qingyun huichuan renqiu wuqiao suning dagu zhigu yanshan gucheng_jingzhou
+			guangzong renxian julu neiqiu shahe xingtai
+			luanyang banbishan baodi yijin dadu changping fangshan fengrun guan huairou daxing yuyang sanhe_tongzhou shicheng_jizhou dongan_shuntian lutai miyun pinggu dacheng shunyi xianghe luxian wenan wuqing wanping yongqing yutian fanyang zunhua
+			huaian yunzhou dushikou xuanping longmen_chicheng huailai shunsheng longqing xuande baoan_baoan
+			macheng_luanzhou changli funing laoting longwangmiao yifeng lulong qianan sanchakou
+			anping xinle anxi_dingzhou ningjin_zhaozhou fuping gaocheng hengshui yuanshi_zhending huolu gucheng_zhending xindu_jizhou lincheng lingshou longping_zhaozhou nangong pingshan_zhending quyang jingan_shenzhou jingxing wuji wuyi xingtang zanhuang zaoqiang pingji zhending
+
+			yique dengfeng gongxian yiyang_songzhou lingbao luanchuan yongning_shanzhou luoyang lushi mengjin mianchi shanxian songzhou_songzhou wenxiang xinan yanshi yiyang zhuyang
+			henei jiyuan mengxian wuzhi wenxian xiuwu
+			yanling changge dancheng fengqiu fugou xiangcheng wanqiu kaifeng lanyang linying luyi mixian kaocheng ningling qixian suiyang_guide shangshui nandun xiangyi taikang tongxu weishi xiangcheng_kaifeng xiayi xihua xingyang xinzheng changshe yancheng_kaifeng yanjin yongcheng yuanyang yucheng_kaifeng yangdi zhecheng guancheng_zhengzhou zhongmu
+			baofeng biyang rangxian fangcheng jiaxian yexian xichuan lushan nanyang nanzhao neixiang liangxian_ruzhou qingtai tanghe tongbai wuyang shunyang yaoshan xinye huayuantou xixia zhenping
+			xiping shangcai changtan guangshan gucheng_xi xincai gushi dingcheng luoshan minggang queshan xinyang ruyang shangcheng suiping xizhou lishan_xinyang pingyu zhenyang zhugao
+			huixian qizhou jixian xinxiang
+			anyang fuyang linzhou linzhang shexian_cizhou tangyin wuan
+
+			chengshan penglai fushan_muping dasong rushan jiangshan_laiyang laiyang huangxian muping qixia weihai wendeng zhaoyuan
+			chaocheng chiping fanxian gaotang guancheng guantao juancheng liaocheng linqing shenxian tangyi enzhou xiajin qiuxian
+			bohai yanshen changqing licheng_yizhou deping lingzhou_dezhou zhanhua yanci licheng jiyang laiwu lanling laoling lijin ande linyi_jinan zhangqiu pingyuan_jinan qidong shanghe xincheng_jinan fengfu gaoyuan_jinan wudi feicheng xintai qihe yangxin yucheng zouping
+			changyi fushan_jiaozhou gaomi jiaoxi jimo luxiang yexian_laizhou lingshanwei jiaoshui beihai
+			anqiu boxing changle yiyuan gegou lean juxian linqu mengyin yidu_qingzhou rizhao shizilu shouguang wulian yishui zhucheng zichuan
+			chuqiu chengwu dingtao xucheng feixian yutai jiyin jiaxiang tengdong rencheng jinxiang juye shouzhang linyi ningyang pingyin qufu shagou shansu sishui tancheng tengxian donge wenshang yanggu_yanzhou ziyang yuncheng yizhou_tengzhou zouxian
+
+			yinshan shanyin datong_datong hebin erdao xuanning guangling zhenwu huairen fengzhou hunyuan zhongling jining feihu lingqiu shenwu ningbian yunnei shanyang_yingzhou tiancheng liangcheng dongsheng wuchuan baideng jincheng yulin_datong lingxian_shanxi pingdi yunchuan
+			xihe jiexiu pingyao xiaoyi heshun yushe liaoshan
+			shangdang huguan licheng_luan lucheng_luan qingyang_luan tunliu xiangyuan zhangzi
+			jishi_anze daning fenxi fushan hejin hongtong huoyi jiangxian jishan jizhou linfen lingshi linjin pinglu puxian quwo ruicheng shilou wanquan wenxi xiaxian taiping_jiangzhou xiangning yuanqu zhengping xichuan_xizhou yicheng_pingyang yonghe hedong yueyang_anze xiexian tongdi qinyuan wuxiang
+			daizhou dingxiang lanzhou_kelan baode fangshan_lishi jianzhou_daizhou luchuan hehe hequ yangqu jiaocheng jingle kelan linxian lishi dinghu loufan ninghua piantouguan pingding xugou qixian_taiyuan shouyang taigu pingjin kehu wenquan wenshui taizhou wuzhou xingxian xiurong leping_pingding guozhou yuci yuzhou ningxiang_shizhou
+			duanshi gaoping jincheng_zezhou lingchuan_zezhou qinshui yangcheng
+
+			haiyang sanhe_chaozhou pantian chengxiang huilai chaoyang pingyuan_mei puning sanrao jieyang
+			maoming xinyi_gaozhou dianbai shilong shicheng wuchuan_huazhou baoning
+			guangzhou baoan_dongguan conghua shunde dongguan guanghai nanhai limushan huiqi lianshan xinfeng_panyu guanfu liannan zhengcheng longmen qingyuan panyu lianzhou yangshan xiangshan_xinhui
+			guishan khuzhupai haifeng heping heyuan lankou longchuan_xunzhou lianping lufeng_haifeng boluo pingshan_huiyang changle_xunzhou xingning qinjiang zuokeng
+			haikang qingdao zhanchuan suixi xuwen
+			hepu lingshan anyuan_lianzhou ruxi xiaodong gaoyang baochang_nanxiong shixing
+			qiongshan yande ganen shuihui dingan lehui chengmai lingao lingshui yilun ningyuan_wananjun changhua xinhui wanan_wananjun wenchang
+			qujiang hanguang mengli lechang wengyuan renhua ruyuan yingde
+			gaoyao yangchun duanxi enping gaoming guliang fengchuan shuangshui guangning_zhaoqing sanshui duling sihui xinxing_nanen ducheng yangjiang jinkang
+			lingui guanyang liupu dayaoshan lipu lingchuan yining luorong lishan_pingle qingxiang xingan xiyan yangshuo yongfu
+			wangmu luodian
+			maping changan shanglin liucheng luocheng huaiyuan_rongzhou qianjiang_binzhou rongshui tongdao_rongzhou wuxian_liuzhou yangshou laibin
+			langning wuyuan_nanning yongning_hengzhou qianlong
+			pingle linhe fengcheng gongcheng guiling longping_pingle fuchuan
+			cangwu bobai cenxi dongan wutun huaiji beiliu rongcheng luchuan_rongzhou puning_rongzhou shahe_bobai tanjin nanliu
+			guiping luoxiu guizhou_xunzhou pingnan watang
+			bazhai_duyun dushan
+			bafan
+			qingjiang_liping taigong
+			ganzhou gaotai hongshui liyuan qidaban qilian sanjiaocheng shandan yongchang_ganzhou
+			anding_suzhou dangcheng kuyu_shazhou guazhou jinta niuquanzi shazhou suzhou_gansu chijin yangguan
+			anyuan datong_xining gulang gushan jinchang xiliang haomen nianbo xining baiting zhuanglang zhenfan
+			baoji fengxiang fufeng linyou longzhou_fengxiang meixian qianyang qishan longan
+			chengzhou dingxi fuqiang longxi_gongchang xihe_huizhou huizhou_gongchang huizhou jiezhou liangdang ningyuan_gongchang baimaguan tongwei qinan chengji sancha qingshui zhangxian
+			chenggu liuba lueyang duoshui nanzheng daan liangquan xixiang yangyuan yangzhou foping guochuan
+			didao kangu lanzhou lutang weiyuan_lintao
+			fuchuan_ningxia lingzhou dingyuan_lingzhou lingwu yanchi ningxia mingsha yingli
+			huating_pingliang guangan kaicheng_guyuan xianzhou jingning jingchuan chongxin longde pingliang sanchuan zhenrong zhenyuan lingtai shuiluo
+			anhua baimachen dingbian huachi huanzhou_qingyang zhenning_qingyang heshui anbian ningzhou
+			jingzhao baishui xinping xianning_xian chengcheng chunhua tongzhou zhouzhi fuping_xian huxian hancheng heyang_xian huayin huazhou yongshou jingyang lantian liquan lintong shangluo luonan pucheng qianyou qianzhou sanyao sanyuan shangnan shangzhou shanyang fucheng tongguan_tongchuan weinan xianyang sanshui_binzhou huayuan zhenan
+			xicheng hanyin ningshan pingli shiquan xunyang ziyang_xingan goupingguan
+			anding baoan yichuan fugu fuzhou_yanan ganquan kaiguang huaiyuan_mizhi jiazhou luochuan dingrong suide mizhi zhongbu qingjian shenmu fushi yanchang yanchuan yijun yulin jingbian ansai
+			langzhong jiachuan huacheng miangu zhangming zengkou cangxi nanjiang nanbu tongjiang puan zhaohua zitong
+			chengdu anzhou zixian jinyuan deyang guanzhou shifang jianzhou mianzhou mianzhu neijiang pixian shiquan_maozhou shuangliu pengshan renshou xindu jingyan jintang ziyang_zizhong
+			baxian tongliang banan bishan changshou_changshou rongchang fuzhou_sichuan dianjiang pengshui shizhao jiangjin qianjiang_shaoqing dazu nanchuan fengdu wulong dingyuan yongchuan linjiang
+			longyou_jiading emei jiajiang rongzhou weiyuan_jiading qianwei
+			fengjie xinning_dazhou daning_kuizhou tongchuan_dazhou dongxiang_dazhou kaizhou liangshan mingtong wanzhou taiping wushan jianshi yunyang
+			luzhou naxi hejiang jiangan
+			meizhou qingshen danleng pengzhou
+			qiongzhou pujiang_qiongzhou dayi
+			qingchuan
+			nanchong yingshan_shunqing huaying xichong yilong linshui qujiang_guangan liujiang yuechi xiangru dazhu
+			huili huichuan_dechang kuozhou puge
+			qixian_tongchuan pengxi lezhi xiaoxi shehong anyue yanting zhongjiang suining
+			yibin changning_changning fushun nanxi qingfu xuanhua
+			mingshan yandao rongjing
+
+			#Mongolia
+			buir_nuur barun_xiabaer khalkh tamsabulag
+			bars_khot bayan_tumen bayantsagaan dalai_nuur menen
+			hailar bayan_ula hulun xuguit yimin
+			avraga kherlen rahsaan_khad uguumur undurkhaan
+			enhe_hada jiliu lower_gazimur merelka upper_gazimur urov
+			abagaita gegen hasar khirkhira talman_boorj
+			choyrin_datsan bayan gazrin_chuluu takhilyn ulziit
+			tavan_tolgoi matad sharga_uul sumtiin zara_uul
+			jingzhou_dorbod bathahalak chahar muumyangan ulan_hua ulanchab
+			erenkhot avga baganuur khobootsar shuluun_khoboot_tsagaan sonod
+			bishreit dalay doloodyn_gobi ikh_narttin_chuluu saikhandulaan ulaanbadrakh
+			avnagar chono khuuchid sangiin_dalai sorin_nuur ulgain uzemchin
+			kyakhta khadanzaa khan_khentii tsokh
+			selenge khimni ulenkhe zed zelterijin
+			amarbayas_galang bornuur eroo
+			sulkhari khilgo khilgoson ung
+			ude_baikal anaa bureen khudan khurbe
+			khovd achit_nuur haerhhana huysiyn khurgan tahiltyn_khotgot tsagaan_usun
+			ulaagchiin airag_nuur hunguy khyargas_nuur telmen
+			ulaamgom dzaigil erzin tes turuum
+			uliastai ogomoor teel zavkhan
+			nibuchu ingedei
+			qorqonaq_yubur aga boorj unda
+			silkari kara_shilka
+			tsagaan baruun_tar_nuur lower_ulz upper_ulz yakhi zyyn_tar_nuur
+			onon balj baldan_bereeven kyra
+			bayankhot alxa bagh bayannurhong urad
+			del_khad galbyn_gobi khatanbulag oiyin_korken ooshiyn_gobi zhavklant_khairkhan
+			bayannur uraqai xinhure
+			khara_khoto banzart_khairkhan naraan_chilaun noyon_uul zag_suujiyn_gobi
+			ordos aerzhai otog tongwancheng
+			bii choigan systyg
+			kaa balyktyg buren_khem busiyn
+			den_terek khemchik ulug usun
+			khatgal eringiin uur
+			karakorum khar_balgas orkhon tsetserleg
+			baibalyk alyanbulag kharkhul mori_baridag tarvagatai
+			urga kedun khar_bukhyn kharuukh manzushir tuul
+			zagzuugiin_balgas altan_gadas chuluutyn delger_moron ider
+			barkul altayn_ovor_gobi naomao santokhe zuun_garyn_gobi
+			otegu_qulan bugat chikhan_agui tevsh_uul tsagaan_agui tsogt
+			ongiin_khiid gimpil_darjaalan shaazan_khot shaazan_tolgoi suriig
+			ulaan bogd khadat ukhaa_khudag
+			khalzan_shireg baidrag biger boontsagaan khangal naran orog tuin
+			tost_uul gaxun_gobi shargyn_gobi shira_qulusun
+			fuxin
+		}
+
+		own_control_integrated = {
+			chit nurchuu tura uldurga kuenga uryum
+
+			lingfang xuanhua_nanning ningpu
+		}
+
+		own_control_conquered = {
+			amgun dukin dzhuk imilen kerbi suluk
+			nurgan bulava shantar torom tugur usalgin
+			boli achan nemptu simmi uninka xungake
+			kedar bitki evur pilda uschu
+			nanghaer idy_sakhalin porokotan wuliehe
+			guohuo boluohe kushunkotan nayoro
+			datta deren kema koppi samarginka tumzhdin
+			urmi bidzhan bira kukan kur sutara
+			yakesa amazar emuer mohe ollo urka
+			gilyuy bryante mogot tukuringra tynda urkan
+			humar bir_amur kuanhe pangu sahar tahe
+			aigun arkhara chenqing jiajin nioman xunhe zhanhe
+			gromatukha birma tehcha tom tygde yor
+			selemde burunda buse kogan mamyn nehru ulma
+			upper_nioman akishma olongki tujun tyrma urgal
+			djee argi dep kupuri mulmuga tok
+			hulan bayan_susu hailun hvlan ougen
+			shangjing boduna hulawen yushu zhaozhou_jurchen
+			ilan_hala hailang malong mudan_ula ningguta
+			chalin taowen wanhufu wehe
+			taizhou_jurchen buteha chol hurle
+			talaha dalaiketun nemeri sart yilaha zhalong
+			qiqihar arun bila laha nuomin
+			chaghankhot gorlos huolin taluhe tuliemao wafang
+			mergen dobkuri gan kuile menlu non
+			zhengjiatun haihaer kailu linhuang qingzhou_mongol xinkai
+			alchan bikinka imanka katen vaka xunka
+			juru_hoton dongning jixi mishan mulun
+			anchun hulin namunka noto_ussuri yiman
+			lahasusu futi nuoluo shuangyashan tulguur
+			kaiyuan_warka anju_nurgan nogule shili yongmingcheng
+			huncun kahari tulazi
+		}
+
+		include = "far_east_asia_monarchy"
+		include = "expl_mongols"
+		include = "expl_china"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			sinicized_vs_unsinicized = -50 # Bayan's policies
+
+			laws = {
+				status_of_the_han_law = limit_the_han_powers
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+
+			type = admin_imperial
+			reforms = {
+				legacy_of_kublai_khan
+			}
+			ruler = yua_togon_temur
+
+			ruler_term = { character = kublai_khan start_date = 1271.12.18 end_date = 1294.2.18 }
+
+			ruler_term = { character = kulug_borjigin start_date = 1307.6.21 end_date = 1311.1.27 }
+
+			ruler_term = { character = yua_khutughtu start_date = 1329.2.27 end_date = 1329.8.30 }
+			ruler_term = { character = yua_rinchinbal start_date = 1332.10.23 end_date = 1332.12.14 }
+			ruler_term = { character = yua_togon_temur start_date = 1333.7.19 }
+		}
+		court_language = northern_mandarin_dialect
+		accepted_cultures = {
+			jilu_culture
+			zhongyuan_culture
+			qin_culture
+			jianghuai_culture
+			liang_culture
+			huaihai_culture
+			tongtai_culture
+			chu_culture
+			changde_culture
+		}
+		tolerated_cultures = {
+			yan_culture
+			jiaodong_culture
+			wu_culture
+			yue_wu_culture
+			liaodong_culture
+			shu_culture
+			jin_culture
+			xuanzhou_culture
+			wuzhou_culture
+			quzhou_culture
+			chuzhou_culture
+			jiangshan_culture
+			taizhou_wu_culture
+			ouhai_culture
+			tunxi_culture
+			jixi_culture
+			qiwu_culture
+			xinxiang_culture
+			laoxiang_culture
+			xianxi_culture
+			yongzhou_culture
+			hengzhou_culture
+			waxiang_culture
+			gan_culture
+			kejia_culture
+			huizhou_hakka_culture
+			dongjiang_culture
+			fuzhou_culture
+			funing_culture
+			manjiang_culture
+			xinghua_culture
+			minnan_culture
+			chaozhou_culture
+			fulao_culture
+			leizhou_culture
+			qiong_culture
+			cunhua_culture
+			jianning_culture
+			yuehai_culture
+			xinhui_culture
+			malao_culture
+			huazhou_culture
+			gaozhou_culture
+			wuchuan_culture
+			yangjiang_culture
+			guangxin_culture
+			tubai_culture
+			yulin_culture
+			guibei_culture
+			yao_china_culture
+			sibe_culture
+			hlai_culture
+			zhuang_culture
+			hui_muslim_culture
+			jurchen_culture
+			daur_culture
+			tumed_culture
+			tujia_culture
+			kharchin_culture
+			kam_culture
+			oirat_culture
+			yi_culture
+			tuvan_culture
+			amdowa_culture
+			mulam_culture
+			yugur_culture
+			monguor_culture
+			uyghur_culture
+			sui_culture
+			rma_culture
+			lahu_culture
+			hmong_culture
+		}
+		capital = dadu
+		country_rank = rank_empire
+		flag = "YUA"
+		country_name = "YUA"
+
+		timed_modifier = {
+			modifier = "chi_factional_strife"
+			start_date = 1328.1.1
+			date = 1368.1.1
+			size = 1
+		}
+		timed_modifier = {
+			modifier = "chi_administration_in_disarray"
+			start_date = 1328.1.1
+			date = 1368.1.1
+			size = 1
+		}
+	}
+
+	YUA = {	#The Yuán fallback tag
+		include = "far_east_asia_monarchy_not_present"
+		include = "expl_mongols"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			ruler_term = { character = kublai_khan start_date = 1271.12.18 end_date = 1294.2.18 }
+			ruler_term = { character = kulug_borjigin start_date = 1307.6.21 end_date = 1311.1.27 }
+			ruler_term = { character = yua_khutughtu start_date = 1329.2.27 end_date = 1329.8.30 }
+			ruler_term = { character = yua_rinchinbal start_date = 1332.10.23 end_date = 1332.12.14 }
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+
+		}
+		court_language = northern_mandarin_dialect
+		tolerated_cultures = {
+			yan_culture
+			jilu_culture
+			jiaodong_culture
+			zhongyuan_culture
+			liang_culture
+			jianghuai_culture
+			shu_culture
+		}
+		capital = dadu
+		country_rank = rank_empire
+		flag = "YUA"
+		country_name = "YUA"
+	}
+
+	SYG = { #Shenyang
+		own_control_core = {
+			liaoyang dingliao dandong
+			gaizhou fuzhou_liaoyang jinzhou_dalian xiuyan zhuanghe
+			guangning kaicheng wangping yizhou_jinzhou
+			jinzhou_liaoyang dalinghe haizhou_liaoyang ningyuan_jinzhou
+			yizhou_jurchen ningchang tongliao
+		}
+
+		own_control_integrated = {
+			qiantun
+		}
+
+		tolerated_cultures = {
+			jurchen_culture
+			kharchin_culture
+		}
+
+		include = "far_east_asia_monarchy"
+
+		government = {
+			type = admin_imperial
+			ruler_term = { character = kor_chungseon start_date = 1308.1.1 end_date = 1316.1.1 regnal_number = 1 }
+			ruler_term = { character = kor_ko start_date = 1316.1.1 regnal_number = 1 }
+
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+			ruler = kor_ko
+		}
+
+		country_rank = rank_kingdom
+		capital = liaoyang
+	}
+	#Ssangseong https://en.wikipedia.org/wiki/Ssangseong_Prefecture
+	SSG = {
+		own_control_core = {
+			deungju munju goju hwaju north_jeongju
+			yangam
+		}
+
+		include = "far_east_asia_monarchy"
+
+		capital = hwaju
+		government = {
+			type = admin_imperial
+			ruler_term = { character = ssg_jo_hwi start_date = 1258.1.1 end_date = 1273.1.1 regnal_number = 1 }
+			ruler_term = { character = ssg_jo_yanggi start_date = 1273.1.1 end_date = 1330.1.1 regnal_number = 1 }
+			ruler_term = { character = ssg_jo_rim start_date = 1330.1.1 regnal_number = 1 }
+
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+			ruler = ssg_jo_rim
+		}
+	}
+	MNG = {	#Míng
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+		}
+		court_language = southern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = shangyuan
+	}
+
+	CSO = {	#Song
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = southern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = linan
+		tolerated_cultures = { jilu_culture }
+	}
+
+	WUU = {	#Wú
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = wu_language
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = jiangdu
+		tolerated_cultures = { shu_culture }
+	}
+
+	CTW = {	#Tiānwán
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = southern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = qishui
+		tolerated_cultures = { shu_culture }
+	}
+
+	CHE = {	#Chén
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = northern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = minxian
+		tolerated_cultures = { tunxi_culture }
+	}
+
+	CSH = {	#Shùn
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = southern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = jingzhao
+	}
+
+	CXI = {	#Xí
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = shu_language
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = chengdu
+	}
+
+	CTG = {	#Tûng-nèn
+		our_cores_conquered_by_others = {}
+		include = "expl_china"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			heir_selection = cognatic_primogeniture
+			parliament = {
+				parliament_type = council
+			}
+
+
+			aristocracy_vs_plutocracy = -60
+			centralization_vs_decentralization = -60
+			traditionalist_vs_innovative = -50
+			spiritualist_vs_humanist = -25
+			serfdom_vs_free_subjects = -40
+			mercantilism_vs_free_trade = -80
+			belligerent_vs_conciliatory = -50
+			quality_vs_quantity = 20
+			offensive_vs_defensive = 10
+			land_vs_naval = -20
+			capital_economy_vs_traditional_economy = 80
+			individualism_vs_communalism = 20
+			outward_vs_inward = 50
+
+			laws = {
+				medieval_levy_law = peasant_levies
+				marriage_law = dishu_system
+				heir_religion_law = heir_any_religion
+				legal_code_law = traditional_law_policy
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+			privilege = {
+				#Burghers
+
+				#Clergy
+				clergy_land_rights
+				embellish_great_works_of_faith
+				promote_cultural_unity
+
+				#Nobles
+				nobles_land_rights
+				elaborate_court_ceremonies
+
+				#Peasants
+			}
+		}
+		court_language = kejia_language
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = siraya
+	}
+
+	CFN = {	#Fāng
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = wu_language
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = yongjia
+	}
+
+	CMO = {	#Māo
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = northern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = yidu
+	}
+
+	CGU = {	#Guō
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = southern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = yidu
+	}
+
+	CNP = {	#Nánpíng
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = min_language
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = nanping
+	}
+
+	CDN = {	#Dōngguǎn
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = yue_language
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = dongguan
+	}
+
+	CSI = {	#Lǐ
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = southern_mandarin_dialect
+		liturgical_language = classical_chinese_language
+		country_rank = rank_kingdom
+		capital = jingzhao
+	}
+
+	CKO = {	#Köke Temür
+		our_cores_conquered_by_others = {}
+		include = "chinese_monarchy"
+		include = "expl_mongols"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+		}
+		court_language = northern_mandarin_dialect
+		country_rank = rank_kingdom
+		capital = pingjin
+	}
+
+	CNA = {	#Naγaču
+		our_cores_conquered_by_others = {}
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		include = "expl_mongols"
+		include = "expl_china"
+		government = {
+			type = admin_imperial
+			heir_selection = cognatic_primogeniture
+			aristocracy_vs_plutocracy = -60
+			centralization_vs_decentralization = -60
+			traditionalist_vs_innovative = -50
+			spiritualist_vs_humanist = -25
+			serfdom_vs_free_subjects = -40
+			mercantilism_vs_free_trade = -80
+			belligerent_vs_conciliatory = -50
+			quality_vs_quantity = 20
+			offensive_vs_defensive = 10
+			land_vs_naval = -20
+			capital_economy_vs_traditional_economy = 80
+			individualism_vs_communalism = 20
+			outward_vs_inward = 50
+			parliament = {
+				parliament_type = council
+			}
+			laws = {
+				medieval_levy_law = peasant_levies
+				marriage_law = monogamous_marriage
+				heir_religion_law = heir_any_religion
+				legal_code_law = traditional_law_policy
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+			privilege = {
+				#Burghers
+
+				#Clergy
+				clergy_land_rights
+				embellish_great_works_of_faith
+				promote_cultural_unity
+
+				#Nobles
+				elaborate_court_ceremonies
+
+				#Peasants
+			}
+		}
+
+		court_language = northern_mandarin_dialect
+		country_rank = rank_kingdom
+		capital = liaoyang
+	}
+
+	LNG = { #Liang
+
+		own_control_core = {
+			kunming lufeng yiliang kunyang anning chenggong yimen songming fumin
+			zhennan dingyuan_chuxiong weichu nanan
+			heyang jiangchuan lunan xinxing
+		}
+
+		own_control_integrated = {
+		}
+
+		capital = kunming
+		include = "far_east_asia_monarchy_no_coast"
+		include = "expl_mongols"
+		include = "expl_china"
+		include = "expl_silk_road_west"
+		include = "expl_silk_road_center"
+		include = "expl_silk_road_east"
+		government = {
+			type = admin_imperial
+			ruler_term = { character = hugeci_borjigin start_date = 1267.8.1 end_date = 1271.2.11 regnal_number = 1 }
+			ruler_term = { character = esen_temur_borjigin start_date = 1280.1.1 end_date = 1290.1.1 regnal_number = 1 }
+			ruler_term = { character = gammala_borjigin start_date = 1290.1.1 end_date = 1291.1.1 regnal_number = 1 }
+			ruler_term = { character = shouning_borjigin start_date = 1291.1.1 end_date = 1308.1.1 regnal_number = 1 }
+			ruler_term = { character = esen_temur_borjigin start_date = 1308.1.1 end_date = 1332.2.29 regnal_number = 1 }
+			ruler_term = { character = tughluq_borjigin start_date = 1334.1.1 regnal_number = 1 }
+
+			ruler = tughluq_borjigin
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+
+		}
+		tolerated_cultures = {
+			yi_culture
+			lahu_culture
+		}
+		court_language = northern_mandarin_dialect
+		country_rank = rank_kingdom
+	}
+
+	DAI = { #Dai Viet
+		own_control_core = {
+			thang_long
+			anbang quang_yen van_don
+			bac_thai_nguyen bao_lac binh_lam binh_nguyen bo_hai_khau cam_hoa chi_la co_dang da_giang
+			dai_man dien_chau hoan_chau hong_chau khet_theu khoai_chau ky_son lang_giang lang_son loc_chau
+			mat_chau muang_sam_tai muong nam_sach nga_lac nghe_ann nhat_nam quan_da_chau quang_uyen
+			quy_chau quynh_lam tam_dai thai_binh thai_nguyen thanh_hoa that_nguyen thien_quan
+			thien_truong tho_hoang thu_vat trang_an tuyen_hoa tuyen_quang van_kiep vo_nhai vu_ninh
+			# own_control_integrated, but culture accepted
+			phon_nha vrddha_ratnapura visnupura amarendrapura
+		}
+		own_control_integrated = {}
+		our_cores_conquered_by_others = {}
+		include = "vietnamese_champa_monarchy"
+		government = {
+			type = admin_imperial
+			ruler_term = { character = dai_canh start_date = 1226.1.11 end_date = 1258.3.30 regnal_number = 1 }
+			ruler_term = { character = dai_hoang start_date = 1258.3.30 end_date = 1278.11.8 regnal_number = 1 }
+			ruler_term = { character = dai_kham start_date = 1278.11.8 end_date = 1293.1.1 regnal_number = 1 }
+			ruler_term = { character = dai_thuyen start_date = 1293.1.1 end_date = 1314.4.3 regnal_number = 1 }
+			ruler_term = { character = dai_manh start_date = 1314.4.3 end_date = 1329.3.15 regnal_number = 1 }
+			ruler_term = { character = dai_vuong start_date = 1329.3.15 regnal_number = 1 }
+			ruler = dai_vuong
+			centralization_vs_decentralization = -35
+			mercantilism_vs_free_trade = -20
+			sinicized_vs_unsinicized = -25
+			laws = {
+				education_masses_law = uneducated_masses_education
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+			}
+			privilege = {
+				#Nobles
+				primacy_of_nobility
+				elaborate_court_ceremonies
+				#Burghers
+				allow_trade_center_sponsorship
+				#Clergy
+				clergy_literacy_rights
+				clergy_in_administration
+				clergy_land_rights
+				#Peasants
+				peasants_allowed_weapons_privilege
+				peasants_autonomous_villages
+			}
+		}
+		tolerated_cultures = {
+			cham_culture
+			muong_culture
+			zhuang_culture
+			dai_culture
+		}
+		country_rank = rank_kingdom
+		capital = thang_long
+	}
+
+}
+}
