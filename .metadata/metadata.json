@@ -1,10 +1,10 @@
 ﻿{
-	"name":	"Admin Government and BR1337 Compatch",
-	"id":	"",
+	"name":	"Admin Government - Praecepta Militaria - BR1337 Compatch",
+	"id":	"PMAGBR",
 	"version":	"0.1",
 	"supported_game_version":	"",
-	"short_description":	"Compatch",
-	"tags":	["Advancements", "Alternative history", "Balance", "Culture & Art", "Events", "Fixes", "Gameplay", "Government and Estates", "Historical", "Overhaul"],
+	"short_description":	"Mod that makes PM compatible with Basileia",
+	"tags":	["Advancements", "Alternative history", "Balance", "Characters", "Culture & Art", "Diplomacy", "Events", "Fixes", "Flags", "Gameplay", "Government and Estates", "Historical", "International Organizations", "Loading Screen", "Map", "Military", "Overhaul", "Religion", "Trade and Economics"],
 	"relationships":	[],
 	"game_custom_data":	{
 }
