@@ -1,0 +1,5699 @@
+﻿### PRAECEPTA MILITARIA - EVENTS ###
+namespace = pm_flavor_byz
+
+scripted_trigger is_valid_danubian_target = {
+	OR = {
+		tag = BUL
+		tag = SER
+		tag = MZK
+		tag = ANT
+		tag = MTR
+		tag = ALB
+	}
+	NOT = {
+		ROOT = {
+			has_casus_belli_on = prev
+		}
+	}
+	NOT = { is_subject_or_below_of = root }
+}
+
+scripted_trigger byz_has_roman_resurgence_active_trigger = {
+	has_country_modifier = byz_roman_resurgence
+}
+
+scripted_trigger byz_ruled_by_palaiologos_trigger = {#check if country ruled by a Palaiologos; shamelessly stolen from BRANDENBURG EVENTS
+	has_ruler = yes
+	ruler.dynasty ?= dynasty:palaiologos_dynasty
+	OR = {
+		government_type = government_type:monarchy
+		government_type = government_type:admin_imperial
+	}
+}
+
+scripted_trigger byz_has_dynastic_chaos_active_trigger = {
+	has_country_modifier = byz_imperial_neglect
+}
+
+scripted_effect byz_change_control_score = {
+	custom_description = {
+		text = byz_change_control_score_$math$_text
+		#text = bra_change_investment_score_$math$_text
+		value = $value$
+		change_variable = {
+			name = pm_byz_imperial_authority_var
+			$math$ = $value$
+		}
+	}
+}
+
+scripted_effect byz_set_localization_scopes = {
+	save_scope_as = root_country
+	ruler ?= { 
+		save_scope_as = root_ruler 
+		dynasty ?= { save_scope_as = root_dynasty }
+	}
+}
+#### Main Event
+#Twilight of the Palaiologos
+#	High-level Concept: Represents the military (and related admistrative) challenges associated with the decline of the Byzantine Empire between 1336 and 1453
+#	Duration: 100 years OR satisfaction conditions met (Imperial Authority restored, Dynasty Swap, Government Type Swap)
+#	Mechanics: Imperial Authority Events
+#	How does it work: 
+#		* Events that increase or decrease "Imperial Authority" variable. 
+#		* Based on the "Imperial Authority" variable, maybe at different 'levels' different events can happen
+#			+ Ex: "Soldiers Acclaim" Event has no level and two possibilities; Positive: "Soldiers Acclaim the Basileus" just gives you a bonus and increments "Imperial Authority", Negative "Soldiers Acclaim the Strategos" makes the player choose between losing Imperial Authority and legitimacy or spending stability negate the "Imperial Authority loss (logic of the event = choose a random location in the country for the scope, then add either the "endorses the basileus" (soldier pops happy) or "endorses the strategoi" (soldier pops unhappy) modifier
+#			+ Ex: "Unhappy Generals", players must either spend gold and increase legitimacy or lose stability and decrease Imperial Authority 
+#			+ Ex: "Governor conspires with foreign power"; lose Imperial Authority and legitimacy (there is nothing we can do), lose gold (his loyalties can be bought), lose stability and gain Imperial Authority (execute the traitor) 
+#			+ Ex: "Settle the Veterans", players can either get a free "soldiers estate" building (they shall be granted appropriate land) or increment Imperial Authority (they shall awarded with titles)
+#			+ Ex: "Expand the Domestikos", players can spend gold and get a kastron + Imperial Authority, or gain gold and lose Imperial Authority
+#			+ Ex: "Peasants upset by military", players lose control in a random province and lose Imperial Authority or get unrest penalty to peasant pops and gain Imperial Authority
+#			+ Ex: Events based on laws or reforms;
+#				- Exclude the Strategoi should trigger a bunch of negative events based on the generals being out of favor in Constantinople (these should be replaced by good events if you change the laws)
+#			+ Ex: Having the Legacy of Andronikos reform should trigger events with the Serbs and Bulgarians
+#			+ Ex: Events based on buildings, like good events for having the Pandadikterion, Thema HQs, or lots of burgi
+#		* History-based events
+#		* Assigning Strategos should have an impact
+#			+ More 'bad' events if no Strategos is assigned
+#		* Lose Imperial Authority when ruler dies?
+#		* 
+#	Satisfaction Condition: Imperial Authority = 20
+pm_flavor_byz.101 = {
+	type = country_event
+	title = pm_flavor_byz.101.title
+	illustration_tags = {
+		10 = exterior
+		10 = angry
+	}
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { ruler = character:byz_andronikos_iii_palaiologos }
+				desc = pm_flavor_byz.101.desc
+			}
+			triggered_desc = {
+				desc = pm_flavor_byz.101.desc.fallback
+			}
+		}
+	}
+		
+	fire_only_once = yes
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1336.1.1
+		to = 1338.1.1
+		monthly_chance = 100
+	}
+	trigger = {
+		OR = {
+				byz_ruled_by_palaiologos_trigger = yes
+				any_active_disaster = {
+					disaster_type = disaster_type:succession_crisis
+				}
+		}
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:peasants_estate background = estate_type:peasants_estate }
+		set_variable = { name = pm_byz_imperial_authority_var value = -1 }
+		byz_set_localization_scopes = yes
+		location:polygyros = {
+			add_location_modifier = {
+				modifier = imperial_mint
+				years = -1
+				mode = add_and_extend
+			}
+			add_location_modifier = {
+				modifier = emergency_minting
+				years = 50
+				mode = add_and_extend
+			}
+			add_location_modifier = {
+				modifier = pm_extensive_mining_complex
+				years = -1
+				mode = add_and_extend
+			}
+		} #pm_extensive_mining_complex
+		location:constantinople = {
+			add_location_modifier = {
+				modifier = imperial_looms
+				years = -1
+				mode = add_and_extend
+			}
+			add_location_modifier = {
+				modifier = imperial_docks
+				years = -1
+				mode = add_and_extend
+			}
+		} #pm_extensive_mining_complex
+	}
+	# Byzantium will prevail!
+	option = {
+		name = pm_flavor_byz.101.a
+		historical_option = yes
+		#add_legitimacy = -40
+		add_country_modifier = { modifier = byz_imperial_neglect years = -1 mode = add_and_extend }
+		custom_tooltip = {
+			text = pm_flavor_byz.101.a.at
+			every_owned_location = {
+				change_control = -0.10
+			}
+		}
+		custom_tooltip = pm_flavor_byz.101.a.bt
+		custom_tooltip = pm_flavor_byz.101.a.ct
+	}
+	option = {
+		name = pm_flavor_byz.101.b
+		custom_tooltip = pm_flavor_byz.101.b.at
+	}
+}
+
+#End of the Imperial Neglect (due to no longer having a Palaiologos anymore, or switching government types)
+pm_flavor_byz.102 = {
+	type = country_event
+	title = pm_flavor_byz.102.title
+	illustration_tags = {
+		10 = happy
+		10 = interior
+	}
+
+	desc = pm_flavor_byz.102.desc
+	fire_only_once = yes
+	trigger = {
+		has_country_modifier = byz_imperial_neglect
+		OR = {
+			NOT = {
+				OR = {
+					government_type = government_type:monarchy
+					government_type = government_type:admin_imperial
+				}
+			}
+			#NOT = { is_member_of_international_organization = international_organization:hre }
+			AND = {
+				OR = {
+					government_type = government_type:monarchy
+					government_type = government_type:admin_imperial
+				}
+				#is_member_of_international_organization = international_organization:hre
+				
+				OR= {
+					ruler_or_heir_if_regent ?= {
+						OR = {
+							has_dynasty = no
+							NOT = { dynasty = dynasty:palaiologos_dynasty }
+						}
+					}
+					ruler_or_heir_if_regent ?= {
+						OR = {
+							has_dynasty = no
+							NOT = { dynasty = dynasty:savoy_dynasty }
+						}
+					}
+				}
+			}
+		}
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:peasants_estate background = estate_type:peasants_estate }
+	}
+	option = {
+		name = pm_flavor_byz.102.a
+		remove_country_modifier = byz_imperial_neglect
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var }
+			remove_variable = pm_byz_imperial_authority_var
+		}
+		add_country_modifier = { modifier = byz_imperial_turmoil years = 25 mode = add_and_extend }
+		
+
+		}
+}
+
+#The Emperor revitalizes Byzantium
+pm_flavor_byz.108 = {
+	type = country_event
+	title = pm_flavor_byz.108.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.108.desc
+	fire_only_once = yes
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1300.1.1
+		to = 1800.1.1
+		monthly_chance = 100
+	}
+	trigger = {
+		has_ruler = yes
+		byz_has_dynastic_chaos_active_trigger = yes
+		var:pm_byz_imperial_authority_var >= 20
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = target_character
+			byz_set_localization_scopes = yes
+		}
+		#set_variable = { name = bra_blocked_from_hohenzoller_event value = yes }
+	}
+	#Byzantium shall become the pride of the World
+	option = {
+		name = pm_flavor_byz.108.a
+		custom_tooltip = pm_flavor_byz.108.a.at
+		remove_country_modifier = byz_imperial_neglect
+		remove_variable = pm_byz_imperial_authority_var
+		add_country_modifier = { modifier = byz_imperial_restoration years = 25 mode = add_and_extend }
+		add_country_modifier = { modifier = byz_phoenix_rises years = -1 mode = add_and_extend }
+		add_legitimacy = legitimacy_severe_bonus
+		add_prestige = 25
+		add_stability = 15
+	}
+}
+
+pm_flavor_byz.109 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.109.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.109.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 2	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		stability < 50
+		byz_has_dynastic_chaos_active_trigger = yes
+		any_owned_location = {
+			NOT = { location_rank = location_rank:urban_settlement }
+			any_pop = {
+				pop_type = pop_type:nobles
+			}
+		}
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:peasants_estate }
+		
+		random_owned_location = {
+			limit = {
+				NOT = { location_rank = location_rank:urban_settlement }
+				any_pop = {
+					pop_type = pop_type:nobles
+				}
+			}
+			save_scope_as = target_location
+		}
+		
+	}
+	option = {
+		name = pm_flavor_byz.109.a
+		byz_change_control_score = { math = subtract value = 1 }
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_weak_bonus }
+		#Add bad modifier to target character
+		scope:target_location = {
+			#change_control = control_mild_penalty
+			add_location_modifier = {	modifier = pm_sold_crownlands	years = 10		mode = add_and_extend	}
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:nobles
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_bonus
+			}
+		}
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 35
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 6
+			}
+			multiply = 1
+		}
+		add_gold_to_estate  = {
+			estate_type = estate_type:nobles_estate
+			value = {
+				value = root.monthly_income_trade_and_tax
+				multiply = 35
+				divide = {
+					value = root.ruler_or_regent.adm
+					divide = 6
+				}
+				multiply = -1
+			}
+		}
+	}
+	
+	option = {
+		name = pm_flavor_byz.109.b
+		byz_change_control_score = { math = add value = 1 }
+		add_stability = stability_weak_bonus
+		scope:target_location = {
+			#change_control = control_mild_penalty
+			add_location_modifier = {	modifier = pm_sold_crownlands	years = 10		mode = add_and_extend	}
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:nobles
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_bonus
+			}
+		}
+		add_country_modifier = { modifier = byz_army_investments years = 5 mode = add_and_extend } #add 
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 20
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 6
+			}
+			multiply = 1
+		}
+		add_gold_to_estate  = {
+			estate_type = estate_type:nobles_estate
+			value = {
+				value = root.monthly_income_trade_and_tax
+				multiply = 35
+				divide = {
+					value = root.ruler_or_regent.adm
+					divide = 6
+				}
+				multiply = -1
+			}
+		}
+	}
+
+}
+
+pm_flavor_byz.110 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.110.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.110.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 2	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		stability < 50
+		byz_has_dynastic_chaos_active_trigger = yes
+		any_owned_location = {
+			NOT = { location_rank = location_rank:urban_settlement }
+			any_pop = {
+				pop_type = pop_type:nobles
+			}
+		}
+	}
+	immediate = {
+		ruler ?= {
+			save_scope_as = root_ruler
+			byz_set_localization_scopes = yes
+		}
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:peasants_estate }
+		
+		random_owned_location = {
+			limit = {
+				NOT = { location_rank = location_rank:urban_settlement }
+				any_pop = {
+					pop_type = pop_type:nobles
+				}
+			}
+			save_scope_as = target_location
+		}
+		
+		random_character = {
+			limit = {
+				has_estate = estate_type:nobles_estate
+				is_courtier = yes
+				is_ruler = no
+				is_alive = yes
+				is_adult = yes
+				#is_female = no
+				NOT = { dynasty = root.ruler.dynasty }
+			}
+			save_scope_as = target_character
+		}
+		
+		ruler = { save_scope_as = target_ruler } 
+	}
+	option = {
+		name = pm_flavor_byz.110.a
+		byz_change_control_score = { math = add value = 1 }
+		add_stability = stability_weak_bonus
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_weak_penalty }
+		#Add bad modifier to target character
+		scope:target_location = {
+			change_control = control_mild_bonus
+		}
+	}
+	
+	option = {
+		name = pm_flavor_byz.110.b
+		#byz_change_control_score = { math = add value = 1 }
+		
+		#add_country_modifier = { modifier = pm_nobles_cowed = 5 mode = add_and_extend } #add 
+		scope:target_location = {
+			#change_control = control_mild_penalty
+			add_location_modifier = {	modifier = pm_nobles_cowed	years = 10		mode = add_and_extend	}
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:nobles
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_penalty
+			}
+		}
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 40
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 6
+			}
+			multiply = 1
+		}
+		add_gold_to_estate  = {
+			estate_type = estate_type:nobles_estate
+			value = {
+				value = root.monthly_income_trade_and_tax
+				multiply = 40
+				divide = {
+					value = root.ruler_or_regent.adm
+					divide = 6
+				}
+				multiply = -1
+			}
+		}
+	}
+	
+	option = {
+		name = pm_flavor_byz.110.c
+		byz_change_control_score = { math = subtract value = 1 }
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_extreme_penalty }
+		#add_country_modifier = { modifier = pm_nobles_cowed = 5 mode = add_and_extend } #add 
+		scope:target_location = {
+			change_control = control_mild_bonus
+			add_location_modifier = {	modifier = pm_nobles_cowed	years = 10		mode = add_and_extend	}
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:nobles
+				}
+				add_pop_satisfaction = pop_satisfaction_severe_penalty
+			}
+		}
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 60
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 6
+			}
+			multiply = 1
+		}
+		add_gold_to_estate  = {
+			estate_type = estate_type:nobles_estate
+			value = {
+				value = root.monthly_income_trade_and_tax
+				multiply = 60
+				divide = {
+					value = root.ruler_or_regent.adm
+					divide = 6
+				}
+				multiply = -1
+			}
+		}
+		kill_character = {
+			target = scope:target_character
+			reason = beheading
+			killer = ruler
+		}
+		
+	}
+
+}
+
+#DEATH OF THE EMPEROR
+pm_flavor_byz.111 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.111.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.111.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 100	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+		#Andronikos III is dead
+		character:byz_andronikos_iii_palaiologos ?= {	is_alive = no	}
+		}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler } 
+	}
+	option = {
+		name = pm_flavor_byz.111.a
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 150
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 6
+			}
+			multiply = 1
+		}
+		
+	}
+}
+
+#New Emperor corronated
+pm_flavor_byz.112 = {#
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.112.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.112.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 90	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+		character:byz_andronikos_iii_palaiologos ?= {	is_alive = no	}
+		has_ruler = yes
+		}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		
+	}
+	option = {
+		name = pm_flavor_byz.112.a
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				add_stability = 2.5
+				byz_change_control_score = { math = add value = 2 }
+		}
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 150
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 6
+			}
+			multiply = 1
+		}
+	}
+}
+
+#BULGARIA EVENTS
+
+#Get border guard infrastructure in the north
+pm_flavor_byz.200 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.200.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.200.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 15	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+		location:ormenio = {num_roads > 0}
+		location:bukelon = {num_roads > 0}
+		location:edirne = {num_roads > 0}
+		location:kirklareli = {num_roads > 0}
+		location:ahtopol = {num_roads > 0}
+		location:demotica = {num_roads > 0}
+		# roads built in ormenio, bukelon, edirne, kirklareli, ahtopol, demotica
+		}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler } 
+	}
+	option = {
+		name = pm_flavor_byz.200.a
+		#build a burgi building in agathopolis, kirklareli, demotica and ormenio
+		#add growth modifier to all five provinces for 10 years; available_free_land
+		location:ormenio = {	construct_building = {	building_type = building_type:pm_limes	cost_multiplier = 0.2	}	
+			#add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}
+		}
+		location:bukelon = {	construct_building = {	building_type = building_type:pm_limes	cost_multiplier = 0.2	}	
+			#add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}
+		}
+		#location:edirne = {	construct_building = {	building_type = building_type:burgi	cost_multiplier = 0.2	}	
+		#	add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}
+		#}
+		location:kirklareli = {	construct_building = {	building_type = building_type:pm_limes	cost_multiplier = 0.2	}	
+			#add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}
+		}
+		location:ahtopol = {	construct_building = {	building_type = building_type:pm_limes	cost_multiplier = 0.2	}	
+			#add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}
+		}
+		#location:demotica = {	construct_building = {	building_type = building_type:burgi	cost_multiplier = 0.2	}	
+		#	add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}
+		#}
+		add_stability = 2.5
+		#reduce cost of building in those province
+		#small stability bonus
+	}
+}
+
+#Rebuilding the fortress at Demotica
+pm_flavor_byz.201 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.201.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.201.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 10	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+		# soldiers estates built in ustra and bukelon
+		location:ustra = { has_building_with_at_least_one_level = soldier_estates }
+		location:bukelon = { has_building_with_at_least_one_level = soldier_estates }
+		}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler } 
+	}
+	option = {
+		name = pm_flavor_byz.201.a
+		#build a discounted kastron in Demotica
+		location:demotica = {	construct_building = {	building_type = building_type:byz_mil_admin_lv1	cost_multiplier = 0.3	}	
+			#add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}
+		}
+		location:ustra = {	add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}	}
+		location:bukelon = {	add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}	}
+		#small stability bonus
+	}
+	option = {
+		name = pm_flavor_byz.201.b
+		change_societal_value = {	type = belligerent_vs_conciliatory	value = societal_value_move_to_right	}
+		add_country_modifier = { modifier = prepared_defence years = 15 mode = add_and_extend }
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 50
+			divide = {	value = root.ruler_or_regent.adm	divide = 6		}
+		}
+	}
+}
+
+#CBs on Bulgaria
+pm_flavor_byz.202 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.202.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.202.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 10	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+			stability > 50
+			country_exists = c:BUL
+			#kastron in demotica, limes in ormenio, bukelon, kirklareli, ahtopol
+			location:demotica = { has_building_with_at_least_one_level = byz_mil_admin_lv1 }
+			location:bukelon = { has_building_with_at_least_one_level = pm_limes }
+			location:ustra = { has_building_with_at_least_one_level = pm_limes }
+			location:ahtopol = { has_building_with_at_least_one_level = pm_limes }
+			location:kirklareli = { has_building_with_at_least_one_level = pm_limes }
+		}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler } 
+		c:BUL = { #check the country (in this case, Bulgaria)
+			save_scope_as = target_country #save the country in the scope for use later
+		}
+		location:sliven.province = {
+			save_scope_as = target_province1
+		}
+		location:burgas.province = {
+			save_scope_as = target_province2
+		}
+		location:haskovo.province = {
+			save_scope_as = target_province3
+		}
+	}
+	option = {
+		name = pm_flavor_byz.202.a
+		#get long term cb on Bulgaria; burgas, sliven, and rhodopes provinces
+		add_casus_belli = { #add a cb, but where?
+			target = scope:target_country #we get the target country we saved from the scope
+			type = casus_belli:cb_conquer_province #gotta provide a cb type, go for simple conquer province (could use different ones for lower antagonism)
+			province = scope:target_location1.province #get the province from the scope
+			years = 15
+		}
+		add_casus_belli = { 
+			target = scope:target_country 
+			type = casus_belli:cb_conquer_province
+			province = scope:target_location2.province
+			years = 15
+		}
+		add_casus_belli = { 
+			target = scope:target_country 
+			type = casus_belli:cb_conquer_province
+			province = scope:target_location3.province 
+			years = 15
+		}
+	}
+	#option = {
+	#	name = pm_flavor_byz.202.b
+	#	#get legitimacy, fire secret event to bulgaria demanding money
+	#}
+}
+
+#Restore the birthplace of Belisarius
+pm_flavor_byz.203 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.203.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.203.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 100	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+			#Own & integrate the provinces of; edirne_province, burgas_province, rhodopes_province, sliven_province
+			at_war = no
+			province:edirne_province = {
+				every_location_in_province = {
+					integration_level = integrated
+				}
+			}
+			province:sliven_province = {
+				every_location_in_province = {
+					integration_level = integrated
+				}
+			}
+			province:burgas_province = {
+				every_location_in_province = {
+					integration_level = integrated
+				}
+			}
+			province:rhodopes_province = {
+				every_location_in_province = {
+					integration_level = integrated
+				}
+			}
+			location:demotica = { has_building_with_at_least_one_level = byz_mil_admin_lv1 }
+			location:bukelon = { has_building_with_at_least_one_level = burgi }
+			location:ustra = { has_building_with_at_least_one_level = burgi }
+			location:ahtopol = { has_building_with_at_least_one_level = burgi }
+			location:kirklareli = { has_building_with_at_least_one_level = burgi }
+		}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler } 
+	}
+	option = {
+		name = pm_flavor_byz.203.a
+		prestige = prestige_severe_bonus
+		#upgrade ormenio to a town (in honro of Justinian's birthplace
+		location:ormenio = {	construct_location_rank = location_rank:town	}
+		#get "Legacy of Justinian" heritage law for free
+		add_policy = policy:justinian_law
+	}
+}
+
+#Serbian border defense
+pm_flavor_byz.204 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.204.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.204.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1355.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 10	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+		country_exists = c:SER
+		province:upper_macedonia_province = {
+			every_location_in_province = {
+				integration_level = integrated
+			}
+		}
+		province:central_macedonia_province = {
+			every_location_in_province = {
+				integration_level = integrated
+			}
+		}
+	}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler } 
+	}
+	option = {
+		name = pm_flavor_byz.204.a
+		#build a discounted castle in Kastoria
+		location:kastoria = {	construct_building = {	building_type = building_type:castle	cost_multiplier = 0.4	}			}
+		location:kastoria = {	add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}	}
+		location:ostrovo = {	add_location_modifier = {	modifier = available_free_land	years = 10	mode = add_and_extend	}	}
+		#small stability bonus
+		add_stability = 2.5
+	}
+	option = {
+		name = pm_flavor_byz.204.b
+		location:edessa = {	construct_building = {	building_type = building_type:pm_limes	cost_multiplier = 0.3	} }	
+		location:giannitsa = {	construct_building = {	building_type = building_type:pm_limes	cost_multiplier = 0.3	}	}
+		location:kilkis = {	construct_building = {	building_type = building_type:pm_limes	cost_multiplier = 0.3	} }
+		add_stability = 2.5		
+	}
+}
+
+#CBs on Serbia
+pm_flavor_byz.205 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.205.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.205.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 10	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+		country_exists = c:SER
+		c:SER = {
+			is_subject = no
+			is_great_power = no
+		}
+		stability > 50
+		OR = { 
+			location:kastoria = { has_building_with_at_least_one_level = castle }
+			AND = {
+				location:edessa = { has_building_with_at_least_one_level = pm_limes }
+				location:giannitsa = { has_building_with_at_least_one_level = pm_limes }
+				location:kilkis = { has_building_with_at_least_one_level = pm_limes }
+			}
+		}
+	}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler } 
+		c:SER = { #check the country (in this case, Ottomans
+			save_scope_as = target_country #save the country in the scope for use later
+			ruler_or_regent ?= {#get the ruler of Serbia
+				save_scope_as = target_character #save them as a scope for alter
+			}
+		}
+		c:BYZ = { #check the country (in this case, Ottomans
+			save_scope_as = target_country2
+		}
+		ruler_or_regent ?= {
+			save_scope_as = target_character2
+		}
+		location:orhid.province = {
+			save_scope_as = target_province1
+		}
+		location:skopje.province = {
+			save_scope_as = target_province2
+		}
+	}
+	option = {
+		name = pm_flavor_byz.205.a #get a CB directly but gain antagonism and belligerence
+		#gain antagonism
+		#get long term cb on Bulgaria; burgas, sliven, and rhodopes provinces
+		add_casus_belli = { #add a cb, but where?
+			target = scope:target_country #we get the target country we saved from the scope
+			type = casus_belli:cb_conquer_province #gotta provide a cb type, go for simple conquer province (could use different ones for lower antagonism)
+			province = scope:target_location1.province #get the province from the scope
+			years = 10
+		}
+		add_casus_belli = { #add a cb, but where?
+			target = scope:target_country #we get the target country we saved from the scope
+			type = casus_belli:cb_conquer_province #gotta provide a cb type, go for simple conquer province (could use different ones for lower antagonism)
+			province = scope:target_location2.province #get the province from the scope
+			years = 10
+		}
+		drop_antagonism_bomb = {
+			target = c:SER.capital
+			modifier = antagonism_embraced_antagonism
+			value = 5
+		}
+
+	}
+	#option = {#get a worse cb if the refuse your demand to give up the provinces peacefully
+	#	name = pm_flavor_byz.205.b
+	#	custom_tooltip = {
+	#		text = pm_flavor_demanded_ser_provinces_tt
+	#		c:SER = {
+	#			trigger_event_non_silently = { id = pm_flavor_byz_sub1.205 }
+	#		}
+	#	}
+	#}
+	
+	option = {#decide not threaten war, gain legitimacy and some move toward conciliatory
+		name = pm_flavor_byz.205.c
+		add_legitimacy = 5.0
+		change_societal_value = {
+			type = belligerent_vs_conciliatory
+			value = societal_value_move_to_right
+		}
+	}
+}
+
+##SILENT EVENTS FOR CLAIMS (cast to Serbia and see what they choose)
+#Demand Serbian Provinces
+
+pm_flavor_byz_sub1.205= {
+	type = country_event
+	title = pm_flavor_byz_sub1.205.title
+	desc = pm_flavor_byz_sub1.205.desc
+	#major = yes
+	#major_trigger = {
+		#this = scope:target_country2
+	#}
+
+	#option = { #they agree to to become our vassal
+	#	name = pm_flavor_byz_sub1.205.a
+	#
+	#	make_subject_of = {
+	#		target = scope:target_country2
+	#		type = subject_type:vassal
+	#	}
+	#}
+
+	option = {#the agree and turn over the provinces and gain enmity towards Byzantium
+		name = pm_flavor_byz_sub1.205.a
+		province:vardar_province = {	change_province_owner = c:BYZ	}
+		province:prilep_province = {	change_province_owner = c:BYZ	}
+	
+		#add_opinion_mutual_effect = {
+		#	modifier = tur_rejected_vassalization
+		#	target = scope:c:BYZ
+		#}
+	}
+
+	option = {#they reject and trigger an event that gives us an 'insulted' CB
+		name = pm_flavor_byz_sub1.205.b
+		province:vardar_province = {	change_province_owner = c:BYZ	}
+		province:prilep_province = {	change_province_owner = c:BYZ	}
+		#c:BYZ = {
+		#	trigger_event_non_silently = { id = pm_flavor_byz_sub2.205 }
+		#}
+	}
+}
+
+pm_flavor_byz_sub2.205 = {
+	type = country_event
+	title = pm_flavor_byz_sub2.205.title
+	desc = pm_flavor_byz_sub2.205.desc
+
+	option = {
+		name = pm_flavor_byz_sub2.205.a
+
+		add_casus_belli = {
+			target = scope:target_country
+			type = casus_belli:cb_insulted_us
+		}
+	}
+}
+
+####################
+
+pm_flavor_byz.206 = {
+	type = country_event
+	title = pm_flavor_byz.206.title
+	desc = pm_flavor_byz.206.desc
+	historical_info = pm_flavor_byz.206.historical_info
+
+	illustration_tags = {
+		10 = regular
+		10 = interior
+	}
+
+	trigger = {
+		tag = BYZ
+		any_neighbor_country = {
+			is_valid_danubian_target = yes
+		}
+		NOT = { has_variable = BYZ_danubian_dispute_cooldown }
+	}
+
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		random_neighbor_country = {
+			limit = {
+				is_valid_danubian_target = yes
+			}
+			save_scope_as = danubian_target
+		}
+	}
+
+	#Put pressure on them.
+	option = {
+		name = pm_flavor_byz.206.a
+
+		historical_option = yes
+
+		add_casus_belli = {
+			type = casus_belli:cb_border_war
+			#type = casus_belli:cb_annex
+			target = scope:danubian_target
+		}
+
+		add_country_modifier = {
+			modifier = pm_BYZ_fabrication
+			years = 25
+			mode = extend #Should extend beyond 25 years
+		}
+	}
+
+	#War does not suit us.
+	option = {
+		name = pm_flavor_byz.206.b
+
+		if = {
+			limit = {
+				has_countries_with_timed_antagonism = yes
+			}
+			drop_antagonism_bomb = {
+				target = scope:danubian_target.capital
+				modifier = antagonism_defused_border_disputes
+			}
+		}
+		change_societal_value = {
+			type = belligerent_vs_conciliatory
+			value = societal_value_tiny_move_to_right
+		}
+	}
+	after = {
+		set_variable = {
+			name = BYZ_danubian_dispute_cooldown
+			days = 3650
+		}
+	}
+}
+
+### Owns all of Thrace
+
+pm_flavor_byz.208 = { #Castello a Mare
+	type = country_event
+	title = pm_flavor_byz.208.title
+	desc = pm_flavor_byz.208.desc
+
+	fire_only_once = yes
+
+	historical_info = pm_flavor_byz.208.historical_info
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1836.1.1
+		monthly_chance = 5
+	}
+	
+	trigger = {
+		owns = area:thrace_area
+		area:thrace_area = {
+			area_average_integration >= 0.5
+		}
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:burghers_estate background = estate_type:nobles_estate }
+		location:sliven = {
+			save_scope_as = target_location
+		}
+	}
+
+	
+
+	option = {
+		pm_flavor_byz.208.a
+		historical_option = yes
+		change_societal_value = { type = offensive_vs_defensive value = societal_value_move_to_right }
+		#Build some castles
+		location:stipon = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:sliven = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:aytos = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+	}
+
+	option = {
+		name = pm_flavor_byz.208.b
+		add_gold = 350
+		add_prestige = prestige_weak_penalty
+	}
+}
+
+#Restore the Eastern Limes Danubia
+pm_flavor_byz.209 = { #Free castles and some limes
+	type = country_event
+	title = pm_flavor_byz.209.title
+	desc = pm_flavor_byz.209.desc
+
+	fire_only_once = yes
+
+	historical_info = pm_flavor_byz.209.historical_info
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1836.1.1
+		monthly_chance = 5
+	}
+	
+	trigger = {
+		owns = area:bulgaria_area
+		area:bulgaria_area = {
+			area_average_integration >= 0.5
+		}
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:burghers_estate background = estate_type:nobles_estate }
+		location:tarnovo = {
+			save_scope_as = target_location
+		}
+	}
+
+	option = {
+		pm_flavor_byz.209.a
+		historical_option = yes
+		change_societal_value = { type = offensive_vs_defensive value = societal_value_move_to_right }
+		#Build some castles
+		location:kozelj = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:lom = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:cherven = {
+			construct_building = {
+				building_type = building_type:limes
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:cernavoda = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+	}
+
+	option = {
+		name = pm_flavor_byz.209.b
+		add_gold = 350
+		add_prestige = prestige_weak_penalty
+	}
+}
+
+#Restore the Western Limes Danubia
+pm_flavor_byz.210 = { #Free castles and some limes
+	type = country_event
+	title = pm_flavor_byz.210.title
+	desc = pm_flavor_byz.210.desc
+
+	fire_only_once = yes
+
+	historical_info = pm_flavor_byz.210.historical_info
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1836.1.1
+		monthly_chance = 5
+	}
+	
+	trigger = {
+		owns = area:serbia_area
+		area:serbia_area = {
+			area_average_integration >= 0.5
+		}
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:burghers_estate background = estate_type:nobles_estate }
+		location:trgoviste_SER = {
+			save_scope_as = target_location
+		}
+	}
+
+	option = {
+		pm_flavor_byz.210.a
+		historical_option = yes
+		change_societal_value = { type = offensive_vs_defensive value = societal_value_move_to_right }
+		#Build some castles
+		location:smederevo = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:branicevo = {
+			construct_building = {
+				building_type = building_type:limes
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:valjevo = {
+			construct_building = {
+				building_type = building_type:limes
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+		location:krupanj = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0.5
+				cost_multiplier_reason = "military_cheap_sponsorship"
+			}
+		}
+	}
+
+	option = {
+		name = pm_flavor_byz.210.b
+		add_gold = 210
+		add_prestige = prestige_weak_penalty
+	}
+}
+
+#Ottomans Destroyed
+pm_flavor_byz.215 = { 
+	type = country_event
+	title = pm_flavor_byz.215.title
+	desc = pm_flavor_byz.215.desc
+
+	fire_only_once = yes
+
+	#historical_info = pm_flavor_byz.215.historical_info
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1836.1.1
+		monthly_chance = 100
+	}
+	
+	trigger = {
+		own_entire_province = province:hudavendigar_province
+		own_entire_province = province:kocaeli_province
+		NOT = { country_exists = c:TUR }
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:burghers_estate }
+		
+	}
+
+	option = {#Add their strength to our own
+		name = pm_flavor_byz.215.a
+		historical_option = yes
+		add_country_modifier = { modifier = pm_skilled_turks years = -1 mode = add_and_extend } #add  #add modifier "Skilled Turkish Officers" -> artillery power, infantry power
+		
+		
+	}
+
+	option = {#We shall revel in our victory
+		name = pm_flavor_byz.215.b
+		
+		add_country_modifier = { modifier = pm_ottoman_traditions years = -1 mode = add_and_extend } #add  #add modifier "Ottoman Martial Traditions" -> tactics and army movement speed
+	}
+}
+
+#Marmara Recaptured
+pm_flavor_byz.216 = { 
+	type = country_event
+	title = pm_flavor_byz.216.title
+	desc = pm_flavor_byz.216.desc
+
+	fire_only_once = yes
+
+	#historical_info = pm_flavor_byz.216.historical_info
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1836.1.1
+		monthly_chance = 100
+	}
+	
+	trigger = {
+		own_entire_area = area:marmara_area
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:burghers_estate background = estate_type:nobles_estate }
+		
+	}
+
+	
+
+	option = { #prioritize acceptance 
+		name = pm_flavor_byz.216.a
+		historical_option = yes
+		add_country_modifier = { modifier = pm_cultural_communion years = -1 mode = add_and_extend } 
+		add_country_modifier = { modifier = pm_triumph_for_marmara years = 5 mode = add_and_extend } #add  #add modifier "Triumph for Anatolia" for 25 years
+	}
+
+	option = {#prioritize integration
+		name = pm_flavor_byz.216.b
+		add_prestige = 20
+		add_legitimacy = 15
+		add_gold = 350
+		add_country_modifier = { modifier = pm_aggressive_romanization years = 25 mode = add_and_extend } 
+		add_country_modifier = { modifier = pm_triumph_for_marmara years = 5 mode = add_and_extend } #add  #add modifier "Triumph for Anatolia" for 25 years
+		add_gold = 300
+	}
+}
+
+#Adopt a cousin if there aren't enough young male family members
+pm_flavor_byz.300 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.300.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.300.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 1	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		any_character_in_dynasty = {
+			count <= 5
+			# your trigger conditions like the age check
+			is_alive = yes
+			is_ruler = no
+			is_female = no
+			age_in_years >= 20
+			age_in_years <= 60
+		}
+		NOT = { has_country_modifier = byz_family_admin }
+		NOT = { has_country_modifier = byz_family_army }
+	}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler }
+		create_character = {
+				adm = { 30 85 }
+				dip = { 30 85 }
+				mil = { 40 85 }
+				culture = culture:greek_culture
+				dynasty = root.ruler.dynasty
+				religion = root.religion
+				#birth_location = scope:target_location2
+				age = { 18 35 }
+				estate = estate_type:crown_estate
+				create_in_limbo = yes
+				#trait_category = general
+				save_scope_as = crown_cousin
+			}
+	}
+	option = {
+		name = pm_flavor_byz.300.a
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				byz_change_control_score = { math = add value = 1 }
+		}
+		scope:crown_cousin = {
+			add_character_modifier = {
+				modifier = pm_adopted_scion
+					years = -1
+					mode = add_and_extend
+			}
+			move_country = root 
+		}
+	}
+	option = {
+		name = pm_flavor_byz.300.b
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				byz_change_control_score = { math = add value = 1 }
+		}
+		# get some good modifier: "family in the administration" for 25 years
+		add_country_modifier = { modifier = byz_family_admin years = 25 mode = add_and_extend } #add 
+	}
+	
+	option = {
+		name = pm_flavor_byz.300.c
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				byz_change_control_score = { math = add value = 1 }
+		}
+		# get some good modifier: "family in the administration" for 25 years
+		add_country_modifier = { modifier = byz_family_army years = 25 mode = add_and_extend } #add 
+	}
+	
+	option = {
+		name = pm_flavor_byz.300.d
+		# pick a random neighboring country
+		add_legitimacy = 15
+		random_neighbor_country = {
+			save_scope_as = exile_destination
+		}
+		# give the "scorned scion" trait
+		scope:crown_cousin = {
+			add_character_modifier = {
+				modifier = pm_scorned_scion
+					years = -1
+					mode = add_and_extend
+			}
+			move_country = scope:exile_destination #kick them out
+		} 
+	}
+}
+
+
+#The Emperor has neglected the nation too much #DEVASTATION?
+pm_flavor_byz.1100 = {
+	type = country_event
+	title = pm_flavor_byz.1100.title
+	image = "gfx/interface/illustrations/international_organization_types/hre.dds"
+
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.1100.desc
+	fire_only_once = yes
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1300.1.1
+		to = 1800.1.1
+		monthly_chance = 100
+	}
+	trigger = {
+		has_ruler = yes
+		byz_has_dynastic_chaos_active_trigger = yes
+		var:pm_byz_imperial_authority_var <= -10
+		is_subject = no
+	}
+	immediate = {
+		byz_set_localization_scopes = yes
+		
+	}
+	#The Emperor will be quite disgruntled...
+	option = {
+		name = pm_flavor_byz.1100.a
+		remove_country_modifier = byz_imperial_neglect
+		remove_variable = pm_byz_imperial_authority_var
+		add_country_modifier = { modifier = trade_policy_failing years = 10 mode = add_and_extend }
+		add_country_modifier = { modifier = byz_imperial_disaster years = 25 mode = add_and_extend }
+		add_legitimacy = legitimacy_severe_penalty
+		add_prestige = prestige_severe_penalty
+		add_stability = stability_ultimate_penalty
+	}
+}
+#### END MAIN EVENT
+
+#### MISC TWILIGHT OF THE PALAIOLOGOS EVENTS (i.e. the smaller random events that alter Imperial authority
+
+#Peasants Revolt
+pm_flavor_byz.2000 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2000.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2000.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 2	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		any_owned_location = {
+			location_rank = location_rank:rural_settlement
+			any_pop = {
+				pop_type = pop_type:peasants
+			}
+		}
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:peasants_estate background = estate_type:peasants_estate }
+		if = {
+			limit = {
+				NOT = { any_rebel = { rebel_name_key = byz_peasants_revolt } }
+			}
+			create_rebel = {
+				name = byz_peasants_revolt
+				category = estate
+				estate = peasants_estate
+				save_scope_as = target_rebel
+			}
+		}
+		else = {
+			random_rebel = {
+				limit = { rebel_name_key = byz_peasants_revolt }
+				save_scope_as = target_rebel
+			}
+		}
+		random_owned_location = {
+			limit = {
+				location_rank = location_rank:rural_settlement
+				any_pop = {
+					pop_type = pop_type:peasants
+				}
+			}
+			save_scope_as = target_location
+		}
+	}
+	option = {
+		name = pm_flavor_byz.2000.a
+		custom_tooltip = pm_flavor_byz.2000.a.at
+		byz_change_control_score = { math = add value = 2 }
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_penalty }
+		add_legitimacy = legitimacy_weak_bonus
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 10
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 6
+			}
+			multiply = -1
+		}
+
+		custom_tooltip = BYZ_THE_COST_WILL_SCALE_WITH_RULERS_ADM
+		scope:target_location = {
+			change_control = control_mild_bonus
+			
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:peasants
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_bonus
+			}
+		}
+	}
+	#That is not our issue
+	option = {
+		name = pm_flavor_byz.2000.b
+		byz_change_control_score = { math = subtract value = 1 }
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_bonus }
+		scope:target_location = {
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:peasants
+				}
+				add_pop_satisfaction = pop_satisfaction_severe_penalty
+				change_pop_allegiance = scope:target_rebel
+			}
+		}
+	}
+}
+
+#Soldier's Acclaim: Positive (Small)
+#Positive: "Soldiers Acclaim the Basileus" just gives you a bonus and increments "Imperial Authority", Negative "Soldiers Acclaim the Strategos" makes the player choose between losing Imperial Authority and legitimacy or spending stability negate the "Imperial Authority loss (logic of the event = choose a random location in the country for the scope, then add either the "endorses the basileus" (soldier pops happy) or "endorses the strategoi" (soldier pops unhappy) modifier
+pm_flavor_byz.2001 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2001.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2001.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 3	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		any_owned_location = {
+			OR = {
+				location_rank = location_rank:rural
+				location_rank = location_rank:town
+				location_rank = location_rank:city
+			}
+			any_pop = {
+				pop_type = pop_type:soldiers
+			}
+		}
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		random_owned_location = {
+			limit = {
+				OR = {
+					location_rank = location_rank:rural
+					location_rank = location_rank:town
+					location_rank = location_rank:city
+				}
+				any_pop = { pop_type = pop_type:soldiers }
+			}
+			save_scope_as = target_location
+		}
+	}
+	option = {
+		name = pm_flavor_byz.2001.a
+		#custom_tooltip = pm_flavor_byz.2001.a.at
+		byz_change_control_score = { math = add value = 1 }
+		add_legitimacy = 5
+		scope:target_location = {
+			change_control = 0.05
+			
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:soldiers
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_bonus
+			}
+		}
+	}
+}
+
+#Soldier's Acclaim: Positive (BIG)
+#Positive: "Soldiers Acclaim the Basileus" just gives you a bonus and increments "Imperial Authority", Negative "Soldiers Acclaim the Strategos" makes the player choose between losing Imperial Authority and legitimacy or spending stability negate the "Imperial Authority loss (logic of the event = choose a random location in the country for the scope, then add either the "endorses the basileus" (soldier pops happy) or "endorses the strategoi" (soldier pops unhappy) modifier
+pm_flavor_byz.2002 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2002.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2002.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 3	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		region:balkan_region = {
+			any_location_in_region = {
+				count >=5
+				owner ?= root
+				has_building_with_at_least_one_level  = soldier_estates
+			}
+		}
+		any_owned_location = {
+			OR = {
+				location_rank = location_rank:rural
+				location_rank = location_rank:town
+				location_rank = location_rank:city
+			}
+			any_pop = {
+				pop_type = pop_type:soldiers
+			}
+		}
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		random_owned_location = {
+			limit = {
+				OR = {
+					location_rank = location_rank:rural
+					location_rank = location_rank:town
+					location_rank = location_rank:city
+				}
+				any_pop = { pop_type = pop_type:soldiers }
+			}
+			save_scope_as = target_location
+		}
+	}
+	option = {
+		name = pm_flavor_byz.2002.a
+	#	custom_tooltip = pm_flavor_byz.2002.a.at
+		byz_change_control_score = { math = add value = 2 }
+		add_legitimacy = 10
+		add_prestige = 5
+		scope:target_location = {
+			change_control = 0.1
+			
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:soldiers
+				}
+				add_pop_satisfaction = pop_satisfaction_extreme_bonus
+			}
+		}
+	}
+}
+
+#Soldier's Acclaim: Negative (Small)
+#Positive: "Soldiers Acclaim the Basileus" just gives you a bonus and increments "Imperial Authority", Negative "Soldiers Acclaim the Strategos" makes the player choose between losing Imperial Authority and legitimacy or spending stability negate the "Imperial Authority loss (logic of the event = choose a random location in the country for the scope, then add either the "endorses the basileus" (soldier pops happy) or "endorses the strategoi" (soldier pops unhappy) modifier
+pm_flavor_byz.2003 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2003.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2003.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 2	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		any_owned_location = {
+			OR = {
+				location_rank = location_rank:rural
+				location_rank = location_rank:town
+				location_rank = location_rank:city
+			}
+			any_pop = {
+				pop_type = pop_type:soldiers
+			}
+		}
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		random_owned_location = {
+			limit = {
+				OR = {
+					location_rank = location_rank:rural
+					location_rank = location_rank:town
+					location_rank = location_rank:city
+				}
+				any_pop = { pop_type = pop_type:soldiers }
+			}
+			save_scope_as = target_location
+		}
+	}
+	option = {
+		name = pm_flavor_byz.2003.a
+		#custom_tooltip = pm_flavor_byz.2003.a.at
+		byz_change_control_score = { math = subtract value = 1 }
+		add_legitimacy = -2.5
+		scope:target_location = {
+			change_control = -0.05
+			
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:soldiers
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_penalty
+			}
+		}
+	}
+}
+
+#Soldier's Acclaim: Negative (Big)
+#Positive: "Soldiers Acclaim the Basileus" just gives you a bonus and increments "Imperial Authority", Negative "Soldiers Acclaim the Strategos" makes the player choose between losing Imperial Authority and legitimacy or spending stability negate the "Imperial Authority loss (logic of the event = choose a random location in the country for the scope, then add either the "endorses the basileus" (soldier pops happy) or "endorses the strategoi" (soldier pops unhappy) modifier
+pm_flavor_byz.2004 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2004.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2004.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 1	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		legitimacy < 75
+		any_owned_location = {
+			OR = {
+				location_rank = location_rank:rural
+				location_rank = location_rank:town
+				location_rank = location_rank:city
+			}
+			any_pop = {
+				pop_type = pop_type:soldiers
+			}
+		}
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		random_owned_location = {
+			limit = {
+				OR = {
+					location_rank = location_rank:rural
+					location_rank = location_rank:town
+					location_rank = location_rank:city
+				}
+				any_pop = { pop_type = pop_type:soldiers }
+			}
+			save_scope_as = target_location
+		}
+		
+		###CREATE A GENERAL
+		location:constantinople = {
+			save_scope_as = target_location2
+		}
+		create_character = {
+				mil = { 10 40 }
+				mil = { 10 40 }
+				mil = { 40 75 }
+				culture = culture:greek_culture
+				birth_location = scope:target_location2
+				age = 30
+				save_scope_as = strategos_character
+				estate = estate_type:peasants_estate
+				create_in_limbo = yes
+				trait_category = general
+			}
+	}
+	option = {
+		name = pm_flavor_byz.2004.a
+		#custom_tooltip = pm_flavor_byz.2004.a.at
+		byz_change_control_score = { math = subtract value = 1 }
+		add_legitimacy = legitimacy_weak_penalty
+		scope:target_location = {
+			change_control = control_mild_penalty
+			
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:soldiers
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_penalty
+			}
+		}
+		scope:strategos_character = {
+			add_character_modifier = {
+				modifier = refuses_to_serve_in_cabinet
+					years = 20
+					mode = add_and_extend
+			}
+			add_character_modifier = {
+				modifier = strategos_influential
+					years = 15
+					mode = add_and_extend
+			}
+			move_country = root 
+		}
+	}
+}
+#Unhappy Generals
+#			+ Ex: "Unhappy Generals", players must either spend gold and increase legitimacy or lose stability and decrease Imperial Authority 
+
+pm_flavor_byz.2005 = { #The Grand Domestic - Trouble on the Horizon
+	type = country_event
+	title = pm_flavor_byz.2005.title
+	desc = pm_flavor_byz.2005.desc
+
+	#fire_only_once = yes
+
+	illustration_tags = {
+		10 = interior
+		10 = angry
+	}
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1440.1.1
+		monthly_chance = 2
+	}
+
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		legitimacy < 75
+	}
+	immediate = {
+		event_illustration_government_estate_effect = yes
+		ruler_or_regent ?= {
+			save_scope_as = target_character
+		}
+		ordered_character = {#Get character with highest MIL score
+			order_by = mil
+			max = 1
+			check_range_bounds = no
+			save_scope_as = target_character2
+		}
+		#Give them some modifiers
+	}
+
+	option = {
+		name = pm_flavor_byz.2005.a
+		#custom_tooltip = pm_flavor_byz.2005.a.at
+		byz_change_control_score = { math = subtract value = 1 }
+		#add_legitimacy = legitimacy_mild_penalty
+		scope:target_character2 = {
+			add_character_modifier = {
+				modifier = strategos_influential
+				years = 15
+				mode = add_and_extend
+			}
+		}
+		scope:target_character2 = {
+			add_character_modifier = {
+				modifier = strategos_content
+				years = 15
+				mode = add_and_extend
+			}
+		}
+		
+		
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 80
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 5
+			}
+			multiply = 1
+		}
+	}
+	
+	option = {
+		name = pm_flavor_byz.2005.b
+		#custom_tooltip = pm_flavor_byz.2005.b.at
+		add_stability = stability_weak_bonus
+		scope:target_character2 = {
+			add_character_modifier = {
+				modifier = strategos_denied
+				years = 15
+				mode = add_and_extend
+			}
+		}
+		
+		byz_change_control_score = { math = add value = 1 }
+		
+		
+		
+	}
+}
+
+#settle the veterans
+#			+ Ex: "Settle the Veterans", players can either get a free "soldiers estate" building (they shall be granted appropriate land) or increment Imperial Authority (they shall awarded with titles)
+
+pm_flavor_byz.2006 = { #Build a soldier's estate
+	type = country_event
+	title = pm_flavor_byz.2006.title
+	desc = pm_flavor_byz.2006.desc
+
+	fire_only_once = yes
+
+	#historical_info = pm_flavor_byz.2006.historical_info
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1836.1.1
+		monthly_chance = 5
+	}
+
+	trigger = {
+		#byz_has_dynastic_chaos_active_trigger = yes
+		owns = location:vize
+		at_war = no
+	}
+	
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:soldiers }
+	}
+
+	option = {
+		name = pm_flavor_byz.2006.a
+		historical_option = yes
+		location:vize = {
+			construct_building = {
+				building_type = building_type:soldier_estates
+				cost_multiplier = 0
+			}
+		}
+		change_societal_value = {
+			type = serfdom_vs_free_subjects
+			value = societal_value_move_to_right
+		}
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				add_stability = 2.5
+				byz_change_control_score = { math = add value = 2 }
+		}
+		
+	}
+
+	option = {
+		name = pm_flavor_byz.2006.b
+		add_prestige = prestige_mild_bonus
+		add_country_modifier = { modifier = byz_veterans_satisfied years = 5 mode = add_and_extend } #add modifier byz_veterans_satisfied
+		change_societal_value = {
+			type = serfdom_vs_free_subjects
+			value = societal_value_move_to_left
+		}
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 20
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 7
+			}
+			multiply = -1
+		}
+	}
+}
+
+#military_funding vs military_cutbacks 
+#byz_efficient_mil_admin
+pm_flavor_byz.2007 = { #Get a kastron in Edessa
+	type = country_event
+	title = pm_flavor_byz.2007.title
+	desc = pm_flavor_byz.2007.desc
+
+	fire_only_once = yes
+
+	#historical_info = pm_flavor_byz.2006.historical_info
+
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 4	# monthly chance to fire the event (10 = 10%)
+ 	}
+
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		owns = location:edessa
+		at_war = no
+	}
+	
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:soldiers }
+	}
+
+	option = {
+		name = pm_flavor_byz.2007.a
+		historical_option = yes
+		location:edessa = {
+			construct_building = {
+				building_type = building_type:byz_mil_admin_lv1
+				cost_multiplier = 0.2
+			}
+		}
+
+		byz_change_control_score = { math = add value = 2 }
+	}
+
+	option = {
+		name = pm_flavor_byz.2007.b
+		add_country_modifier = { modifier = byz_army_investments years = 5 mode = add_and_extend } #add 
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 10
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 7
+			}
+			multiply = 1
+		}
+
+	}
+}
+
+#Burgi
+pm_flavor_byz.2008 = { #Get a Burgi in uskudar
+	type = country_event
+	title = pm_flavor_byz.2008.title
+	desc = pm_flavor_byz.2008.desc
+
+	fire_only_once = yes
+
+	#historical_info = pm_flavor_byz.2006.historical_info
+
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 5	# monthly chance to fire the event (10 = 10%)
+ 	}
+
+	trigger = {
+		#byz_has_dynastic_chaos_active_trigger = yes
+		owns = location:uskudar
+		at_war = no
+	}
+	
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:burghers_estate }
+	}
+
+	option = {#safer roads for pilgrims
+		name = pm_flavor_byz.2008.a
+		historical_option = yes
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				#add_stability = 2.5
+				byz_change_control_score = { math = add value = 2 }
+		}
+		location:uskudar = {
+			construct_building = {
+				building_type = building_type:burgi
+				cost_multiplier = 0.2
+			}
+		}
+		#add_stability = stability_mild_bonus
+		
+	}
+
+	option = {#business is booming
+		name = pm_flavor_byz.2008.b
+		#byz_change_control_score = { math = add value = 1 }
+		add_country_modifier = { modifier = business_booming  years = 5 mode = add_and_extend } #add 
+		add_stability = 2.5
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 4
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 7
+			}
+			multiply = 1
+		}
+
+	}
+}
+
+#Thema HQ
+pm_flavor_byz.2009 = { #HQ in Adrianoupolis (Edirne)
+	type = country_event
+	title = pm_flavor_byz.2009.title
+	desc = pm_flavor_byz.2009.desc
+
+	fire_only_once = yes
+
+	#historical_info = pm_flavor_byz.2006.historical_info
+
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 4	# monthly chance to fire the event (10 = 10%)
+ 	}
+
+	trigger = {
+		#byz_has_dynastic_chaos_active_trigger = yes
+		owns = location:edirne
+		at_war = no
+	}
+	
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:peasants_estate }
+	}
+
+	option = {#safer roads for pilgrims
+		name = pm_flavor_byz.2009.a
+		historical_option = yes
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				#add_stability = 2.5
+				byz_change_control_score = { math = add value = 2 }
+		}
+		location:edirne = {
+			construct_building = {
+				building_type = building_type:thema_headquarters
+				cost_multiplier = 0.2
+			}
+		}
+
+		#add_stability = stability_mild_bonus
+		
+	}
+
+	option = {#business is booming
+		name = pm_flavor_byz.2009.b
+		#byz_change_control_score = { math = add value = 1 }
+		add_country_modifier = { modifier = successful_bureaucracy  years = 5 mode = add_and_extend } #add 
+		add_prestige = prestige_mild_bonus
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 9
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 7
+			}
+			multiply = 1
+		}
+
+	}
+}
+
+# Bad peasant reaction
+#			+ Ex: "Peasants upset by military", players lose control in a random province and lose Imperial Authority or get unrest penalty to peasant pops and gain Imperial Authority
+
+pm_flavor_byz.2010 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2010.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2010.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 2	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		stability < 50
+		byz_has_dynastic_chaos_active_trigger = yes
+		any_owned_location = {
+			location_rank = location_rank:rural_settlement
+			any_pop = {
+				pop_type = pop_type:peasants
+			}
+		}
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:peasants_estate }
+		
+		random_owned_location = {
+			limit = {
+				location_rank = location_rank:rural_settlement
+				any_pop = {
+					pop_type = pop_type:peasants
+				}
+			}
+			save_scope_as = target_location
+		}
+	}
+	option = {
+		name = pm_flavor_byz.2010.a
+		byz_change_control_score = { math = subtract value = 1 }
+		add_estate_satisfaction = { type = estate_type:peasants_estate value = estate_satisfaction_mild_penalty }
+		add_legitimacy = legitimacy_weak_penalty
+	
+		scope:target_location = {
+			change_control = control_mild_penalty
+			
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:peasants
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_penalty
+			}
+		}
+	}
+	
+	option = {
+		name = pm_flavor_byz.2010.b
+		byz_change_control_score = { math = add value = 1 }
+		add_stability = stability_weak_bonus
+		add_country_modifier = { modifier = byz_mercs_expelled  years = 10 mode = add_and_extend } #add 
+		add_country_modifier = { modifier = peasants_estate_less_tax_burden  years = 2 mode = add_and_extend }
+	}
+
+}
+
+#Not Enough Thema HQs (Negative event)
+
+pm_flavor_byz.2011 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2011.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2011.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 1	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		region:balkan_region = {
+			any_location_in_region = {
+				count <2
+				owner ?= root
+				has_building = building_type:thema_headquarters
+			}
+		}
+		NOT = {	has_country_modifier = military_cutbacks }
+		NOT = {	has_country_modifier = surplus_equipment }
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:peasants_estate background = estate_type:soldiers }
+	}
+	
+	option = {#lose Imperial Control and take a malus
+		name = pm_flavor_byz.2011.a
+		byz_change_control_score = { math = subtract value = 1 }
+		add_country_modifier = { modifier = military_cutbacks  years = 5 mode = add_and_extend } #add 
+	}
+	
+	option = {#spend some gold
+		name = pm_flavor_byz.2011.b
+		add_stability = 2.5
+		add_country_modifier = { modifier = surplus_equipment  years = 5 mode = add_and_extend }
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 25
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 5
+			}
+			multiply = -1
+		}
+		
+	}
+}
+
+#Good military infrastructure (Positive event)
+
+pm_flavor_byz.2012 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2012.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2012.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 4	# monthly chance to fire the event (10 = 10%)
+ 	}
+		
+	trigger = {
+		#stability < 50
+		byz_has_dynastic_chaos_active_trigger = yes
+		region:balkan_region = {
+			any_location_in_region = {
+				count >=2
+				owner ?= root
+				has_building = building_type:thema_headquarters
+			}
+		}
+		
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:peasants_estate background = estate_type:soldiers }
+	}
+	
+	option = {#lose Imperial Control and take a malus
+		name = pm_flavor_byz.2012.a
+		add_stability = 2.5
+		byz_change_control_score = { math = add value = 2 }
+		add_country_modifier = { modifier = good_discipline  years = 5 mode = add_and_extend } #add 
+	}
+}
+
+
+
+#Not enough Burgi (Negative Event) bandits run rampant, Bad Burgher reaction
+
+pm_flavor_byz.2013 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2013.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2013.desc
+
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 2	# monthly chance to fire the event (10 = 10%)
+ 	}
+
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = yes
+		region:balkan_region = {
+			any_location_in_region = {
+				count < 5
+				owner ?= root
+				has_building = building_type:burgi
+			}
+		}
+		
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:burghers_estate }
+	}
+	
+	option = {#lose Imperial Control and take a malus
+		name = pm_flavor_byz.2013.a
+		add_estate_satisfaction = { type = estate_type:burghers_estate value = estate_satisfaction_mild_penalty }
+		byz_change_control_score = { math = subtract value = 1 }
+		add_country_modifier = { modifier = trade_failure  years = 2 mode = add_and_extend } #add 
+		add_country_modifier = { modifier = byz_bandits_rampant  years = 2 mode = add_and_extend } 
+	}
+	
+	option = {#spend some gold
+		name = pm_flavor_byz.2013.b
+		add_stability = 2.5
+		add_country_modifier = { modifier = byz_rooting_out_bandits  years = 2 mode = add_and_extend } 
+		add_manpower = -0.250
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 40
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 5
+			}
+			multiply = -1
+		}
+		
+	}
+}
+
+
+
+#Enough Burgi constructed (Poistive Event) Good security situation for traders, Good Burgher reaction
+
+pm_flavor_byz.2014 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2014.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2014.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 4	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		#stability < 50
+		byz_has_dynastic_chaos_active_trigger = yes
+		region:balkan_region = {
+			any_location_in_region = {
+				count >=5
+				owner ?= root
+				has_building = building_type:burgi
+			}
+		}
+		
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:burghers_estate }
+	}
+	
+	option = {#gain Imperial Control and take a bonus
+		name = pm_flavor_byz.2014.a
+		add_estate_satisfaction = { type = estate_type:burghers_estate value = estate_satisfaction_mild_bonus }
+		byz_change_control_score = { math = add value = 1 }
+		add_country_modifier = { modifier = good_discipline  years = 5 mode = add_and_extend } #add 
+	}
+}
+
+#Not enough kastrons (Negative Event) Bad nobles reaction 
+
+pm_flavor_byz.2015 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2015.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2015.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 1	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		#stability < 50
+		byz_has_dynastic_chaos_active_trigger = yes
+			region:balkan_region = {
+			any_location_in_region = {
+				count < 3
+				owner ?= root
+				has_building = building_type:byz_mil_admin_lv1
+			}
+		}
+		
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+	}
+	
+	option = {#lose Imperial Control and take a malus
+		name = pm_flavor_byz.2015.a
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_penalty }
+		byz_change_control_score = { math = subtract value = 1 }
+		add_country_modifier = { modifier = admin_problems  years = 5 mode = add_and_extend } #add 
+	}
+	
+	option = {#spend some gold
+		name = pm_flavor_byz.2015.b
+		add_stability = 5.0
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		add_country_modifier = { modifier = byz_army_investments  years = 5 mode = add_and_extend }
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 10
+			divide = {
+				value = root.ruler_or_regent.adm
+				divide = 5
+			}
+			multiply = -1
+		}
+		
+	}
+}
+
+
+
+#Enough Kastrons (Positive event) Good Noble Reaction
+
+pm_flavor_byz.2016 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2016.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2016.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 3	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		#stability < 50
+		byz_has_dynastic_chaos_active_trigger = yes
+		region:balkan_region = {
+			any_location_in_region = {
+				count >=3
+				owner ?= root
+				has_building = building_type:byz_mil_admin_lv1
+			}
+		}
+		
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+	}
+	
+	option = {#gain Imperial Control and take a bonus
+		name = pm_flavor_byz.2016.a
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_bonus }
+		byz_change_control_score = { math = add value = 1 }
+		add_country_modifier = { modifier = successful_bureaucracy  years = 10 mode = add_and_extend } #add 
+		add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+	}
+}
+
+#Built Pandadikterion (Big Positive Boost)
+pm_flavor_byz.2017 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2017.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2017.desc
+	fire_only_once = yes
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1337.1.1	 	# the earliest date at which this event can fire
+ 		to = 1500.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 100	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		#byz_has_dynastic_chaos_active_trigger = yes
+		location:constantinople = { has_building_with_at_least_one_level = stratekon }
+		
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+	}
+	
+	option = {#gain Imperial Control and take a bonus
+		name = pm_flavor_byz.2017.a
+		#add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_bonus }
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				#add_stability = 2.5
+				byz_change_control_score = { math = add value = 3 }
+		}
+		add_country_modifier = { modifier = byz_tactica  years = -1 mode = add_and_extend }
+		add_country_modifier = { modifier = societal_value_push_innovative  years = 5 mode = add_and_extend }
+		add_country_modifier = { modifier = good_discipline  years = 10 mode = add_and_extend } #add 
+		#add_country_modifier = { modifier = centralized_state  years = 10 mode = add_and_extend }
+		add_prestige = 20
+	}
+}
+
+#successful_bureaucracy, good_discipline, surplus_equipment, admin_problems, centralized_state, trust_from_mercs, popular_noble, defensive_stance, overconfidence, foreign_veterans, trade_success, trade_failure, bolstered_crown_authority_modifier, bolstered_state_authority
+
+#LORDSHIP OF CHIOS
+pm_flavor_byz.2020 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2020.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2020.desc
+	fire_only_once = yes
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1338.8.1	 	# the earliest date at which this event can fire
+ 		to = 1448.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 25	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		#stability < 50
+		#byz_has_dynastic_chaos_active_trigger = yes
+		owns = location:chios
+	}
+	
+	#fire_only_once = yes
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+		create_character = {
+			first_name = pm_name_leo
+			dynasty = dynasty:pm_kalothetos_dynasty
+			culture = ligurian
+			religion = orthodox
+			adm = 67 dip = 74 mil = 31
+			birth_date = 1301.1.1
+			birth = chios	
+			tag = byz
+			ruler_trait = industrious
+			ruler_trait = entrepreneur
+			estate = estate_type:burghers_estate
+			#script = pm_leokalothetos
+			#create_in_limbo = yes
+		}
+		character:pm_leokalothetos ?= { save_scope_as = leokalothetos_character }
+		scope:leokalothetos_character = {
+			move_country = root 
+		}
+	}
+	
+	option = {#demand more money, lose control
+		name = pm_flavor_byz.2020.a
+		#add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_penalty }
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 16
+		}
+		location:chios = {
+			add_location_modifier = {
+				modifier = imperial_oversight_lax
+				years = 5
+				mode = add_and_extend
+			}
+		}
+	}
+	
+	option = {#take less money and get some legitimacy
+		name = pm_flavor_byz.2020.b
+		add_legitimacy = 5.0
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		#add_country_modifier = { modifier = byz_army_investments  years = 10 mode = add_and_extend }
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				byz_change_control_score = { math = add value = 1 }
+		}
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 12
+		}
+		location:chios = {
+			add_location_modifier = {
+				modifier = imperial_oversight_strong
+				years = 5
+				mode = add_and_extend
+			}
+		}
+		
+	}
+}
+
+#MILITARY FACILITIES IN CHIOS
+pm_flavor_byz.2021 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2021.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2021.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1342.1.1	 	# the earliest date at which this event can fire
+ 		to = 1448.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 5	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		#stability < 50
+		#byz_has_dynastic_chaos_active_trigger = yes
+		owns = location:chios
+		character:pm_leokalothetos ?= { is_alive = yes }
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+		character:pm_leokalothetos ?= { save_scope_as = leokalothetos_character }
+	}
+	
+	fire_only_once = yes
+	
+	option = {#demand more money, lose control
+		name = pm_flavor_byz.2021.a
+		#add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_penalty }
+		add_stability = 2.5
+		location:chios = {
+			construct_building = {
+				building_type = building_type:castle
+				cost_multiplier = 0
+			}
+		}
+		location:chios = {
+			add_location_modifier = {
+				modifier = imperial_oversight_lax
+				years = 5
+				mode = add_and_extend
+			}
+		}
+	}
+	
+	option = {#take less money and get some legitimacy
+		name = pm_flavor_byz.2021.b
+		add_legitimacy = 2.5
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		#add_country_modifier = { modifier = byz_army_investments  years = 10 mode = add_and_extend }
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				byz_change_control_score = { math = add value = 1 }
+		}
+		location:chios = {
+			construct_building = {
+				building_type = building_type:byz_mil_admin_lv1
+				cost_multiplier = 0.2
+			}
+		}
+		location:chios = {
+			add_location_modifier = {
+				modifier = pm_local_garrisons
+				years = 10
+				mode = add_and_extend
+			}
+		}
+		
+	}
+}
+
+#DEATH OF LEO
+pm_flavor_byz.2022 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2022.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2022.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 100	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		owns = location:chios
+		character:pm_leokalothetos ?= { is_alive = no }
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+		character:pm_leokalothetos ?= { save_scope_as = leokalothetos_character }
+	}
+	
+	fire_only_once = yes
+	
+	option = {#build soldier estate
+		name = pm_flavor_byz.2022.a
+		add_stability = 2.5
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				add_stability = 2.5
+				byz_change_control_score = { math = add value = 1 }
+		}
+		location:chios = {
+			construct_building = {
+				building_type = building_type:soldier_estates
+				cost_multiplier = 0
+			}
+			change_raw_material = goods:fruit
+		}
+		
+	}
+	
+	option = {#take less money and get some legitimacy
+		name = pm_flavor_byz.2022.b
+		
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		#add_country_modifier = { modifier = byz_army_investments  years = 10 mode = add_and_extend }
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				add_legitimacy = 2.5
+				byz_change_control_score = { math = add value = 1 }
+		}
+
+			add_country_modifier = {
+				modifier = pm_army_investment_small
+				years = -1
+				mode = add_and_extend
+			}
+
+	}
+	
+	option = {#take less money and get some legitimacy
+		name = pm_flavor_byz.2022.c
+		
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		#add_country_modifier = { modifier = byz_army_investments  years = 10 mode = add_and_extend }
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 16
+		}		
+	}
+}
+
+#UPGRADING CHIOS
+pm_flavor_byz.2023 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2023.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2023.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1355.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 3	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		owns = location:chios
+		location:chios = {  
+			has_building_with_at_least_one_level = byz_mil_admin_lv1 
+		}
+		has_advance = dock_advance
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+		character:pm_leokalothetos ?= { save_scope_as = leokalothetos_character }
+	}
+	
+	fire_only_once = yes
+	
+	option = {#build soldier estate
+		name = pm_flavor_byz.2023.a
+		#add_stability = 2.5
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				add_stability = 2.5
+				byz_change_control_score = { math = add value = 1 }
+		}
+		location:chios = {
+			construct_location_rank = location_rank:town
+			construct_building = {
+				building_type = building_type:dock
+				cost_multiplier = 0
+			}
+			add_location_modifier = {
+				modifier = pm_military_harbor
+				years = -1
+				mode = add_and_extend
+			}
+		}
+
+	}
+	
+	#option = {#take less money and get some legitimacy
+	#	name = pm_flavor_byz.2023.b
+	#	
+	#	if = {
+	#		limit = { has_variable = pm_byz_imperial_authority_var  }
+	#			add_legitimacy = 2.5
+	#			byz_change_control_score = { math = add value = 1 }
+	#	}
+	#
+	#		add_country_modifier = {
+	#			modifier = pm_army_investment_small
+	#			years = -1
+	#			mode = add_and_extend
+	#		}
+	#
+	#}
+}
+
+#KASTRO IN LEUKTRON
+pm_flavor_byz.2024 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2024.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2024.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1355.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 5	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		owns = location:leuktron
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+	}
+	
+	fire_only_once = yes
+	
+	option = {#demand more money, lose control
+		name = pm_flavor_byz.2024.a
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				byz_change_control_score = { math = add value = 1 }
+		}
+		add_stability = 2.5
+		location:leuktron = {
+			construct_building = {
+				building_type = building_type:byz_mil_admin_lv1
+				cost_multiplier = 0.2
+			}
+			add_location_modifier = {
+				modifier = pm_local_garrisons
+				years = 10
+				mode = add_and_extend
+			}
+		}
+		
+	}
+	
+	option = {#take less money and get some legitimacy
+		name = pm_flavor_byz.2024.b
+		add_legitimacy = 2.5
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		add_country_modifier = { modifier = pm_army_investment_small  years = 5 mode = add_and_extend }	
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			multiply = 16
+		}	
+	}
+}
+
+pm_flavor_byz.2025 = { #Build a soldier's estate
+	type = country_event
+	title = pm_flavor_byz.2025.title
+	desc = pm_flavor_byz.2025.desc
+
+	fire_only_once = yes
+
+	#historical_info = pm_flavor_byz.2006.historical_info
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1345.1.1
+		to = 1836.1.1
+		monthly_chance = 4
+	}
+
+	trigger = {
+		
+		owns = location:giannitsa
+		at_war = no
+	}
+	
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:soldiers background = estate_type:soldiers }
+	}
+
+	option = {
+		name = pm_flavor_byz.2025.a
+		historical_option = yes
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				byz_change_control_score = { math = add value = 1 }
+		}
+		location:giannitsa = {
+			construct_building = {
+				building_type = building_type:soldier_estates
+				cost_multiplier = 0.2
+			}
+		}
+
+		
+	}
+
+	option = {
+		name = pm_flavor_byz.2025.b
+		add_prestige = prestige_mild_bonus
+		add_country_modifier = { modifier = byz_veterans_satisfied years = 10 mode = add_and_extend } #add modifier byz_veterans_satisfied
+	}
+}
+
+#Get Chios back from the Genoese
+pm_flavor_byz.2026 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2026.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2026.desc
+	
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 90	# monthly chance to fire the event (10 = 10%)
+ 	}
+	fire_only_once = yes
+	trigger = {
+		country_exists = c:GEN
+		c:GEN ?= {
+			owns = location:chios
+		}
+		genoa_invaded_chios = no
+	}
+	
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+		ruler = { save_scope_as = target_ruler }
+		genoa_invaded_chios = yes
+	}
+	option = {
+		name = pm_flavor_byz.2026.a
+		resisted_genoese = yes
+		add_manpower = -0.2
+		add_gold = -35
+		location:chios = {
+			change_location_owner = root
+		}
+
+		#province:chios_province = {	change_province_owner = c:BYZ	}
+		#small stability bonus
+		add_legitimacy = 2.5
+		add_antagonism = {
+					target = root
+					modifier = antagonism_took_chios
+				}
+	}
+	option = {
+		name = pm_flavor_byz.2026.b
+		add_legitimacy = -2.5
+		add_country_modifier = { modifier = byz_passive_diplomacy years = 10 mode = add_and_extend } #add become more conciliatory	
+	}
+}
+
+#DEATH OF Guillem
+pm_flavor_byz.2027 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2027.title
+	illustration_tags = {
+		10 = exterior
+		10 = armed
+	}
+	desc = pm_flavor_byz.2027.desc
+	historical_info = pm_flavor_byz.2027.historical_info
+	dynamic_historical_event = { 	# Used to make the event fire for the right tags 
+  		tag = BYZ		# tag that this event can fire for, can provide multiple
+ 		from = 1336.1.1	 	# the earliest date at which this event can fire
+ 		to = 1800.1.1 		# the latest date at which this event can fire
+ 		monthly_chance = 100	# monthly chance to fire the event (10 = 10%)
+ 	}
+	
+	trigger = {
+		not = {	owns = location:athens }
+		#sicily exists	
+		#athens is vassal of sicily
+		country_exists = c:SIC
+		country_exists = c:ATH
+		c:ATH = {
+			is_subject_of = c:SIC
+			NOT = { is_at_war_with = root }
+		}
+		character:ath_william ?= { is_alive = no }
+	}
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:nobles background = pop_type:soldiers }
+		character:ath_william ?= { save_scope_as = guillem_character }
+		c:ATH = {	save_scope_as = ath_country	}
+		c:SIC = {	save_scope_as = overlord_country	}
+		create_character = {
+			first_name = pm_name_guy
+			dynasty = dynasty:pm_debrienne_dynasty
+			culture = french
+			religion = catholic
+			adm = 28 dip = 46 mil = 58
+			birth_date = 1306.8.27
+			birth = vierzon	
+			tag = ath
+			#ruler_trait = industrious
+			#ruler_trait = entrepreneur
+			estate = estate_type:nobles_estate
+			#script = pm_leokalothetos
+			create_in_limbo = yes
+		}
+		character:pm_guydebrienne ?= { save_scope_as = guydebrienne_character }
+		scope:guydebrienne_character = {
+			move_country = ath_country
+		}
+		character:ath_william ?= { save_scope_as = guillem_character }
+	}
+	
+	fire_only_once = yes
+	
+	option = {#take athens as vassal, set new char as leader, give Sicily event to get cb, add antagonism, spend gold and manpower, lose legitimacy, move toward belligerence
+		name = pm_flavor_byz.2027.a
+		#add_stability = 2.5
+		manpower = -2
+		if = {
+			limit = { has_variable = pm_byz_imperial_authority_var  }
+				add_stability = 2.5
+				byz_change_control_score = { math = add value = 1 }
+		}
+		scope:overlord_country = {	
+			add_casus_belli = { #add a cb, but where?
+				target = root #we become the target
+				type = casus_belli:cb_humiliate
+			}
+		}
+		scope:ath_country = {
+			set_new_ruler = scope:guydebrienne_character
+			make_subject_of = {
+				target = c:BYZ
+				type = subject_type:vassal
+			}
+		}
+		add_manpower = -0.1
+		add_gold = -250
+		add_legitimacy = -10
+		drop_antagonism_bomb = {
+			target = c:ATH.capital
+			modifier = antagonism_embraced_antagonism
+			value = 10
+		}
+		
+
+		
+	}
+	
+	option = {#make him a general, get cb on athens, spend gold, lose stability
+		name = pm_flavor_byz.2027.b
+		add_prestige = 15
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		#add_country_modifier = { modifier = byz_army_investments  years = 10 mode = add_and_extend }
+		scope:ath_country = {
+			set_new_ruler = scope:guydebrienne_character
+		}
+		scope:ath_country.overlord = {	
+			cancel_subject = scope:ath_country		
+			add_casus_belli = { #add a cb, but where?
+				target = scope:ath_country #we get the target country we saved from the scope
+				type = casus_belli:cb_subject_broke_free
+			}
+		}
+		#cancel_subject = scope:ath_country
+		reverse_add_opinion = {	target = scope:ath_country	modifier = nov_acknowledged_our_independence }
+		add_gold = -100
+		#add_country_modifier = {	modifier = pm_army_investment_small		years = -1		mode = add_and_extend		}
+
+	}
+	
+	option = {#sell him out to sicily for cash, and get some legitimacy
+		name = pm_flavor_byz.2027.c
+		
+		#add_country_modifier = { modifier = byz_fortification_investment  years = 5 mode = add_and_extend } 
+		#add_country_modifier = { modifier = byz_army_investments  years = 10 mode = add_and_extend }
+		add_prestige = -10
+		add_gold = 200
+		scope:guydebrienne_character = {
+			move_country = c:SIC 
+		}
+
+	}
+}
+
+#### END MISC EVENTS
+
+
+pm_flavor_byz.1 = { #Tagmata Reform Event
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.1.title
+	desc = pm_flavor_byz.1.desc
+
+	fire_only_once = yes
+
+	illustration_tags = {
+		10 = armed
+		10 = exterior
+	}
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1330.1.1
+		to = 1800.1.1
+		monthly_chance = 10
+	}
+
+	trigger = {
+		has_embraced_institution = institution:professional_armies
+		has_reform = government_reform:tagmata_late
+		regular_army_size >= 2	
+		has_ruler = yes
+		any_cabinet_character = {
+			count > 0
+		}
+		owns = location:constantinople
+		capital = {
+			has_building_with_at_least_one_level = stratekon
+		}
+
+	}
+
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }		
+		ruler_or_regent ?= {
+			save_scope_as = target_character
+		}
+
+		ordered_cabinet_character = {
+			order_by = mil
+			max = 1
+			check_range_bounds = no
+			save_scope_as = cabinet_character
+		}
+	}
+
+	option = {
+		name = pm_flavor_byz.1.a
+
+		set_variable = unlocked_modern_tagmata
+
+		change_societal_value = {
+			type = quality_vs_quantity
+			value = societal_value_move_to_left
+		}
+		remove_reform = government_reform:tagmata_late
+		add_reform = government_reform:reformed_tagmata
+
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			divide = {
+				value = ruler_or_regent.mil
+				divide = 10
+			}
+			multiply = -3
+		}
+
+		custom_tooltip = BYZ_THE_COST_WILL_SCALE_WITH_RULERS_MIL
+	}
+
+	option = { #This is Byzantium at the end of the day
+		name = pm_flavor_byz.1.b
+		set_variable = unlocked_modern_tagmata
+
+		change_societal_value = {
+			type = quality_vs_quantity
+			value = societal_value_move_to_right
+		}
+		remove_reform = government_reform:tagmata_late
+		add_reform = government_reform:integrated_regiments
+
+		add_estate_satisfaction = {
+			type = estate_type:peasants_estate
+			value = estate_satisfaction_mild_bonus
+		}
+		
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			divide = {
+				value = ruler_or_regent.mil
+				divide = 10
+			}
+			multiply = -3
+		}
+
+		custom_tooltip = BYZ_THE_COST_WILL_SCALE_WITH_RULERS_MIL
+
+		#custom_tooltip = {
+		#	text = BYZ_ALL_THEMATA_PROVINCES_GAIN_NOBLE_LOYALTY
+		#	every_owned_location = {
+		#		limit = {
+		#			has_building = building_type:thema_headquarters
+		#			any_pop = {
+		#				pop_type = pop_type:nobles
+		#			}
+		#		}
+		#		every_pop = {
+		#			limit = {
+		#				owner = root
+		#				pop_type = pop_type:nobles
+		#			}
+		#			add_pop_satisfaction = pop_satisfaction_ultimate_bonus
+		#		}
+		#	}
+		#}
+	}
+}
+
+pm_flavor_byz.2 = { #Pronoia Reform Event
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.2.title
+	desc = pm_flavor_byz.2.desc
+
+	fire_only_once = yes
+
+	illustration_tags = {
+		10 = armed
+		10 = exterior
+	}
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1340.1.1
+		to = 1800.1.1
+		monthly_chance = 100
+	}
+
+	trigger = {
+		has_ruler = yes
+		any_cabinet_character = {
+			count > 0
+		}
+	
+		region:balkan_region = {
+			any_location_in_region = {
+				count >= 10
+				owner ?= root
+				has_building = building_type:soldier_estates
+
+			}
+		}
+		region:balkan_region = {
+			any_location_in_region = {
+				count >=2
+				owner ?= root
+				has_building = building_type:byz_mil_admin_lv1
+			}
+		}
+		region:balkan_region = {
+			any_location_in_region = {
+				count >=3
+				owner ?= root
+				has_building = building_type:thema_headquarters
+			}
+		}
+	}
+
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }		
+		ruler_or_regent ?= {
+			save_scope_as = target_character
+		}
+
+		ordered_cabinet_character = {
+			order_by = mil
+			max = 1
+			check_range_bounds = no
+			save_scope_as = cabinet_character
+		}
+	}
+
+	option = { #This is Byzantium at the end of the day
+		name = pm_flavor_byz.2.a
+		set_variable = unlocked_good_administration
+
+		change_societal_value = {
+			type = centralization_vs_decentralization
+			value = societal_value_move_to_left
+		}
+		remove_reform = government_reform:byz_inept_administration
+		add_reform = government_reform:byz_pronoia_muster
+
+		add_estate_satisfaction = {
+			type = estate_type:peasants_estate
+			value = estate_satisfaction_mild_bonus
+		}
+		
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			divide = {
+				value = ruler_or_regent.mil
+				divide = 10
+			}
+			multiply = -3
+		}
+
+		custom_tooltip = BYZ_THE_COST_WILL_SCALE_WITH_RULERS_MIL
+
+		custom_tooltip = {
+			text = BYZ_ALL_THEMATA_PROVINCES_GAIN_PEASANT_LOYALTY
+			every_owned_location = {
+				limit = {
+					has_building = building_type:soldier_estates
+					any_pop = {
+						pop_type = pop_type:peasants
+					}
+				}
+				every_pop = {
+					limit = {
+						owner = root
+						pop_type = pop_type:peasants
+					}
+					add_pop_satisfaction = pop_satisfaction_ultimate_bonus
+				}
+			}
+		}
+	}
+}
+
+pm_flavor_byz.3 = {
+    type = country_event         # This is a country event - it will be fired on countries and the country
+                    # for which it will fires will be considered ROOT
+
+
+    title = pm_flavor_byz.3.title        # Title key.
+    desc = pm_flavor_byz.3.desc        # Description key
+    #historical_info = pm_flavor_byz.3.historical_info    # (Optional) Historical Info key, responsible for the
+                            # historical information box
+                    # Title, desc and historical_info can be made dynamic and be made
+                    # dependent on triggers or randomized amongst a list of keys.
+
+
+    # In EU5, mean_time_to_happen events do not exist and all events need to be either fired
+    # either by on_actions, script or by a dynamic_historical_event clause.
+
+	fire_only_once = yes
+    dynamic_historical_event = {
+        tag = BYZ        # This event can fire for BYZ tag. There can be more than one “tag”s
+        from = 1350.1.1    # This event can fire from 1500.1.1…
+        to = 1800.1.1        #  … to 1510.1.1
+        monthly_chance = 100 # with a monthly chance of 25%
+    }
+
+
+    trigger = {
+		#has_embraced_institution = institution:professional_armies
+		has_reform = government_reform:byz_army_late
+		#has_truce_with = c:FRA
+		root.manpower_percentage > 0.5
+		#add_manpower = { value = root.monthly_manpower multiply = 6 }
+		manpower >= 4
+		legitimacy >= 75
+		stability >= 50
+		"estate_power(estate_type:crown_estate)" > 0.25
+		location:constantinople = { owner = root }	
+        AND = {
+			num_loans = 0
+			at_war = no
+		}
+		#has_law = distribution_of_power_law     # only requirement for this event is to have
+                                # “distribution_of_power_law“ available.
+		
+    }
+
+
+    fire_only_once = yes         # This event can only fire once per campaign for any tag.
+
+    illustration_tags = {        # Illustration tags that are used for the pops in the event picture
+10 = angry
+        10 = interior
+    }
+
+
+    immediate = {
+        event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+        }
+
+
+    option = {
+        name = pm_flavor_byz.3.a    # key for the option.
+                        # can also be made dynamic, but with a different syntax.
+		set_variable = unlocked_army_recovering
+
+
+        historical_option = yes    # This will make AI with “Historical AI” gamerule
+                        # always select this option
+
+
+        #if = {
+        #    limit = {
+        #        NOT = {
+        #            has_policy = dop_favor_the_nobles
+        #        }
+        #    }
+        #    add_policy = policy:dop_favor_the_nobles
+        #}
+
+
+        #set_variable = unlock_nihil_novi    # set_variable is the unified solution of jomini for
+                            # set_country_flag and variables.
+
+
+        # grant the estate privilege under “estate_privilege:nihil_novi”
+        # if this was a generic event, we could, for example, save a random privilege ahead of time
+        # and assign it with a scope:target_privilege or a var:saved_privilege instead…
+        #grant_estate_privilege = estate_privilege:nihil_novi
+		
+		#set_variable = unlocked_modern_tagmata
+		
+		change_societal_value = {
+			type = centralization_vs_decentralization
+			value = societal_value_move_to_left
+		}
+		remove_reform = government_reform:byz_army_late
+		add_reform = government_reform:byz_army_recovering
+    }
+}
+
+pm_flavor_byz.4 = {
+    type = country_event         # This is a country event - it will be fired on countries and the country  # for which it will fires will be considered ROOT
+    
+	title = pm_flavor_byz.4.title        # Title key.
+    desc = pm_flavor_byz.4.desc        # Description key
+    # In EU5, mean_time_to_happen events do not exist and all events need to be either fired
+    # either by on_actions, script or by a dynamic_historical_event clause.
+	fire_only_once = yes
+    dynamic_historical_event = {
+        tag = BYZ        # This event can fire for POL tag. There can be more than one “tag”s
+        from = 1350.1.1    # This event can fire from 1500.1.1…
+        to = 1610.1.1        #  … to 1510.1.1
+        monthly_chance = 100 # with a monthly chance of 10%
+    }
+
+    trigger = {
+		has_reform = government_reform:byz_army_recovering
+		root.manpower_percentage > 0.9
+		manpower >= 10
+		legitimacy >= 95
+		stability >= 75
+		"estate_power(estate_type:crown_estate)" > 0.35
+		location:constantinople = { owner = root }	
+        AND = {
+			num_loans = 0
+			at_war = no
+		}
+    }
+
+    fire_only_once = yes         # This event can only fire once per campaign for any tag.
+
+    illustration_tags = {        # Illustration tags that are used for the pops in the event picture
+10 = angry
+        10 = interior
+    }
+
+    immediate = {
+        event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+        }
+
+    option = {
+        name = pm_flavor_byz.4.a    # key for the option.
+		set_variable = unlocked_army_recovered
+        historical_option = yes    # This will make AI with “Historical AI” gamerule
+		change_societal_value = {
+			type = centralization_vs_decentralization
+			value = societal_value_move_to_left
+		}
+		remove_reform = government_reform:byz_army_recovering
+		add_reform = government_reform:byz_army_recovered
+    }
+}
+
+#modifying the Ethiopian naft thrower event to make sense for Byzantium
+pm_flavor_byz.5 = { #Learning the Secrets of Greek fire or naft
+	type = country_event
+	title = pm_flavor_byz.5.title
+	desc = pm_flavor_byz.5.desc
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1400.4.1
+		to = 1500.1.1
+		monthly_chance = 1
+	}
+
+	fire_only_once = yes
+	illustration_tags = {
+		10 = armed
+		10 = interior
+	}
+	
+	trigger = {
+		owns = location:constantinople
+		has_advance = byz_greek_fire
+	}
+	immediate = {}
+
+	option = {
+		name = pm_flavor_byz.5.a
+		
+		show_as_tooltip = {
+			unlock_unit_effect = {
+				type = byz_flamethrower_infantry
+			}
+
+			#lose some gold
+		}
+		modifier:allow_flamethrowers = yes
+		modifier:num_of_flamethrower_units = 4
+		change_societal_value = { type = traditionalist_vs_innovative value = societal_value_tiny_move_to_right }
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			divide = {
+				value = ruler_or_regent.mil
+				divide = 10
+			}
+			multiply = -3
+		}
+		add_country_modifier = {
+				modifier = naft_factories
+				years = -1
+				mode = add_and_extend
+				#size = 1.5
+			}
+
+	}
+
+	option = {
+		name = pm_flavor_byz.5.b
+		#get some prestige and stability
+		add_estate_satisfaction = { type = estate_type:clergy_estate value = estate_satisfaction_weak_bonus }
+		add_prestige = prestige_mild_bonus
+		change_societal_value = { type = traditionalist_vs_innovative value = societal_value_tiny_move_to_left }
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			divide = {
+				value = ruler_or_regent.mil
+				divide = 10
+			}
+			multiply = 3
+		}
+	}
+}
+
+pm_flavor_byz.6 = {#basic event for getting a CB on the Ottomans early in the game
+	type = country_event
+	title = pm_flavor_byz.6.title
+	desc = pm_flavor_byz.6.desc
+
+	illustration_tags = {
+		10 = armed
+		10 = exterior
+	}
+
+	fire_only_once = yes
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1340.1.1
+		to = 1400.1.1
+		monthly_chance = 10
+	}
+
+	trigger = {
+		c:TUR ?= {
+			is_subject = no
+			has_presence_in = region:anatolia_region
+		}
+	}
+
+	immediate = { #as soon as event fires...
+		#event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:peasants_estate } #set the portrait
+		illustration_tags = {
+		10 = angry
+		10 = exterior}
+		c:TUR = { #check the country (in this case, Ottomans
+			save_scope_as = target_country #save the country in the scope for use later
+			capital = { #get the capital
+				save_scope_as = target_location #save the capital location for use later...
+			}
+		}
+		ruler_or_regent ?= {#get our leader's info
+			save_scope_as = target_character
+		}
+		
+		######CHECK THE LOCATION AND SETUP THE UNREST
+		#location:izmit = {
+		#	save_scope_as = target_location2
+		#}
+
+		#if = {
+		#	limit = {
+		#		scope:target_location = {
+		#			any_pop = {
+		#				pop_satisfaction >= var:izmit_pop_sat
+		#			}
+		#		}
+		#	}
+		#	set_variable = byz_commune_good_outcome
+		#}
+		#else = {
+		#	set_variable = byz_commune_bad_outcome
+		
+		#########################
+		#create_rebel = {
+		#		category = religious
+		#		name = izmit_uprising
+		#		save_scope_as = izmit_uprising
+		#		culture = culture:greek_culture
+		#		religion = root.religion
+		#	}
+		#	location:izmit.province = {
+		#		every_location_in_province = {
+		#			limit = { owner ?=  c:TUR }
+		#			every_pop = {
+		#				limit = {
+		#					owner c:TUR
+		#					OR = {
+		#						pop_type = pop_type:burghers
+		#						pop_type = pop_type:peasants
+		#					}
+		#					culture = culture:greek_culture
+		#				}
+		#				add_pop_satisfaction = pop_satisfaction_ultimate_penalty
+		#				change_pop_allegiance = scope:izmit_uprising
+		#			}
+		#		}
+		#	}
+		#	scope:izmit_uprising = {
+		#		add_rebel_progress = 1
+		#	}
+		#	###################
+		#}
+		######END
+	}
+
+	option = {
+		name = pm_flavor_byz.6.a
+		#we use the scope info here
+		add_casus_belli = { #add a cb, but where?
+			target = scope:target_country #we get the target country we saved from the scope
+			type = casus_belli:cb_conquer_province #gotta provide a cb type, go for simple conquer province (could use different ones for lower antagonism)
+			province = scope:target_location.province #get the province from the scope
+		}
+	}
+	option = {
+		name = pm_flavor_byz.6.b
+		
+		scope:target_country = {#add opinion to Ottoman
+			add_opinion = {
+				target = ROOT
+				modifier = opinion_orthodoxy_stands_alone
+			}
+		}
+		
+		add_stability = {
+			value = stability_mild_bonus
+			add = {
+				value = root.ruler_or_regent.adm
+				divide = 20
+			}
+		}
+		custom_tooltip = BYZ_STABILITY_DEPENDS_ON_RULER_ADM
+
+		
+	}
+}
+
+## NOT={has_policy = pm_exclude_generals } #player can assign strategois 
+## #AND number assigned characters is < 1 || use the list "all_active_strategos" to get all the characters assigned as strategos and "all_influential_strategos" to get all influential characters
+
+#check if we can assign strategos and the advanced reform hasn't been fired, if so fire occasionally if fewer than two are assigned. A: Lose money and prestige, gain stability B: lost legitmacy, gain stability
+pm_flavor_byz.7 = { #Learning the Secrets of Greek fire or naft
+	type = country_event
+	title = pm_flavor_byz.7.title
+	desc = pm_flavor_byz.7.desc
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1350.4.1
+		to = 1800.1.1
+		monthly_chance = 1
+	}
+
+	fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+	
+	trigger = {
+		#owns = location:constantinople
+		#has_advance = byz_greek_fire
+		#Example of checking if any character has a particular modifier
+		#any_character = {
+		#	is_ruler = no
+		#	NOT = { has_character_modifier = imprisoned }
+		#}
+
+		has_variable = all_active_strategos
+		at_war = no
+		NOT = {has_policy = pm_exclude_generals}
+		limit = {
+					global_variable_list_size = {
+						name = all_active_strategos
+						value < 2
+					}
+				}
+	}
+	immediate = {}
+
+	option = {
+		name = pm_flavor_byz.7.a
+		
+		add_estate_satisfaction = {
+			type = estate_type:nobles_estate
+			value = estate_satisfaction_mild_bonus
+		}
+		add_stability = {
+			value = stability_tiny_penalty
+			add = {
+				value = societal_value:centralization_vs_decentralization
+				divide = 10
+				multiply = -1
+			}
+		}
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			divide = {
+				value = ruler_or_regent.mil
+				divide = 10
+			}
+			multiply = -25
+		}
+
+	}
+
+	option = {
+		name = pm_flavor_byz.7.b
+		#get some prestige and stability
+		#add_estate_satisfaction = { type = estate_type:clergy_estate value = estate_satisfaction_weak_bonus }
+		#add_prestige = prestige_mild_bonus
+		add_prestige = prestige_weak_penalty
+		add_legitimacy = legitimacy_mild_penalty
+		
+		}
+	}
+
+
+pm_flavor_byz.8 = { #upgrading the strategoi reform
+	type = country_event
+	title = pm_flavor_byz.8.title
+	desc = pm_flavor_byz.8.desc
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1350.4.1
+		to = 1800.1.1
+		monthly_chance = 1
+	}
+
+	fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+
+	trigger = {
+		has_reform = government_reform:byz_strategos_early
+		has_advance = government_size_discovery
+		
+		legitimacy >= 95
+		stability >= 50
+		
+		
+		#Example of checking if any character has a particular modifier
+		#any_character = {
+		#	is_ruler = no
+		#	NOT = { has_character_modifier = imprisoned }
+		#}
+
+		#has_variable = all_active_strategos
+		#at_war = no
+		#NOT = {has_policy = pm_exclude_generals}
+		#limit = {
+		#			global_variable_list_size = {
+		#				name = all_active_strategos
+		#				value < 2
+		#			}
+		#		}
+	}
+	immediate = {
+		set_variable = unlocked_reformed_strategos
+		unlocked_strategos_reform = yes
+		unlocked_despotates = yes
+		}
+
+	option = {
+		name = pm_flavor_byz.8.a
+		
+		add_stability = {
+			value = stability_tiny_penalty
+			add = {
+				value = societal_value:centralization_vs_decentralization
+				divide = 5
+				multiply = 1
+			}
+		}
+		
+		remove_reform = government_reform:byz_strategos_early
+		add_reform = government_reform:byz_strategos_late
+
+	}
+}
+
+#STRATEGOS EVENTS 
+
+#Create a random new strategos OR elevate an existing character
+#CHARACTER ELIGIBLE FOR APPOINTMENT
+pm_flavor_byz.9 = { #if there are powerful, inactive generals and they are excluded (DEMAND LAW CHANGE)
+	type = country_event
+	title = pm_flavor_byz.9.title
+	desc = pm_flavor_byz.9.desc
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.4.1
+		to = 1800.1.1
+		monthly_chance = 1
+	}
+
+	fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+	#immediate = {unlocked_strategos_reform=yes}
+	trigger = {#trigger if there are inactive generals with a lot of influence
+		NOT = { has_policy = pm_exclude_generals } #if we don't have the "generals excluded" law
+		any_character = {
+			#random_event_75_character_trigger = yes
+			
+			#NOT = { 
+			#	has_character_modifier = strategos_influential 
+			#	has_character_modifier = strategos_command
+			#	has_character_modifier = strategos_active
+			#} 
+			#has_character_modifier = strategos_command
+			is_courtier = yes
+			is_ruler = no
+			#is_regent = no
+			#is_heir = no
+			#is_adolescent = no
+			is_alive = yes
+			is_adult = yes
+			is_female = no
+			#has_variable = is_etienne_marcel
+			#NOT = { has_character_modifier = imprisoned }
+			#has_estate = estate_type:nobles_estate
+			#this != scope:fire_victim_1
+		}
+	}
+	immediate = {
+		random_character = {
+			limit = {
+				NOT = { 
+					has_character_modifier = strategos_influential 
+					has_character_modifier = strategos_command
+					has_character_modifier = strategos_active
+				} 
+				is_courtier = yes
+				is_ruler = no
+				is_alive = yes
+				is_adult = yes
+				is_female = no
+				NOT = { dynasty = root.ruler.dynasty }
+			}
+			save_scope_as = aspiring_strategos
+		}
+		#ruler ?= {
+        #    save_scope_as = fra_ruler
+       # }
+	   #ruler ?= {
+		#	save_scope_as = target_ruler
+		#}
+		create_character = {
+				mil = { 10 40 }
+				mil = { 10 40 }
+				mil = { 40 75 }
+				culture = culture:greek_culture
+				dynasty = root.ruler.dynasty
+				#birth_location = scope:target_location2
+				#age = 30
+				estate = estate_type:crown_estate
+				create_in_limbo = yes
+				trait_category = general
+				save_scope_as = crown_strategos
+			}
+		
+		#ruler = { save_scope_as = target_ruler }
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {
+		name = pm_flavor_byz.9.a
+		add_stability = -0.5
+		scope:crown_strategos = {
+			add_character_modifier = {
+				modifier = strategos_loyal
+				years = -1
+				mode = add_and_extend
+			}
+			add_character_modifier = {
+				modifier = strategos_promoted
+				years = -1
+				mode = add_and_extend
+			}
+			add_character_modifier = {
+				modifier = strategos_content
+					years = -1
+					mode = add_and_extend
+			}
+			move_country = root 
+		}
+		scope:aspiring_strategos = {
+			add_character_modifier = {
+				modifier = strategos_denied
+					years = -1
+					mode = add_and_extend
+			}
+			add_character_modifier = {
+				modifier = strategos_discontent
+					years = -1
+					mode = add_and_extend
+			}
+		}
+	}
+	#strategos_promoted
+	option = {
+		name = pm_flavor_byz.9.b
+		
+		add_prestige = 15
+		#add_stability -10
+		scope:aspiring_strategos = {
+			add_character_modifier = {
+				modifier = strategos_experienced
+					years = 20
+					mode = add_and_extend
+			}
+			add_character_modifier = {
+				modifier = strategos_influential
+					years = 15
+					mode = add_and_extend
+			}
+			add_character_modifier = {
+				modifier = strategos_promoted
+				years = -1
+				mode = add_and_extend
+			}
+			add_character_modifier = {
+				modifier = strategos_content
+				years = -1
+				mode = add_and_extend
+			}
+			#move_country = root 
+		}
+		add_legitimacy = 2
+		
+	}
+}
+
+
+		
+#If there are active Strategos add control to a random location with the strategos modifier (MEDIUM POSITIVE EVENT)
+
+pm_flavor_byz.10 = { 
+	type = country_event
+	title = pm_flavor_byz.10.title
+	desc = pm_flavor_byz.10.desc
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1800.1.1
+		monthly_chance = 1
+	}
+
+	#fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+	#immediate = {unlocked_strategos_reform=yes}
+	trigger = {#trigger if there are inactive generals with a lot of influence
+		NOT = { has_policy = pm_exclude_generals } #if we don't have the "generals excluded" law
+		#has_policy = pm_exclude_generals
+		any_character = {
+			has_character_modifier = strategos_active
+		}
+	}
+	immediate = {
+		
+		random_character = {
+			limit = {	has_character_modifier = strategos_command	}
+			save_scope_as = commanding_strategos
+		}
+		
+		random_location = {
+			limit = {
+				has_location_modifier = strategos_fort_influence_modifier
+			}
+			save_scope_as = target_location
+		}
+		
+		#ruler = { save_scope_as = target_ruler }
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {
+		name = pm_flavor_byz.10.a
+		scope:target_location = {
+			change_control = control_mild_bonus
+			
+			every_pop = {
+				limit = {
+					owner = root
+					pop_type = pop_type:every_pop
+				}
+				add_pop_satisfaction = pop_satisfaction_mild_bonus
+			}
+		}
+		
+	}
+
+	option = {
+		name = pm_flavor_byz.10.b
+		add_stability = 0.5
+		add_gold = {
+			value = root.monthly_income_trade_and_tax
+			divide = {
+				value = ruler_or_regent.mil
+				divide = 10
+			}
+			multiply = 3
+		}
+		
+	}
+}
+
+#If there are active Strategos add control to a random location with the strategos modifier (SMALL POSITIVE EVENT)
+
+#If there are active Strategos add control to a random location with the strategos modifier (NEGATIVE EVENT)
+
+pm_flavor_byz.11 = { #no active strategos; pick an existing character to promote, give player an option to choose a distant family member instead
+	type = country_event
+	title = pm_flavor_byz.11.title
+	desc = pm_flavor_byz.11.desc
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1800.1.1
+		monthly_chance = 1
+	}
+
+	#fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+	#immediate = {unlocked_strategos_reform=yes}
+	trigger = {#trigger if there are inactive generals with a lot of influence
+		#NOT = { has_policy = pm_exclude_generals } #if we don't have the "generals excluded" law
+		has_policy = pm_exclude_generals
+		any_character = {
+			#random_event_75_character_trigger = yes
+			
+			NOT = { has_character_modifier = strategos_active } 
+			OR = {
+					has_character_modifier = strategos_influential
+					has_character_modifier = strategos_loyal
+					has_character_modifier = strategos_promoted
+				}
+			is_courtier = yes
+			is_ruler = no
+			#is_regent = no
+			#is_heir = no
+			#is_adolescent = no
+			is_alive = yes
+			is_adult = yes
+			is_female = no
+			#has_variable = is_etienne_marcel
+			#NOT = { has_character_modifier = imprisoned }
+			#has_estate = estate_type:nobles_estate
+			#this != scope:fire_victim_1
+		}
+		
+		
+		#Example of checking if any character has a particular modifier
+		#any_character = {
+		#	is_ruler = no
+		#	NOT = { has_character_modifier = imprisoned }
+		#}
+
+		#has_variable = all_active_strategos
+		#at_war = no
+		#NOT = {has_policy = pm_exclude_generals}
+		#limit = {
+		#			global_variable_list_size = {
+		#				name = all_active_strategos
+		#				value < 2
+		#			}
+		#		}
+	}
+	immediate = {
+		#random_character = {
+		#	limit = {
+		#		random_event_75_character_trigger = yes
+		#	}
+		#	save_scope_as = naive
+		#}
+		
+		random_character = {
+			limit = {
+				NOT = { has_character_modifier = strategos_active }
+				OR = {
+					has_character_modifier = strategos_influential
+					has_character_modifier = strategos_loyal
+					has_character_modifier = strategos_promoted
+				}
+				is_courtier = yes
+				is_ruler = no
+				is_alive = yes
+				is_adult = yes
+				is_female = no
+				NOT = { dynasty = root.ruler.dynasty }
+			}
+			save_scope_as = treacherous_general
+		}
+		
+		#ruler = { save_scope_as = target_ruler }
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {
+		name = pm_flavor_byz.11.a
+		
+		add_legitimacy = -10
+		add_policy = policy:pm_favor_generals
+		#add_gold = {
+		#	value = root.monthly_income_trade_and_tax
+		#	multiply = 40
+		#	divide = {
+		#		value = root.ruler_or_regent.adm
+		#		divide = 5
+		#	}
+		#	multiply = -1
+		#}
+		scope:treacherous_general = {
+			add_character_modifier = {
+				modifier = strategos_loyal
+				years = -1
+				mode = add_and_extend
+			}
+		}
+	}
+
+	option = {
+		name = pm_flavor_byz.11.b
+		
+		#kill_character_silently = scope:naive
+		add_prestige = prestige_weak_penalty
+		add_stability = -0.5
+		scope:treacherous_general = {
+			add_character_modifier = {
+				modifier = strategos_corruption
+				years = -1
+				mode = add_and_extend
+			}
+		}
+		
+	}
+}
+
+pm_flavor_byz.12 = { #Subsidies from Palaiologos family in Montferrat
+	type = country_event
+	title = pm_flavor_byz.12.title
+	desc = pm_flavor_byz.12.desc
+	historical_info = pm_flavor_byz.12.historical_info
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1365.1.1
+		monthly_chance = 5
+	}
+
+	fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+	#immediate = {unlocked_strategos_reform=yes}
+	
+	trigger = {
+		country_exists = c:MFA #if montferrat exists 
+		dynasty_exists = palaiologos_dynasty #the dynasty still exists
+
+		#scope:montferrat_ruler = { dynasty = dynasty:palaiologos_dynasty }
+		c:MFA?= { #anyone in montferrat is our dynasty
+				#save_scope_as = target_country
+				#ruler = { save_scope_as = montferrat_ruler }
+				ruler.dynasty ?= dynasty:palaiologos_dynasty
+			}
+		
+		c:MFA = {
+			at_war = no
+		}
+		
+		stability < 0 #byzantine stability < 0
+		num_loans >= 1 #has any loans
+
+	}
+	immediate = {
+		#ruler = { save_scope_as = target_ruler }
+		c:MFA = { #check the country (in this case, Ottomans
+			save_scope_as = target_country #save the country in the scope for use later
+			ruler = { save_scope_as = montferrat_ruler }
+		}
+		set_variable = { name = requested_foreign_aid value = 1 } #trigger = { c:ENG = { has_variable = tripartite_indenture } }
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {#ask relatives for help
+		name = pm_flavor_byz.12.a
+		add_legitimacy = -10.0 #lose legitimacy
+		#silently send request to montferrat
+		custom_tooltip = {
+			text = pm_flavor_byz.12.a.tt
+			scope:target_country = { #montferrat
+				trigger_event_silently = {
+					id = pm_flavor_byz.13
+					days = 10
+				}
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {#we stand on our own
+		name = pm_flavor_byz.12.b
+		add_legitimacy = 5.0 #gain legitimacy
+		add_country_modifier = {	modifier = pm_proud_leadership	years = 25	mode = add_and_extend	} #gain proud leaders
+	}
+}
+
+pm_flavor_byz.13 = { #Subsidies from family in Montferrat
+	type = country_event
+	title = pm_flavor_byz.13.title
+	desc = pm_flavor_byz.13.desc
+	historical_info = pm_flavor_byz.13.historical_info
+	#fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+
+	immediate = {
+		c:BYZ = { #check the country (in this case, Ottomans
+			save_scope_as = byz_country #save the country in the scope for use later
+			ruler = { save_scope_as = byz_ruler }
+		}
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {#send aid
+		name = pm_flavor_byz.13.a
+		add_gold = -100#lose gold
+		#add_opinion = {	target = c:BYZ	modifier = opinion_pleased	} #gain opinion with byzantium
+		c:BYZ = { add_opinion = {	target = c:MFA	modifier = eng_opposes_lollards	}}
+		set_variable = { name = aided_byzantine_relatives value = 1 } #sets aided_byzantine_relatives flag to 'yes'
+		#silently send positive response event; 14
+		custom_tooltip = {
+			text = pm_flavor_byz.13.a.tt
+			scope:byz_country = { #byzantium
+				trigger_event_silently = {
+					id = pm_flavor_byz.14
+					days = 10
+				}
+			}
+		}
+		ai_chance = { factor = 9 }
+	}
+	
+	option = {#reject aid
+		name = pm_flavor_byz.13.b
+		add_legitimacy = 5.0
+		c:BYZ = { add_opinion = {	target = c:MFA	modifier = eng_tolerates_lollards	}}
+		set_variable = { name = rejected_byzantine_relatives value = 1 } #adds "rejected pleas" modifier
+		#silently send negative response event; 15
+		custom_tooltip = {
+			text = pm_flavor_byz.13.b.tt
+			scope:byz_country = { #byzantium
+				trigger_event_silently = {
+					id = pm_flavor_byz.15
+					days = 10
+				}
+			}
+		}
+		ai_chance = { factor = 1 }
+	}
+}
+
+pm_flavor_byz.14 = { #Help Sent
+	type = country_event
+	title = pm_flavor_byz.14.title
+	desc = pm_flavor_byz.14.desc
+
+	#fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+
+	immediate = {
+		#ruler = { save_scope_as = target_ruler }
+		event_illustration_government_estate_effect = yes
+		set_variable = { name = received_help_from_montferrat value = 1 } #sets flag received_help_from_montferrat
+		c:MFA = { #check the country (in this case, Ottomans
+			save_scope_as = montferrat_country #save the country in the scope for use later
+			ruler = { save_scope_as = montferrat_ruler }
+		}
+	}
+	
+	option = {#send aid
+		name = pm_flavor_byz.14.a
+		add_country_modifier = {	modifier = pm_family_subsidies	years = 10	mode = add_and_extend	}#gain modifier "family subisidies" (adds some gold every month)
+		add_stability = 10 #gain stability
+		custom_tooltip = {
+			text = gain_2_a_footmen
+			capital = {
+				create_sub_unit = unit_type:a_footmen
+				create_sub_unit = unit_type:a_footmen
+			}
+		}
+	}
+}
+
+pm_flavor_byz.15 = { #Help Rejected
+	type = country_event
+	title = pm_flavor_byz.15.title
+	desc = pm_flavor_byz.15.desc
+
+	#fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+	#immediate = {unlocked_strategos_reform=yes}
+	trigger = {#trigger if there are inactive generals with a lot of influence
+		#no trigger as its response
+	}
+	immediate = {
+		#ruler = { save_scope_as = target_ruler }
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {#send aid
+		name = pm_flavor_byz.15.a
+		add_stability = -10 #lose stability
+	}
+}
+#total_sub_unit_type_count:a_mamluk_unit_renaissance > 0 #count the number of a specific unit
+
+#Unit triggered events 
+#The Varangian Guard
+pm_flavor_byz.21 = {
+	type = country_event
+	fire_only_once = yes
+	title = pm_flavor_byz.21.title
+	desc = pm_flavor_byz.21.desc
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1837.1.1
+		monthly_chance = 5
+	}
+	illustration_tags = {
+		10 = happy
+		10 = interior
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+	}
+	trigger = {
+		any_unit = {
+			any_sub_unit = {
+				sub_unit_type = unit_type:a_varangians #########
+			}
+			count >= 1
+		}
+	}
+	#They shall shape the battlefields of our time.
+	option = {
+		name = pm_flavor_byz.21.a
+		historical_option = yes
+		add_army_tradition = army_tradition_extreme_bonus
+		location:constantinople = {
+			construct_building = {
+				building_type = building_type:pm_urban_barracks
+				cost_multiplier = 0.0
+			}
+		}
+	}
+	#The varangians bring glory to [ROOT.GetCountry.GetName].
+	option = {
+		name = pm_flavor_byz.21.b
+		add_prestige = prestige_extreme_bonus
+		location:constantinople = {
+			construct_building = {
+				building_type = building_type:pm_urban_barracks
+				cost_multiplier = 0.0
+			}
+		}
+	}
+}
+
+#The Tagmata Grows
+pm_flavor_byz.22 = {
+	type = country_event
+	fire_only_once = yes
+	title = pm_flavor_byz.22.title
+	desc = pm_flavor_byz.22.desc
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1337.1.1
+		to = 1837.1.1
+		monthly_chance = 5
+	}
+	illustration_tags = {
+		10 = happy
+		10 = interior
+	}
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+	}
+	trigger = {
+		any_unit = {
+			any_sub_unit = {
+				sub_unit_type = unit_type:tagmata_cataphracts 
+			}
+			count >= 4
+		}
+		owns = location:constantinople
+	}
+	#They shall shape the battlefields of our time.
+	option = {
+		name = pm_flavor_byz.22.a
+		historical_option = yes
+		add_army_tradition = army_tradition_extreme_bonus
+		#get a scholai barracks in capital
+		location:constantinople = {
+			construct_building = {
+				building_type = building_type:pm_palatine_barracks
+				cost_multiplier = 0.0
+			}
+		}
+	}
+}
+
+#### Greek Revolt in Bulgaria
+
+#Greeks clamor for recognition
+pm_flavor_byz.400 = {
+	type = country_event
+
+	title = pm_flavor_byz.400.title
+	desc = pm_flavor_byz.400.desc
+
+	historical_info = pm_flavor_byz.400.historical_info
+
+	fire_only_once = yes
+	dynamic_historical_event = {
+		tag = BYZ
+		#tag = FIN
+		from = 1336.1.1
+		to = 1800.1.1
+		monthly_chance = 2
+	}
+
+	trigger = {
+		byz_has_dynastic_chaos_active_trigger = no #no twilight vars (e.g. the event is over)
+		byz_has_roman_resurgence_active_trigger = yes
+		#have Roman Resurgence var
+		#control 50 locations
+		any_owned_location = {
+			limit = {	owner ?= root		}
+			count >=50
+		}
+		#not at war
+		at_war = no 
+		prestige > 40	#have prestige > 40
+		#own constantinople, izmit, bursa, and athens 
+		location:constantinople = { owner = root }
+		location:izmit = { owner = root }			
+		location:bursa = { owner = root }	
+		location:athens = { owner = root }
+		any_neighbor_country = {
+			NOT { is_subject_of = root }
+		}
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:clergy_estate background = estate_type:burghers_estate }
+		
+		random_neighbor_country = { #select a random country that borders you
+			limit = {
+				NOT = { 
+					is_allied_with = { target = root } 
+					is_subject_of = root 
+				}
+			}
+		}
+		#Code help from the discord	
+		random_owned_location = {
+			limit = {
+				any_neighbor_location = {
+					has_owner = yes
+					NOT = {
+						is_owned_or_owned_by_subjects_or_below_of = ROOT
+					}
+				}
+			}
+			random_neighbor_location = {
+				limit = {
+					has_owner = yes
+					NOT = {
+						is_owned_or_owned_by_subjects_or_below_of = ROOT
+					}
+				}
+				save_scope_as = my_border_location
+			}
+		}
+		scope:my_border_location.province = { save_scope_as = target_province }
+		scope:my_border_location.owner = { save_scope_as = target_country }
+	}
+	
+
+	option = {
+		name = pm_flavor_byz.400.a
+		historical_option = yes
+		add_gold = -60
+		scope:my_border_location = {
+			add_location_modifier = {	modifier = pm_byzantine_influence	years = 25	mode = add_and_extend	}
+			random_pop = {
+				change_pop_culture = culture:greek_culture
+			}
+		}
+		
+		#culture:greek_culture = {
+		#	add_cultural_tradition = cultural_tradition_radical_bonus
+		#}
+	}
+	option = {
+		name = pm_flavor_byz.400.b
+		add_prestige = 10
+	}
+}
+
+#Bulgarians Demand Tribute
+pm_flavor_byz.401 = {
+	type = country_event
+	#category = situation_event	
+	title = pm_flavor_byz.401.title
+	desc = pm_flavor_byz.401.desc
+	fire_only_once = yes
+	image = "gfx/interface/illustrations/situation/hundred_years_war.dds"
+
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1300.1.1
+		to = 1600.1.1
+		monthly_chance = 2
+	}
+
+	trigger = {
+		location:constantinople = { any_neighbor_location = { owner ?= c:BUL  } }
+		owns = location:constantinople
+		OR = { has_truce_with = c:BUL is_at_war_with = c:BUL }
+		#great_power_score < c:BUL.great_power_score
+	}
+	
+	immediate = {
+		c:BUL = { #check the country (in this case, Ottomans
+			save_scope_as = bul_country #save the country in the scope for use later
+			ruler = { save_scope_as = bul_ruler }
+		}
+		c:BYZ = { save_scope_as = byzantium_country }
+		event_illustration_government_estate_effect = yes
+	}
+	
+
+	option = {#Buy peace with gold
+		name = pm_flavor_byz.401.a
+		historical_option = yes
+		add_prestige = prestige_mild_penalty
+		add_gold = -250
+		add_truce_with = { target = c:BUL years = 5 }
+		custom_tooltip = {#Trigger event to send Bulgarians gold
+				text = pm_flavor_byz.401.a.tt
+				scope:bul_country = { #byzantium
+					trigger_event_silently = {
+						id = pm_flavor_byz.402
+						days = 10
+					}
+				}
+			}
+		
+	}
+	
+	option = {#immediately declare war if not at war
+		name = pm_flavor_byz.401.b
+		
+		if = {
+			limit = {
+				NOT = { is_at_war_with = c:BUL }
+			}
+			declare_war_with_cb = {  target = c:BUL type = casus_belli:cb_insulted_us }
+		}
+	}
+	
+	option = {#send hostages, but raiding continues
+		name = pm_flavor_byz.401.c
+		
+		if = {
+			limit = {
+				NOT = { is_at_war_with = c:BUL }
+			}
+			add_stability = -1 #lose stability
+			#Byzantium gets "Border Regions Ravaged" modifier for 2 years
+			add_country_modifier = { modifier = pm_borders_ravaged years = 2 mode = add_and_extend }
+			#Byzantium gets a CB on Bulgaria
+			add_casus_belli = {
+				target = scope:byzantium_country #byzantium_country
+				type = casus_belli:cb_destabilized_our_state
+			}
+			#Bulgaria gets an event which gives them a CB
+			custom_tooltip = {#trigger event "Bulgarian Border Raids Continue"
+				text = pm_flavor_byz.401.c.tt
+				scope:bul_country = { #byzantium
+					trigger_event_silently = {
+						id = pm_flavor_byz.403
+						days = 10
+					}
+				}
+			}
+		}
+	}
+}
+
+pm_flavor_byz.402 = { #The Byzantine cowards send us tribute
+	type = country_event
+	title = pm_flavor_byz.402.title
+	desc = pm_flavor_byz.402.desc
+	historical_info = pm_flavor_byz.402.historical_info
+	#fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+
+	immediate = {
+		c:BYZ = { #check the country 
+			save_scope_as = byz_country #save the country in the scope for use later
+			ruler = { save_scope_as = byz_ruler }
+		}
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {#receive gold
+		name = pm_flavor_byz.402.a
+		add_gold = 250#lose gold
+		#add_opinion = {	target = c:BYZ	modifier = opinion_pleased	} #gain opinion with byzantium
+		c:BYZ = { add_opinion = {	target = c:BUL	modifier = eng_opposes_lollards	}}
+		set_variable = { name = byz_tribute_paid value = 1 } #sets byz_tribute_paid flag to 'yes'
+		#silently send positive response event; 14
+	}
+	
+}
+
+pm_flavor_byz.403 = { #The Byzantine cowards send us tribute
+	type = country_event
+	title = pm_flavor_byz.403.title
+	desc = pm_flavor_byz.403.desc
+	historical_info = pm_flavor_byz.403.historical_info
+	#fire_only_once = yes
+	illustration_tags = {
+		10 = angry
+		10 = exterior
+	}
+
+	immediate = {
+		c:BYZ = { #check the country 
+			save_scope_as = byz_country #save the country in the scope for use later
+			ruler = { save_scope_as = byz_ruler }
+		}
+		event_illustration_government_estate_effect = yes
+	}
+	
+	option = {
+		name = pm_flavor_byz.403.a
+		add_country_modifier = { modifier = pm_byzantine_hostages years = 15 mode = add_and_extend }
+		add_country_modifier = { modifier = pm_allowed_raids years = 5 mode = add_and_extend }
+		c:BYZ = {	add_opinion = {	modifier = opinion_kicked_out_italians target = root	}	}
+	}
+	
+}
+
+#The Greek-Bulgarian Rebellion of 1337
+pm_flavor_byz.415 = {
+	type = country_event
+	fire_only_once = yes
+	title = pm_flavor_byz.415.title
+	desc = pm_flavor_byz.415.desc
+	dynamic_historical_event = {
+		tag = BUL #BUL
+		from = 1337.1.1
+		to = 1350.1.1
+		monthly_chance = 10
+	}
+	trigger = {
+		location:demotica = { has_building_with_at_least_one_level = castle }
+		country_exists = c:MOE #MOE
+		any_owned_location = {
+			any_pop = {
+				percent >= 0.05
+				culture = culture:greek_culture #Greek
+			}
+		}
+	}
+	immediate = {
+		every_owned_location = {
+			limit = {
+				any_pop = {
+					#percent >= 0.05
+					culture = culture:greek_culture #Greek
+				}
+			}
+			add_to_list = moesian_rebellion_locations #Greek rebellion locations
+		}
+		ordered_in_list = {
+			list = moesian_rebellion_locations #Greek rebellion locations
+			limit = {
+				owner = root
+			}
+			order_by = population
+			max = 1
+			save_scope_as = target_location
+		}
+		
+		create_rebel = {
+			category = nationalist
+			name = moesian_independence_fighter #Greek independence fighter
+			save_scope_as = moesian_independence_fighter #save the scope for the rebel leaders
+			culture = culture:greek_culture #Greek
+		}
+		c:MOE = { #MOE
+			save_scope_as = moesian_country #moesia_country save Greek Imperial country (maybe name after the old roman province?)
+		}
+		if = {
+			limit = {
+				country_exists = c:BYZ #BYZ
+			}
+			c:BYZ = {
+				save_scope_as = byzantium_country #byzantium_country
+			}
+		}
+		save_scope_as = bulgaria_country #bulgaria_country
+	}
+	#Troublesome times are ahead
+	option = {
+		name = pm_flavor_byz.415.a
+		historical_option = yes
+		add_country_modifier = { modifier = bul_greek_rebellion years = 20 mode = add_and_extend }
+		scope:target_location = {
+			change_control = control_radical_penalty
+			every_pop = {
+				limit = {
+					#owner = root
+					culture = culture:greek_culture #Greek
+				}
+				add_pop_satisfaction = pop_satisfaction_radical_penalty
+				change_pop_allegiance = scope:moesian_independence_fighter #moesian_independence_fighter
+			}
+		}
+		every_in_list = {
+			list = moesian_rebellion_locations
+			change_control = control_radical_penalty
+			every_pop = {
+				limit = {
+					#owner = root
+					culture = culture:greek_culture #Greek
+				}
+				add_pop_satisfaction = pop_satisfaction_radical_penalty
+				change_pop_allegiance = scope:moesian_independence_fighter #moesian_independence_fighter
+			}
+		}
+		if = {
+			limit = {
+				country_exists = c:BYZ #Byz
+			}
+			custom_tooltip = {
+				text = pm_flavor_byz.415.a.tt
+				scope:byzantium_country = { #byzantium_country
+					trigger_event_silently = {
+						id = pm_flavor_byz.416 #send Byzantium the event to support or naw
+						days = 20
+					}
+				}
+			}
+		}
+		change_societal_value = { type = belligerent_vs_conciliatory value = societal_value_move_to_left }
+		ai_chance = {
+			factor = 1
+		}
+	}
+	#Let them unite with their people
+	option = {
+		name = pm_flavor_byz.415.b
+		change_societal_value = { type = belligerent_vs_conciliatory value = societal_value_move_to_right }
+		add_stability = stability_mild_bonus
+		add_prestige = prestige_extreme_penalty
+		add_country_modifier = { modifier = bul_greek_rebellion years = 10 mode = add_and_extend }
+		every_in_list = {
+			list = moesian_rebellion_locations #moesian_rebellion_locations
+			add_core = scope:moesian_country #moesian_country
+			change_location_owner = scope:moesian_country #moesian_country
+			remove_core = root
+			change_integration_level = integrated
+		}
+		reverse_add_opinion = {
+			target = scope:moesian_country #moesian_country
+			modifier = nov_granted_karelian_independence
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+#The Greek-Bulgarian Rebellion of 1337 - Byzantium's Support
+pm_flavor_byz.416 = {
+	type = country_event
+	title = pm_flavor_byz.416.title
+	desc = pm_flavor_byz.416.desc
+	#We should take advantage of this opportunity!
+
+	
+	illustration_tags = {
+		10 = regular
+		10 = interior
+	}
+
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+	}
+
+	option = {
+		name = pm_flavor_byz.416.a
+		historical_option = yes
+		change_gold_effect = { scale = -2 }
+		change_societal_value = { type = belligerent_vs_conciliatory value = societal_value_move_to_left }
+		add_prestige = prestige_mild_bonus
+		custom_tooltip = {
+			text = pm_flavor_byz.416.a.tt
+			scope:bulgaria_country = { #bulgaria_country
+				trigger_event_silently = {
+					id = pm_flavor_byz.417
+					days = 10
+				}
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+	#We don't gain anything from it.
+	option = {
+		name = pm_flavor_byz.416.b
+		add_prestige = prestige_weak_penalty
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+#The Greek-Bulgarian Rebellion of 1337 - Escalation?
+pm_flavor_byz.417 = {
+	hide_portraits = yes
+	type = country_event
+	title = pm_flavor_byz.417.title
+	desc = pm_flavor_byz.417.desc
+
+	illustration_tags = {
+		10 = angry
+		10 = interior
+	}
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+		create_rebel = {
+			category = nationalist
+			name = moesian_independence_fighter #moesian_independence_fighter
+			save_scope_as = moesian_independence_fighter #moesian_independence_fighter
+			culture = culture:greek_culture #greek
+		}
+	}
+	#We need to deescalate the Greek Rebellion
+	option = {
+		name = pm_flavor_byz.417.a
+		historical_option = yes
+		add_legitimacy = -25
+		add_stability = -50
+		add_prestige = prestige_weak_penalty
+		change_societal_value = { type = belligerent_vs_conciliatory value = societal_value_move_to_right }
+		every_in_list = {
+			list = moesian_rebellion_locations #moesian_rebellion_locations
+			every_pop = {
+				#limit = {
+				#	owner = root
+				#	culture = culture:greek_culture #greek
+				#}
+				add_pop_satisfaction = pop_satisfaction_radical_penalty
+				change_pop_allegiance = scope:moesian_independence_fighter #moesian_independence_fighter
+			}
+		}
+		hidden_effect = {
+			scope:byzantium_country = { #byzantium_country
+				trigger_event_silently = {
+					id = pm_flavor_byz.419
+					days = 7
+				}
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+	#Traitors! This is a Casus Belli!
+	option = {
+		name = pm_flavor_byz.417.b
+		add_casus_belli = {
+			target = scope:byzantium_country #byzantium_country
+			type = casus_belli:cb_destabilized_our_state
+		}
+		add_legitimacy = -50
+		add_stability = -25
+		change_societal_value = { type = belligerent_vs_conciliatory value = societal_value_move_to_left }
+		every_in_list = {
+			list = moesian_rebellion_locations #moesian_rebellion_locations
+			every_pop = {
+				limit = {
+					owner = root
+					culture = culture:greek_culture #greek
+				}
+				add_pop_satisfaction = pop_satisfaction_radical_penalty
+				change_pop_allegiance = scope:moesian_independence_fighter #moesian_independence_fighter
+			}
+		}
+		hidden_effect = {
+			scope:byzantium_country = { #byzantium_country
+				trigger_event_silently = {
+					id = pm_flavor_byz.418
+					days = 7
+				}
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+#The Greek-Bulgarian Rebellion of 1337 - Bulgaria lets it escalate
+pm_flavor_byz.418 = {
+	type = country_event
+	title = pm_flavor_byz.418.title
+	desc = pm_flavor_byz.418.desc
+	#Unfortunate...
+
+	illustration_tags = {
+		10 = regular
+		10 = interior
+	}
+
+	immediate = {
+		event_illustration_poptype_effect = { foreground = pop_type:soldiers background = pop_type:soldiers }
+	}
+
+	option = {
+		name = pm_flavor_byz.418.a
+		historical_option = yes
+		add_stability = stability_mild_penalty
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+#The Greek-Bulgarian Rebellion of 1337 - Byzantium gets away scot free
+pm_flavor_byz.419 = {
+	type = country_event
+	title = pm_flavor_byz.419.title
+	desc = pm_flavor_byz.419.desc
+	#They are cowards, hah!
+
+	illustration_tags = {
+		10 = happy
+		10 = exterior
+	}
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+	}
+
+	option = {
+		name = pm_flavor_byz.419.a
+		historical_option = yes
+		add_prestige = prestige_mild_bonus
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+##Theodoro
+#Gothic Alliance
+pm_flavor_byz.500 = {
+	type = country_event
+
+	title = pm_flavor_byz.500.title
+	desc = pm_flavor_byz.500.desc
+	historical_info = pm_flavor_byz.500.historical_info
+	fire_only_once = yes
+	
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1336.1.1
+		to = 1755.1.1
+		monthly_chance = 10
+	}
+
+	trigger = {
+		at_war = no
+		is_subject = no
+		c:FEO ?= {
+			opinion = {
+				target = c:BYZ
+				value > 100
+			}
+			#has_opinion = { target = root modifier = opinion_good_relations }
+		}
+		NOT = { is_at_war_with = c:FEO }
+		NOR = {
+			is_rival_of = c:FEO
+			is_enemy_of = c:FEO
+		}
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+		set_variable = { name = byzantium_inherit value = 1 }
+		c:FEO.ruler = {
+			save_scope_as = feo_monarch
+		}
+		c:BYZ.ruler = {
+			save_scope_as = target_character
+		}
+		c:FEO = {
+				save_scope_as = theodoro_country #byzantium_country
+		}
+	}
+	
+	option = {
+		historical_option = yes
+		name = pm_flavor_byz.500.a
+
+		set_variable = { name = gothic_alliance value = 1 }
+		
+		set_global_variable = gothic_union_possible
+		add_gold = -100
+		c:FEO = {
+			add_gold = 100
+			
+		}
+		c:BYZ = {
+			create_alliance = { target = c:FEO }			
+		}
+		
+		hidden_effect = {
+			area:crimea_area = {
+				every_location_in_area = {
+					
+					add_core = scope:theodoro_country
+				}
+			}
+			#every_owned_location = {
+			#	limit = {
+			#		OR = {
+			#			province = location:theodoro.province
+			#			province = location:kaffa.province
+			#		}
+			#	}
+			#	add_core = scope:theodoro_country
+				#change_integration_level = core
+			#}
+		}
+
+		
+		#create_relation = {
+		#	first = c:BYZ
+		#	second = c:FEO
+		#	type = relation_type:alliance
+		#}
+		
+	}
+
+	option = {
+		name = pm_flavor_byz.500.b
+		add_prestige = 15
+		add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_bonus }
+	}
+
+}
+
+#Blood Ties in Crimea (Theodoro)
+pm_flavor_byz.501 = {
+	type = country_event
+
+	title = pm_flavor_byz.501.title
+	desc = pm_flavor_byz.501.desc
+	historical_info = pm_flavor_byz.501.historical_info
+	fire_only_once = yes
+	
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1400.1.1
+		to = 1755.1.1
+		monthly_chance = 10
+	}
+
+	trigger = {
+		at_war = no
+		c:FEO ?= {
+			opinion = {
+				target = c:BYZ
+				value > 150
+			}
+			is_allied_with = { target = root }
+		}
+		c:BYZ = {
+			has_variable = gothic_alliance
+		}
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+		set_variable = { name = byzantium_inherit value = 1 }
+		c:FEO.ruler = {
+			save_scope_as = dying_monarch
+			set_variable = {
+				name = bt_dying_monarch
+				value = 1
+			}
+		}
+		c:BYZ.ruler = {
+			save_scope_as = target_character
+			set_variable = {
+				name = by_inheriting_monarch
+				value = 1
+			}
+		}
+		
+		ruler.dynasty = {
+			random_character_in_dynasty = {
+				limit = {
+					is_heir = yes
+				}
+				save_scope_as = byzantine_heir
+			}
+		}
+
+	}
+	
+	option = {
+		historical_option = yes
+		name = pm_flavor_byz.501.a
+
+		set_variable = { name = gothic_union value = 1 }
+		
+		#send event to Theodoro to let them choose their preferred outcome?
+
+		#c:ENG = { trigger_event_silently = { id = flavor_eng_diplomacy.1 days = 0 } }
+
+		custom_tooltip = pm_flavor_byz.501.tt1
+		
+		
+		#create_relation = {
+		#	first = c:BYZ
+		#	second = c:TEO
+		#	type = relation_type:alliance
+		#}
+		c:FEO = {
+			set_as_designated_heir = {
+				target = scope:byzantine_heir
+				reason = preferred_heir_of_ruler
+			}
+		}
+		add_opinion_mutual_effect = {
+			target = c:FEO
+			modifier = opinion_dynastic_allies
+		}
+
+		if = {
+			limit = {
+				c:BYZ = { has_variable = byzantium_inherit }
+			}
+			add_estate_satisfaction = { type = estate_type:nobles_estate value = estate_satisfaction_mild_penalty }
+			custom_tooltip = pm_flavor_byz.501.tt2
+		}
+		else = {
+			custom_tooltip = pm_flavor_byz.501.tt3
+		}
+
+	}
+
+	option = {
+		name = pm_flavor_byz.501.b
+
+		set_variable = { name = gothic_union_declined value = 1 }
+
+		custom_tooltip = pm_flavor_byz.501.tt4
+
+		#c:ENG = { trigger_event_silently = { id = flavor_eng_diplomacy.2 days = 0 } }
+
+	}
+
+}
+
+# The Union of the Crowns
+pm_flavor_byz.502 = {
+	type = country_event
+
+	title = pm_flavor_byz.502.title
+	desc = pm_flavor_byz.502.desc
+	fire_only_once = yes
+	
+	dynamic_historical_event = {
+		tag = BYZ
+		from = 1425.1.1
+		to = 1755.1.1
+		monthly_chance = 10
+	}
+
+	trigger = {
+		at_war = no
+		c:FEO ?= {
+			opinion = {
+				target = c:BYZ
+				value > 175
+			}
+		}
+
+		has_global_variable = gothic_union_possible
+
+		ruler = {
+			has_variable = bt_inheriting_monarch
+		}
+
+		any_character = {
+			count = 1
+			has_variable = bt_dying_monarch
+			is_alive = no
+		}
+
+	}
+
+	illustration_tags = {
+        10 = regular
+        10 = interior
+    }
+
+	immediate = {
+		event_illustration_estate_effect = { foreground = estate_type:nobles_estate background = estate_type:nobles_estate }
+		random_character = {
+			limit = {
+				has_variable = bt_inheriting_monarch
+			}
+			save_scope_as = inheriting_monarch
+			owner = {
+				save_scope_as = inheriting_country
+			}
+		}
+
+		random_character = {
+			limit = {
+				has_variable = bt_dying_monarch
+			}
+			save_scope_as = dying_monarch
+			owner = {
+				save_scope_as = inherited_country
+			}
+		}
+
+		make_subject_of = { target = scope:inherited_country type = subject_type:dominion }
+
+		scope:inherited_country.capital = { save_scope_as = target_location }
+
+	}
+	
+
+	option = {
+		name = pm_flavor_byz.502.a
+		historical_option = yes
+
+		add_prestige = prestige_severe_bonus
+		add_stability = stability_severe_bonus
+
+	}
+
+}

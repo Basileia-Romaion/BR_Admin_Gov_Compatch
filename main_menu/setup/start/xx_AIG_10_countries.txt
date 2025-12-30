@@ -15,7 +15,91 @@ current_age = age_1_traditions
 countries = {
 	countries = {
 
-		BYZ = {
+		#Ethiopia - ETH (TAG/Reformable)
+	ETH = {
+		own_control_core = {
+			kubar aheyya_fagg gannata_giyorgis tadbaba #amhara_province
+			kombolcha #argobba_province
+			tsana debre_tabor #begemder_province
+			lalibela antalo sokota #lasta_province
+			senafe yeha #serae_province
+			axum abiy_addi adwa shire #tigray_province
+			debre_libanos ambat badabedi wej #wej_province
+			debra_berhan #wej_province
+			ankober gendebelo nora_eth #argobba_province
+			dima bahir_dar dangila debra_warq enjebara #gojjam_province
+			gonder #begemder_province
+		}
+
+		own_control_integrated = {
+			maldarede gambo #damot_province
+			barara ziqwala #shewa_province
+			waldeba debarq kosoge #semien_province
+		}
+
+		own_control_conquered = {
+			 seru #bale_province
+			abala adigrat agula mekele #enderta_province
+			harro_walabu #oromia_province
+			bossa worabe#sidamo_province
+		}
+
+		our_cores_conquered_by_others = {
+			zula #akele_guzai_province
+		}
+
+		starting_technology_level = 3
+		include = "expl_horn_of_africa_ethiopia"
+		include = "subsaharan_monarchy_no_coast"
+		government = {
+			type = admin_imperial
+			heir_selection = cognatic_primogeniture
+			ruler = eth_amedee_i_solomon
+
+			ruler_term = {	 character = eth_yekuno_amlak start_date = 1270.8.10 end_date = 1285.6.19 regnal_number = 1 regnal_name = name_tesfa_iyasus	}
+			ruler_term = {	 character = eth_yagbeu_seyon start_date = 1285.6.20 end_date = 1294.1.1 regnal_number = 1	regnal_name = name_salomon }
+			ruler_term = {	 character = eth_senfa_ared_iv start_date = 1294.1.1 end_date = 1295.1.1 regnal_number = 4 }
+			ruler_term = {	 character = eth_hezba_asgad start_date = 1295.1.1 end_date = 1296.1.1 regnal_number = 1 }
+			ruler_term = {	 character = eth_qedma_asgad start_date = 1296.1.1 end_date = 1297.1.1 regnal_number = 1 }
+			ruler_term = {	 character = eth_jin_asgad start_date = 1297.1.1 end_date = 1298.1.1 regnal_number = 1 }
+			ruler_term = {	 character = eth_saba_asgad start_date = 1298.1.1 end_date = 1299.1.1 regnal_number = 1 }
+			ruler_term = {	 character = eth_wedem_arad start_date = 1299.1.1 end_date = 1314.1.1 regnal_number = 1 }
+			ruler_term = {	 character = eth_amedee_i_solomon start_date = 1314.1.2 regnal_number = 1 regnal_name = name_gebre_mesqel }
+
+
+			laws = {
+				feudal_de_jure_law = by_tradition
+				cultural_traditions_law = martial_society
+				education_masses_law = basic_religious_education
+				patriarchate_law = separated_patriarchate_policy
+				royal_court_customs_law = itinerant_court_policy
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+				admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+				precious_metal_distribution_law = gold_export_ban
+			}
+
+			centralization_vs_decentralization = 80
+			belligerent_vs_conciliatory = -50
+			offensive_vs_defensive = -30
+			outward_vs_inward = 0
+		}
+		capital = ankober #Marade/Tegulet, made capital by Amda Seyon I
+		country_rank = rank_empire
+
+		liturgical_language = geez_language
+
+		dynasty = solomonid_dynasty
+
+		tolerated_cultures = {
+			agaw_culture gurage
+			afar_culture
+			tigrinya
+		}
+	}
+
+	BYZ = {
 			own_control_core = {
 				lemnos imbros molyvos mitilene gallipoli kesan
 				edirne hayrabolu corlu
@@ -292,20 +376,28 @@ countries = {
 					#consolidated_corruption_of_the_peasants #BR EDIT
 				}
 				reforms = {
+					military_settlements
+					tagmata_late
+					byz_inept_administration
 					autocracy
+					byz_army_late
 					theme_system
 					kritai_katholikoi
+					byz_strategos_early
 				}
-				
+
 				laws = {
 					legal_code_law = byzantine_law
 					distribution_of_power_law = dop_favor_the_ruler
-					#feudal_de_jure_law = by_blood
+					pm_internal_security = pm_lax_policies
+					pm_strategos_favor = pm_exclude_generals
 					administrative_system = pronoia_system
 					patriarchate_law = state_patriarchate_policy
 					admin_imperial_de_jure_law = admin_imperial_by_edict
 					admin_imperial_levy_law = admin_imperial_militarised_farmers
 					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 				}
 			}
 			#Setup to accurately portray the starting situation
@@ -331,169 +423,7 @@ countries = {
 			country_rank = rank_empire
 		}
 
-		EPI = { #BR EDITED
-			own_control_core = {
-				nafpaktos angelokastron vonitsa arta preveza parga ioannina kleisoura_epirus butrint
-				argyrokastro avlonya karpenisi konitsa
-				#BYZ
-				pyli
-				#SAO
-				loidoriki
-			}
-			our_cores_conquered_by_others = {
-				#CEP
-				zakynthos leukas cephalonia
-				#SAO
-				salona
-			}
-			
-			starting_technology_level = 3
-			include = "expl_mediterranean"
-			include = "expl_silk_road_west"
-			include = "expl_silk_road_center"
-			include = "expl_silk_road_east"
-			include = "expl_indian_trade_route"
-			include = "eastern_european_monarchy"
-			government = {
-				type = admin_imperial
-				heir_selection = cognatic_primogeniture
-				
-				ruler = epi_theodoros_synadenos
-				consort = epi_eudokia_doukania_kommene
-				
-				ruler_term = { character = epi_michael_i_komnenos_doukas start_date = 1205.1.1 end_date = 1215.1.1 regnal_number = 1 }
-				ruler_term = { character = the_theodoros_komnenos_doukas start_date = 1215.1.1 end_date = 1230.1.1 regnal_number = 1 }
-				ruler_term = { character = epi_michael_ii_komnenos_doukas start_date = 1230.1.1 end_date = 1268.1.1 regnal_number = 2 }
-				ruler_term = { character = epi_nikephoros_i_komnenos_doukas start_date = 1268.1.1 end_date = 1297.1.1 regnal_number = 1 }
-				ruler_term = { character = epi_thomas_i_komnenos_doukas start_date = 1297.1.1 end_date = 1318.1.1 regnal_number = 1 }
-				
-				ruler_term = { character = epi_nikolaos_orsini start_date = 1318.1.1 end_date = 1323.1.1 regnal_number = 1 }
-				ruler_term = { character = cep_john_orsini start_date = 1323.1.1 end_date = 1335.1.1 regnal_number = 1 }
-				ruler_term = { character = epi_nikephoros_ii_orsini start_date = 1335.1.1 end_date = 1336.1.1 regnal_number = 2 }
-				
-				ruler_term = { character = epi_theodoros_synadenos start_date = 1336.1.1 regnal_number = 0 } # As Governor of Epirus
-				
-				regnal_numbers = {
-					name_michael = 2
-					name_theodore = 1
-					name_nikephoros = 2
-					name_thomas = 1
-					name_nicholas = 1
-					name_john = 1
-				}
-				laws = {
-					admin_imperial_de_jure_law = admin_imperial_by_edict
-					admin_imperial_levy_law = admin_imperial_militarised_farmers
-					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
-				}
-			}
-			
-			accepted_cultures = {
-				aromanian 
-			}
-			tolerated_cultures = {
-				albanian latinoi
-			}
-			
-			country_rank = rank_duchy
-			liturgical_language = khoine_dialect
-			
-			capital = ioannina
-		}
-		
-		TRE = {
-			own_control_core = {
-				trebizond giresun gorele gumushane surmene
-				bayramlu unye
-				#HCI
-				mesudiye
-				#TDJ
-				akkus terme
-				#KBD
-				samsun
-				#BFR
-				bafra gerze
-				rize khupati
-			}
-			
-			own_control_integrated = {
-				taman
-				#GAZ
-				tana kaffa vosporo
-				
-			}
-			
-			our_cores_conquered_by_others = {
-				khupati
-				#GLH
-				lusta soldaia
-				amasya merzifon
-				niksar sonisa
-				gadegara ladik_pontus
-			}
-			
-			starting_technology_level = 3
-			include = "expl_eastern_europe"
-			include = "eastern_european_monarchy"
-			government = {
-				type = admin_imperial
-				heir_selection = cognatic_primogeniture
-				ruler = tre_basil_komnenos
-				
-				ruler_term = { character = tre_alexios_i_komnenos start_date = 1204.4.1 end_date = 1222.2.1 regnal_number = 1 }
-				
-				ruler_term = { character = tre_andronikos_i_gidos start_date = 1222.2.1 end_date = 1235.1.1 regnal_number = 1 }
-				
-				ruler_term = { character = tre_ioannes_i_auxouchos start_date = 1235.1.1 end_date = 1238.1.1 regnal_number = 1 }
-				ruler_term = { character = tre_manouel_i_komnenos start_date = 1238.1.1 end_date = 1263.3.1 regnal_number = 1 }
-				ruler_term = { character = tre_andronikos_ii_komnenos start_date = 1263.3.1 end_date = 1266.1.1 regnal_number = 2 }
-				ruler_term = { character = tre_georgios_komnenos start_date = 1266.1.1 end_date = 1280.6.1 regnal_number = 1 }
-				ruler_term = { character = tre_ioannes_ii_komnenos start_date = 1280.6.1 end_date = 1284.10.1 regnal_number = 2 }
-				ruler_term = { character = tre_theodora_komnene start_date = 1284.10.1 end_date = 1285.1.1 regnal_number = 1 }
-				ruler_term = { character = tre_ioannes_ii_komnenos start_date = 1285.1.1 end_date = 1297.8.16 regnal_number = 2 } # Restored
-				ruler_term = { character = tre_alexios_ii_komnenos start_date = 1297.8.16 end_date = 1330.5.3 regnal_number = 2 }
-				ruler_term = { character = tre_andronikos_iii_komnenos start_date = 1330.5.3 end_date = 1332.1.8 regnal_number = 3 }
-				ruler_term = { character = tre_manouel_ii_komnenos start_date = 1332.1.8 end_date = 1332.9.23 regnal_number = 2 }
-				ruler_term = { character = tre_basil_komnenos start_date = 1332.9.23 regnal_number = 1 }
-				
-				regnal_numbers = {
-					name_alexis = 2
-					name_andronikos = 3
-					name_john = 2
-					name_emmanuel = 2
-					name_george = 1
-					name_theodora = 1
-					name_basil = 1
-				}
-				privilege = {
-					#nobles
-					noble_armies
-					primacy_of_nobility
-					auxilium_et_consilium
-					joint_assembly_decrees
-					#burghers
-					#peasants
-					peasants_allowed_weapons_privilege
-				}
-				laws = {
-					admin_imperial_de_jure_law = admin_imperial_by_edict
-					admin_imperial_levy_law = admin_imperial_militarised_farmers
-					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
-				}
-			}
-			
-			country_rank = rank_kingdom #BR EDIT
-			capital = trebizond
-			
-			accepted_cultures = {
-				greek_culture
-			}
-			tolerated_cultures = {
-				laz_culture
-			}
-		}
-		
-		MAM = {
+	MAM = {
 			own_control_core = {
 				alexandria el_alamein damanhur ramsis kafr_saqr kharibta rashid wadi_el_natrun
 				cairo atfih beni_suef faiyum giza dakahla
@@ -608,6 +538,8 @@ countries = {
 					admin_imperial_de_jure_law = admin_imperial_by_edict
 					admin_imperial_levy_law = admin_imperial_militarised_farmers
 					admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 				}
 				
 			}
@@ -717,6 +649,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 			privilege = {
 				#Nobles
@@ -1006,6 +940,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 
 			type = admin_imperial
@@ -1143,6 +1079,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 
 		}
@@ -1191,6 +1129,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 			ruler = kor_ko
 		}
@@ -1218,6 +1158,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 			ruler = ssg_jo_rim
 		}
@@ -1230,6 +1172,13 @@ countries = {
 		include = "expl_silk_road_east"
 		government = {
 			type = admin_imperial
+			laws = {
+				admin_imperial_de_jure_law = admin_imperial_by_edict
+				admin_imperial_levy_law = admin_imperial_militarised_farmers
+				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
+			}
 		}
 		court_language = southern_mandarin_dialect
 		liturgical_language = classical_chinese_language
@@ -1249,6 +1198,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = southern_mandarin_dialect
@@ -1270,6 +1221,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = wu_language
@@ -1291,6 +1244,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = southern_mandarin_dialect
@@ -1312,6 +1267,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = northern_mandarin_dialect
@@ -1333,6 +1290,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = southern_mandarin_dialect
@@ -1353,6 +1312,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = shu_language
@@ -1397,6 +1358,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 			privilege = {
 				#Burghers
@@ -1431,6 +1394,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = wu_language
@@ -1451,6 +1416,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = northern_mandarin_dialect
@@ -1471,6 +1438,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = southern_mandarin_dialect
@@ -1491,6 +1460,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = min_language
@@ -1511,6 +1482,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = yue_language
@@ -1531,6 +1504,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = southern_mandarin_dialect
@@ -1552,6 +1527,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 		}
 		court_language = northern_mandarin_dialect
@@ -1593,6 +1570,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 			privilege = {
 				#Burghers
@@ -1646,6 +1625,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 
 		}
@@ -1689,6 +1670,8 @@ countries = {
 				admin_imperial_de_jure_law = admin_imperial_by_edict
 				admin_imperial_levy_law = admin_imperial_militarised_farmers
 				admin_imperial_court_customs_law = admin_imperial_balanced_court_policy
+					admin_imperial_power_law = admin_imperial_devolution_of_powers_policy
+					precious_metal_distribution_law = gold_export_ban
 			}
 			privilege = {
 				#Nobles

@@ -1,0 +1,6 @@
+### PRAECEPTA MILITARIA - modify start to have correct laws and reforms ###
+countries = {
+	countries = {
+
+	}
+}

@@ -1,0 +1,929 @@
+### PRAECEPTA MILITARIA - Script Values ###
+
+#think about barbaroi recruitment
+
+pm_religious_warfare = {# How involved should the Orthodox church in warfare
+    #Idea: let the player shape hard-to-get modifiers like antagonism reduction and cb generation by interacting with clergy estate
+	law_category = military
+	#law_category = religious
+	
+	#law_religion_group = {
+	#	orthodox
+	#	strigolniki
+	#	miaphysite
+	#} 
+	
+	potential = {
+		#religion = religion:orthodox
+		OR = {
+			government_type = government_type:monarchy
+			government_type = government_type:admin_imperial
+		}
+		#has_unlocked_global_law_trigger = { type = pm_religious_warfare }
+
+	}
+	#locked = {
+	#	is_locked_mechanic = {
+	#		mechanic = law
+	#		type = pm_religious_warfare
+	#	}
+	#}
+
+	
+	#Advances
+	#Symponia Militari: begin to entwine the church with the military, give stability and true faith tolerance. enable the religious warfare laws
+	#Orthodox Crusade
+	
+	
+	#Royal Efimerioi - royal chaplains; priests exhort the men from behind the lines - fast recovery option
+	#Armed Hieromonks - preacher sergeants; offensive option
+	#
+	#Hagio Strategoi; totally break the separation between church and state -  priests may be generals ; clergy_estate_allowed_leading_military
+	#secular authority in the ranks; clergy_estate_blocked_from_cabinet
+	#antagonism reduction
+	
+	#useful mods:
+	#antagonism_breaking_truce_giving_modifier
+	#antagonism_culture_influence
+	#antagonism_declared_war_no_cb_giving_modifier
+	#antagonism_monthly_change_modifier
+	#antagonism_religion_influence
+	#antagonism_taking_land_giving_modifier
+	#army_infantry_power
+	#army_auxiliary_power
+	#army_artillery_power
+	#antagonism_tolerance
+	#army_logistics_distance
+	#assault_ability
+	#auto_slave_raid_different_religion
+	#can_execute_characters
+	#casus_belli_creation_speed
+	#clergy_estate_allowed_leading_military
+	#clergy_estate_allowed_to_build_roads
+	#clergy_estate_levy_size
+	#clergy_estate_max_tax
+	#clergy_estate_min_tax
+	#clergy_estate_satisfaction_decay
+	#clergy_estate_satisfaction_recovery
+	#clergy_estate_target_satisfaction
+	#convert_religion_cost_modifier
+	#country_cabinet_efficiency
+	#cultures_capacity
+	#cultures_capacity_modifier
+	#damage_done_versus_heathens_modifier
+	#damage_done_versus_heretics_modifier
+	#diplomatic_annexation_cost
+	#global_clergy_estate_power
+	#global_clergy_food_consumption
+	#global_crown_estate_power
+	#global_manpower_modifier
+	#global_max_control
+	#global_monthly_control
+	#global_pop_conversion_speed
+	#global_soldiers_max_literacy
+	#land_morale
+	#land_morale_attrition_cost
+	#land_morale_modifier
+	#land_morale_movement_cost
+	#land_morale_recovery
+	#land_unit_attrition
+	#legislative_efficiency
+	#levy_combat_efficiency_modifier
+	#monthly_gold_expense
+	#monthly_gold_income
+	#monthly_prestige
+	#monthly_devotion
+	#monthly_clergy_estate_rebel_growth
+	#dip
+	#mil
+	#adm
+	#maximum_religious_influence
+	#max_war_exhaustion
+	#tolerance_heathen
+	#tolerance_heretic
+	#tolerance_own
+	#tax_income_efficiency
+	#stability_investment
+	#stability_decay
+	#stability_cost
+	#rural_disease_resistance
+	#retreat_delay
+	#regiment_reinforcement_speed
+	#peasants_estate_satisfaction_recovery
+	#peasants_estate_target_satisfaction
+	#peasants_estate_levy_size
+	#orthodox_monastery_building_cost_modifier
+	#nobles_estate_target_satisfaction
+	#national_church_power_cost_modifier
+	#monthly_war_exhaustion
+	#monthly_towards_spiritualist
+	#monthly_towards_liberalism
+	#monthly_towards_humanist
+	#monthly_towards_conciliatory
+	#monthly_towards_belligerent
+	#supply_depot_capacity #wartime food tithes
+	#war_on_same_religion_cb_cost_modifier
+	#war_on_different_religion_cost_modifier
+	#war_on_same_religion_cb_cost_modifier
+	#war_on_same_religion_no_cb_cost_modifier
+	#war_no_cb_cost_modifier
+	#war_great_relations_cost_modifier
+	#war_good_relations_cost_modifier
+	#war_declaration_war_exhaustion_tolerance
+	#war_declaration_stab_hit_tolerance
+	
+	pm_imperial_chaplains = {#boost morale (medium), boost infantry attack power, tolerance_heathen (small) boost morale recovery, 
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			religion = religion:orthodox
+		}
+		country_modifier = {
+			land_morale_recovery = 0.1
+			land_morale_attrition_cost = -0.05
+			army_auxiliary_power = 0.1
+			global_soldiers_max_literacy = 0.25
+			monthly_towards_spiritualist = 0.05
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	pm_monk_sergeants = {#choose for a more zealous army. attack power, morale, difficult to disengage, lose tolerance of heathens and heretics
+		potential = {
+			has_estate_privilege = estate_privilege:expansionist_zealotry 
+			religion = religion:orthodox
+		}
+		country_modifier = {
+			army_infantry_power = 0.1
+			assault_ability = 0.1
+			tolerance_heathen = -0.1
+			tolerance_heretic = -0.1
+			monthly_towards_belligerent = 0.05
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_clerical_generals = {#priests can lead armies, unlocks clergy generals, makes the clergy more influential and satisfied
+		potential = {
+			has_estate_privilege = estate_privilege:orthodox_military_orders
+			#has_reform = government_reform:modern_imperial_army
+			religion = religion:orthodox
+		}
+		country_modifier = {
+			land_morale = 0.01
+			land_morale_modifier = 0.1
+			clergy_estate_allowed_leading_military = yes
+			clergy_estate_target_satisfaction = 0.05
+			nobles_estate_target_satisfaction = -0.1
+			#global_clergy_estate_power = .25
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_secular_army = {#priests are barred from the battlefield, but may aid indirectly on the homefront
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			religion = religion:orthodox
+		}
+		country_modifier = {
+			stability_investment = 0.06
+			monthly_war_exhaustion = -0.05 #fighting war exhaustion means country can sustain war longer
+			global_monthly_control = 0.025 #priests are crown agents, control ticks faster
+			global_clergy_food_consumption = 0.15 # priests are more active, feed them!
+			monthly_towards_humanist = 0.05
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_religious_justification = {#sermons are propaganda! our cause is just
+		potential = {
+			has_estate_privilege = estate_privilege:religious_diplomats
+			religion = religion:orthodox
+		}
+		country_modifier = {
+			antagonism_monthly_change_modifier = 0.1
+			monthly_prestige = 0.1
+			diplomatic_reputation = 2.5
+			monthly_towards_conciliatory = 0.05
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+}
+
+###Domestikos
+pm_domestikos_mil = {
+	potential = {
+		OR = {
+			government_type = government_type:monarchy
+			government_type = government_type:admin_imperial
+		}
+		has_or_had_tag = BYZ
+	}
+	
+	pm_split_offices = { #more efficient command related buffs, move toward decentralization + maluses
+		potential = {
+				#has_reform = government_reform:modern_imperial_army
+				culture = culture:greek_culture
+			}
+		country_modifier = {
+			expected_army_size_modifier = 0.05
+			army_logistics_distance_modifier = 0.1
+			country_cabinet_efficiency = 0.01
+			tax_income_efficiency = -0.05
+			monthly_towards_decentralization = 0.075
+		}
+		estate_preferences = {
+				nobles_estate
+		}
+		years = 2
+	}
+	
+	pm_ceremonial_titles = { #change_policy_cost_modifier
+		potential = {
+				#has_reform = government_reform:modern_imperial_army
+				culture = culture:greek_culture
+			}
+		country_modifier = {
+			change_policy_cost_modifier = -0.2
+			nobles_estate_agenda_impact = 0.05
+			nobles_estate_max_tax = 0.025
+			subject_loyalty = 5.0
+			subject_income_modifier = -0.25
+		}
+		estate_preferences = {
+				nobles_estate
+		}
+		years = 2
+	}
+	
+	pm_logistics_offices = { #army_food_gathering_modifier, army_logistics_distance_modifier, #build_gravel_road_cost_modifier, #build_modern_road_cost_modifier, build_paved_road_cost_modifier, create_supply_depot_cost_modifier
+		potential = {
+				has_reform = government_reform:modern_imperial_army
+				culture = culture:greek_culture
+			}
+		country_modifier = {
+			army_food_gathering_modifier = 0.1
+			army_logistics_distance_modifier = 0.15
+			create_supply_depot_cost_modifier = -0.25
+			food_consumption_modifier = 0.025
+			food_purchase_cost = 0.05
+		}
+		estate_preferences = {
+				peasants_estate
+		}
+		years = 2
+	}
+	
+	pm_castle_management = {
+		potential = {
+				#has_reform = government_reform:modern_imperial_army
+				culture = culture:greek_culture
+			}
+		country_modifier = {
+			fort_limit_modifier = 0.25
+			fort_maintenance_cost = -0.15
+			global_fort_build_buildings_cost = -0.1
+			expected_army_size_modifier = -0.15
+			monthly_towards_defensive = 0.075
+		}
+		estate_preferences = {
+				peasants_estate
+		}
+		years = 2
+	}
+	
+	pm_grand_domestic = { #casus_belli_creation_speed_modifier,chancery_cap_level
+		potential = {
+				has_advance = cabinet_laws_advance
+				culture = culture:greek_culture
+			}
+		country_modifier = {
+			global_crown_estate_power = 0.025
+			casus_belli_creation_speed_modifier = 0.25
+			global_supply_limit_modifier = 0.01
+			monthly_prestige = 0.075
+			government_size = 1
+			court_spending_cost = 0.15
+		}
+		estate_preferences = {
+				burghers_estate
+		}
+		years = 2
+	}
+	
+	pm_female_commanders = { 
+		potential = {
+				has_advance = right_to_rule
+				culture = culture:greek_culture
+			}
+		country_modifier = {
+			allow_female_cabinet = yes
+			allow_female_leader = yes
+			stability_cost = -0.025
+		}
+		estate_preferences = {
+				crown_estate
+		}
+		years = 2
+	}
+}
+	
+
+pm_internal_security = { #how will the Byzantine Military intervene in domestic security?
+    law_category = military
+	
+	potential = {
+		#culture = culture:greek_culture
+		OR = {
+			government_type = government_type:monarchy
+			government_type = government_type:admin_imperial
+		}
+	}
+	
+	pm_favor_secret_police = {#anti-espionage + tyrannical behavior (executing characters)
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			revoke_privilege_cost_modifier = -0.1
+			counter_espionage = 1
+			monthly_prestige = -0.15
+			monthly_towards_traditionalist = 0.05
+			can_execute_characters = yes
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_patrols = {#nobles
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			stability_investment = 0.04
+			global_max_rural_control = 0.05
+			army_maintenance_cost = 0.15
+			monthly_towards_belligerent = 0.05
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_military_police = {#stability, anti rebel activity
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			fort_maintenance_cost = 0.15
+			monthly_rebel_growth = -0.0025
+			global_max_urban_control = 0.05
+			province_integration_speed = 0.05
+			monthly_towards_centralization = 0.05
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_independent_police = {#mps have a free hand to curtail the estates
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			monthly_legitimacy = 0.05
+			nobles_estate_target_satisfaction = -0.04
+			burghers_estate_target_satisfaction = -0.04
+			burghers_estate_max_tax = 0.075
+			nobles_estate_max_tax = 0.025
+			monthly_towards_innovative = 0.05
+		}
+		estate_preferences = {
+			peasants_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_lax_policies = {#leave the states to themselves
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			global_monthly_prosperity = 0.05
+			#global_pop_promotion_speed = 0.1
+			global_estate_target_satisfaction = 0.1
+			global_estate_max_tax = -0.1
+			monthly_towards_decentralization = 0.05
+		}
+		estate_preferences = {
+			burghers_estate
+		}
+		years = 2
+	}
+	
+}
+pm_officer_training = {
+    law_category = military
+	
+	potential = {
+		#culture = culture:greek_culture
+		#government_type = government_type:monarchy
+		has_or_had_tag = BYZ
+	}
+	
+	pm_thematic_officers = {#starting law, should be replaced first
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			#culture = culture:greek_culture
+			has_advance = byz_stratekon_advance
+		}
+		country_modifier = {
+			nobles_estate_satisfaction_recovery = 0.001
+			no_lowborn_leaders = yes
+			discipline = 0.01
+			army_tradition_from_battle = 0.15
+			regiment_recruit_speed = -0.15
+			monthly_army_tradition = -0.03
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_officer_schools_early = {#unlocked by building the pandakterion (e.g. stratekon building)
+		potential = {
+			owns = location:constantinople
+			location:constantinople = {
+				has_building = building_type:stratekon
+			}
+		}
+		country_modifier = {
+			military_tactics = 0.05
+			discipline = 0.02
+			monthly_army_tradition = 0.025
+			monthly_towards_quality = societal_value_tiny_monthly_move
+			
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_officer_schools_late = {#unlocked by building "pm_staff_college_early" and getting event "Officer Training Revolution"
+		potential = {
+			has_advance = byz_staff_college_advance
+			owns = location:constantinople
+			location:constantinople = {
+				has_building = building_type:stratekon
+			}
+		}
+		country_modifier = {
+			military_tactics = 0.1
+			discipline = 0.025
+			monthly_army_tradition = 0.03
+			army_infantry_power = 0.1
+			monthly_towards_quality = societal_value_monthly_move
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_universal_training = {#unlocked by building "pm_staff_college_late" and getting event "New Men" event
+		potential = {
+			has_advance = byz_staff_college_late_advance
+			owns = location:constantinople
+			location:constantinople = {
+				has_building = building_type:stratekon
+			}
+		}
+		
+		country_modifier = {
+			military_tactics = 0.2
+			discipline = 0.035
+			monthly_army_tradition = 0.05
+			army_infantry_power = 0.15
+			monthly_towards_free_subjects = societal_value_minor_monthly_move
+			nobles_estate_target_satisfaction = small_permanent_target_satisfaction_penalty
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_elite_training = {#unlocked by building "pm_war_college" and getting event "Praecepta Militaria" event
+		potential = {
+			has_advance = byz_war_college_advance
+			owns = location:constantinople
+			location:constantinople = {
+				has_building = building_type:stratekon
+			}
+		}
+		country_modifier = {
+			military_tactics = 0.3
+			discipline = 0.05
+			monthly_army_tradition = 0.07
+			army_infantry_power = 0.25
+			monthly_towards_free_subjects = societal_value_monthly_move
+			nobles_estate_target_satisfaction = medium_permanent_target_satisfaction
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+}
+
+pm_strategos_favor = {
+    law_category = military
+	
+	potential = {
+		#culture = culture:greek_culture
+		OR = {
+			government_type = government_type:monarchy
+			government_type = government_type:admin_imperial
+		}
+	}
+	
+	pm_favor_regional_leaders = {#nobles
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			byz_can_assume_fort_command = yes
+			global_nobles_estate_power = 0.2
+			global_max_rural_control = 0.05
+			#global_max_urban_control = 0.025
+			nobles_estate_levy_size = 0.1
+			stability_investment = 0.06
+			monthly_towards_communalism = 0.05
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_crown_advisors = {#defensive, attrition-based mods
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			byz_can_assume_fort_command = yes
+			global_crown_estate_power = 0.025
+			country_cabinet_efficiency = 0.1
+			mil = 12
+			adm = 10
+			monthly_legitimacy = 0.05
+			monthly_towards_conciliatory = 0.05
+			global_estate_target_satisfaction = -0.1
+		}
+		estate_preferences = {
+			nobles_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_governors = {#nobles
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			has_advance = diplomatic_range_age_1
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			byz_can_assume_fort_command = yes
+			subject_loyalty = 5
+			spy_network_construction = 0.15
+			monthly_prestige = 0.07
+			monthly_towards_aristocracy = 0.05
+			global_integration_speed_modifier = -0.1
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_exclude_generals = {#nobles
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			global_crown_estate_power = 0.05
+			country_cabinet_efficiency = -0.1
+			monthly_towards_centralization = 0.025
+			monthly_rebel_growth = 0.004
+			monthly_prestige = -0.1
+			discipline = -0.01
+			byz_can_assume_fort_command = no
+			revoke_privilege_cost_modifier = -0.35
+			stability_investment = 0.12
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_generals = {#nobles
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			byz_can_assume_fort_command = yes
+			country_cabinet_efficiency = 0.05
+			levy_combat_efficiency_modifier = 0.15
+			monthly_towards_decentralization = 0.025
+			discipline = 0.1
+			global_distance_from_capital_cost_modifier = -0.03
+			army_maintenance_cost = 0.1
+
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+}
+
+pm_martial_favor = {
+    law_category = military
+	
+	potential = {
+		#culture = culture:greek_culture
+		OR = {
+			government_type = government_type:monarchy
+			government_type = government_type:admin_imperial
+		}
+	}
+	
+	pm_favor_veterans = {#defensive, attrition-based mods
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			discipline = 0.015
+			experience_decay = -0.01
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_nobles = {#defensive, attrition-based mods
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			monthly_army_tradition = 0.025
+			siege_ability = 0.015
+		}
+		estate_preferences = {
+			nobles_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_yeoman = {#defensive, attrition-based mods
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			land_morale = 0.075
+			possible_frontage_modifier = 0.01
+		}
+		estate_preferences = {
+			peasants_estate_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_mercenaries = {#defensive, attrition-based mods
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			global_mercenaries_modifier = 0.15
+			military_tactics = 0.15
+			
+		}
+		estate_preferences = {
+			merchants_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_clergy = {#defensive, attrition-based mods
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			damage_done_versus_heathens_modifier = 0.15
+			damage_done_versus_heretics_modifier = 0.15
+			land_morale_recovery = 0.05
+		}
+		estate_preferences = {
+			clergy_estate 
+		}
+		years = 2
+	}
+	
+	pm_favor_equality = {#defensive, attrition-based mods
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			has_advance = meritocracy_advance
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			stability_investment = 0.05
+			land_morale_recovery = 0.1
+			crown_estate_levy_size = 0.05
+			
+		}
+		estate_preferences = {
+			clergy_estate
+		}
+		years = 2
+	}
+	
+	pm_favor_crown_appointments = {#nepotism
+		potential = {
+			#has_reform = government_reform:modern_imperial_army
+			has_advance = meritocracy_advance
+			culture = culture:greek_culture
+		}
+		country_modifier = {
+			stability_investment = 0.05
+			monthly legitimacy = 0.1
+			monthly_army_tradition = -0.025
+			discipline = -0.04
+			#land_morale_recovery = 0.1
+			#crown_estate_levy_size = 0.05
+
+		}
+		estate_preferences = {
+			clergy_estate
+		}
+		years = 2
+	}
+}
+
+pm_martial_tradition = {
+    law_category = military
+
+	potential = {
+		culture = culture:greek_culture
+		
+	}
+
+	fabian_law = {#defensive, attrition-based mods
+		potential = {
+			has_reform = government_reform:modern_imperial_army
+			societal_value:offensive_vs_defensive >= 80
+		}
+		country_modifier = {
+			land_morale_modifier = 0.1
+			global_defensive = 0.125
+			global_hostile_attrition = 0.5
+			food_consumption_modifier = -0.1
+			monthly_war_exhaustion = -0.025
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	maurician_law = {#offensive, attack based laws
+		potential = {
+			has_reform = government_reform:modern_imperial_army
+			societal_value:offensive_vs_defensive <= -80
+		}
+		country_modifier = {
+			army_initiative = 0.2
+			army_movement_speed = 0.1
+			military_tactics = 0.15
+			army_tradition_from_battle = 1
+		}
+		estate_preferences = {
+			crown_estate
+		}
+		years = 2
+	}
+	
+	komnenoi_law = {#tactical and logistical focus (quantity)
+		potential = {
+			has_reform = government_reform:modern_imperial_army
+			societal_value:quality_vs_quantity >= 80
+		}
+		country_modifier = {
+			land_morale_movement_cost = -0.1
+			army_maintenance_cost = -0.05
+			monthly_experience_gain = 0.1
+			possible_frontage_modifier = 0.05
+			peasants_estate_satisfaction_recovery = 0.001
+		}
+		estate_preferences = {
+			peasants_estate
+		}
+		years = 2
+	}
+	
+	phokas_law = {#army power, quality
+		potential = {
+			has_reform = government_reform:modern_imperial_army
+			societal_value:quality_vs_quantity <= -80
+		}
+		country_modifier = {
+			discipline = 0.025
+			army_food_gathering_modifier = 0.1
+			army_infantry_power = 0.1
+			army_cavalry_power = 0.15
+			nobles_estate_satisfaction_recovery = 0.001
+		}
+		estate_preferences = {
+			peasants_estate
+		}
+		years = 2
+	}
+	
+	justinian_law = {#infrastructure construction
+		potential = {
+			has_reform = government_reform:modern_imperial_army
+			societal_value:land_vs_naval <= -80
+		}
+		country_modifier = {
+			fort_limit_modifier = 0.15
+			fort_maintenance_cost = -0.075
+			army_auxiliary_power = 0.1
+			army_auxiliary_build_cost_modifier = -0.2
+			global_road_building_time = -0.2
+			global_rural_build_buildings_cost = -0.05
+			global_fort_build_buildings_cost = -0.1
+		}
+		estate_preferences = {
+			burghers_estate
+		}
+		years = 2
+	}
+	michael_law = {#navy
+		potential = {
+			has_reform = government_reform:modern_imperial_army
+			societal_value:land_vs_naval >= 80
+		}
+		country_modifier = {
+			casus_belli_creation_speed_modifier = 0.33
+			naval_morale = 0.05
+			own_coast_naval_combat_bonus = -0.1
+			navy_galley_power = 0.05
+			navy_light_ship_build_cost_modifier = 0.1
+			prestige_from_naval_battle = 0.05
+			monthly_peasants_estate_rebel_growth = -0.01
+		}
+		estate_preferences = {
+			
+			burghers_estate
+			
+		}
+		years = 2
+	}
+
+}
+
+
