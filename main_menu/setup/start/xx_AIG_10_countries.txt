@@ -100,74 +100,68 @@ countries = {
 	}
 
 	BYZ = {
+
 			own_control_core = {
-				lemnos imbros molyvos mitilene gallipoli kesan
+				gallipoli kesan
 				edirne hayrabolu corlu
 				rodoscuk enez kiyikoy ahtopol constantinople silivri catalca luleburgaz kirklareli
 				malgara alasehir
 				uskudar silli biga eregli
 				chios vize
 				ormenio
-				traianopolis demotica xanthia komotini
-				
+				traianopolis demotica
 				#TUR
-				kibrus
-				bolu akcasehir akyazi konrapa gerede mengen mudurnu
+				kibrus mihaliccik sivrihisar bozan kaymaz
+				bolu gerede mengen
+				akcasehir akyazi konrapa mudurnu
 				bursa adranos iznik
 				izmit atpazari
 				domanic
 				sultanonu bilecik goynuk eynegol inonu nalli sogut
-				
 				#KRD
 				balikesir balya edremit manyas mihalic susurluk
-				ayvacik bandirma bayramic can canakkale gonen lapseki
+				bandirma can gonen
 				dursunbey harmancik
-				
 				#GRM
-				mihaliccik sivrihisar bozan kaymaz
 				altintas emirdag seyitgazi
 				kutahya aslanapa emet simav tavsanli
 				usak banaz gediz seyhli
-				
 				#SRU
 				manisa akhisar demirci gordes kula
 				bergama bigadic soma
-				
 				#AYD
 				smyrna ayasuluk cesme menemen urla
 				tire balat birgi guzelhisar nazilli
-				
 				#MEN
 				milas
-				mugla bodrum cine gokabat marmaris megri yuksekkum
-				
+				mugla cine
 				#TVS
 				tavas
-				
 				#INA
 				honaz lazkiye
-				
 				#SHP
 				karahisar_i_sahib sandikli suhut
-				
 				#HMD
 				isparta burdur dinar egirdir uluborlu
 				golhisar stefani
-				
-				#TEK
-				antalya elmali karahisar_i_teke kas istanoz
-				manavgat finike
-				
-				#KNI
-				rodos kos
+				megri yuksekkum bodrum gokabat
 			}
 			own_control_integrated = {
-				bukelon ustra
+				bukelon
 			}
 			own_control_conquered = {
 			
 			}
 			our_cores_conquered_by_others = {
+				komotini
+				lapseki bayramic ayvacik
+				alaiye selinti
+				canakkale
+				thasos sporades lemnos imbros molyvos mitilene
+				marmaris  
+				antalya elmali karahisar_i_teke kas istanoz
+				manavgat finike
+				rodos kos karpathos
 				#ANA
 				aksaray kochisar insuyu
 				kirsehir nevsehir sariyahsi
@@ -187,6 +181,7 @@ countries = {
 				kilkis giannitsa gynaikokastro serres rentina kavala mount_athos thasos drama
 				ostrovo
 				grevena siatista
+				xanthia
 				#THS
 				demetrias farsala elassona larissa stomio trikala tyrnavos karditsa
 				neopatras zetounion
@@ -196,7 +191,7 @@ countries = {
 				gravia
 				bodonitsa
 				salona
-				#MOE
+				#M0E
 				tripolitsa veligosti karytaina
 				monemvasia mystras oitylo leuktron astros
 				argos nafplio
@@ -244,6 +239,7 @@ countries = {
 				alaiye selinti
 				antioch arsuz
 			}
+			
 			
 			starting_technology_level = 3
 			include = "expl_mediterranean"
@@ -354,7 +350,7 @@ countries = {
 					noble_serfdom_rights
 					manorial_courts
 					noble_patronage_of_the_arts
-					#consolidated_corruption_of_the_nobles
+					consolidated_corruption_of_the_nobles
 					
 					#Clergy
 					embellish_great_works_of_faith
@@ -369,6 +365,7 @@ countries = {
 					sponsor_maritime_contracts
 					control_over_monetary_policy
 					control_over_the_coinage
+					br_latin_trade_naval_reliance
 					#consolidated_corruption_of_the_burghers #BR EDIT
 					
 					#Commoners
